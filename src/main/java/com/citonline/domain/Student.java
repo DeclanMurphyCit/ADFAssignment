@@ -35,7 +35,4 @@ public class Student extends Person{
 	public void setStudentNumber(String studentNumber) {
 		this.studentNumber = studentNumber;
 	}
-	
-
-
 }
