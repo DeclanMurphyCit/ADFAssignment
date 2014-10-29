@@ -1,5 +1,16 @@
 package com.citonline.domain;
 
+/*
+ * Author: Tim Wallace
+ * Date: 29/10/14
+ * 
+ * Description:Module pojo
+ * 
+ * Inputs: Module id, semester, code, crn, name
+ * 
+ * Expected Outputs: Module id, semester, code, crn, name
+ */
+
 public class Module {
 	int id, semester;
 	String code, crn, name;
