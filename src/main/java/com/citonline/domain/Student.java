@@ -1,6 +1,12 @@
 package com.citonline.domain;
 
-public class Student extends Person{
+/**
+* 
+* @author  Declan Murphy
+* @since   29-10-2014
+*/
+
+public class Student extends Person{	
 	
 	String studentNumber, addressLine1,addressLine2;
 	

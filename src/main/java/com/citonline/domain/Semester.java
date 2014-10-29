@@ -2,17 +2,13 @@ package com.citonline.domain;
 
 import java.util.ArrayList;
 
+/**
+* @author  Declan Murphy
+* @since   29-10-2014
+*/
+
 public class Semester {
-	
-	/**
-	* This represents a semester
-	* It consists of Modules
-	*
-	* @author  Declan Murphy
-	* @version 1.0
-	* @since   29-10-2014
-	*/
-	
+		
 	private ArrayList<Module> moduleList = new ArrayList<Module>();
 	
 	public Semester(ArrayList<Module> moduleList) {

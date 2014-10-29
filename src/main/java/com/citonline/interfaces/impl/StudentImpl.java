@@ -7,6 +7,11 @@ import com.citonline.domain.Program;
 import com.citonline.domain.Student;
 import com.citonline.interfaces.StudentInt;
 
+/**
+* @author  Declan Murphy
+* @since   29-10-2014
+*/
+
 public class StudentImpl extends Student implements StudentInt {
 	
 	private ArrayList<Module> moduleList = new ArrayList<Module>();

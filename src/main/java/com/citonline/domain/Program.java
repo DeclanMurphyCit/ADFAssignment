@@ -2,16 +2,14 @@ package com.citonline.domain;
 
 import java.util.ArrayList;
 
+/**
+* This represents a course
+* @author  Declan Murphy
+* @since   29-10-2014
+*/
+
 public class Program {
-	
-	/**
-	* This represents a course
-	* 
-	* @author  Declan Murphy
-	* @version 1.0
-	* @since   29-10-2014
-	*/
-	
+		
 	String programName,programCode;
 	
 	private ArrayList<Semester> semesterList = new ArrayList<Semester>();
