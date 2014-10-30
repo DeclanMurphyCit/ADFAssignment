@@ -95,7 +95,6 @@ public class Lecturer extends Person implements LecturerInt {
 	 */
 	@Override
 	public boolean isProgramManager() {
-		// TODO Auto-generated method stub
 		return this.managedProgram != null;
 	}
 
