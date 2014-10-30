@@ -40,6 +40,26 @@ public interface LecturerDAO {
 	public void createLecturer(String firstName, String lastName, String email, String roomNumber, Integer idProgram);
 	
 	/**
+	 *  This is the method to be used to delete
+	 * a record from the Lecturer table corresponding
+	 * to a passed Lecturer's id.
+	 * 
+	 * @param id
+	 * @return the corresponding Lecturer
+	 */
+	public void deleteLecturer(Integer id);
+	/**
+	 *  This is the method to be used to delete
+	 * a record from the Lecturer table corresponding
+	 * to a passed Lecturer's firstName and lastName.
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @return the corresponding Lecturer
+	 */
+	public void deleteLecturer(String firstName, String lastName);
+	
+	/**
 	 *  This is the method to be used to list down
 	 * a record from the Lecturer table corresponding
 	 * to a passed Lecturer's id.
@@ -48,6 +68,17 @@ public interface LecturerDAO {
 	 * @return the corresponding Lecturer
 	 */
 	public Lecturer getLecturer(Integer id);
+	/**
+	 *  This is the method to be used to list down
+	 * a record from the Lecturer table corresponding
+	 * to a passed Lecturer's firstName and lastName.
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @return the corresponding Lecturer
+	 */
+	public Lecturer getLecturer(String firstName, String lastName);
+	
 	/** 
 	 *  This is the method to be used to list down
 	 * all the records from the Lecturer table.
@@ -102,7 +133,7 @@ public interface LecturerDAO {
 	 * @param id
 	 * @param idManagedProgram
 	 */
-	public void updateLecturerManagedProgram(Integer id, Integer managedProgram);
+	public void updateLecturerManagedProgram(Integer id, Integer idManagedProgram);
 	
 	/**
 	 *  Set the Lecturer to teach this Module
