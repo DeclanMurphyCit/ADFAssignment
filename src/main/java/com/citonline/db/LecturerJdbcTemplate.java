@@ -28,81 +28,6 @@ public class LecturerJdbcTemplate implements LecturerDAO {
 		
 		jdbcTemplateObject.update(SQL, new Object[] { firstName, lastName, email, roomNumber});
 		
-<<<<<<< HEAD
-		System.out.println("Created Record Name = " + firstName + " " + lastName +
-				"\nemail = " + email + ", roomNumber = " + roomNumber);
-
-	}
-
-	@Override
-	public void createLecturer(String firstName, String lastName, String email,
-			String roomNumber, Integer idProgram) {
-
-		String SQL = "INSERT INTO Lecturer (firstName, lastName, email, roomNumber, idProgram)"
-				+ "VALUES(?, ?, ?, ?, ?)";
-		
-		jdbcTemplateObject.update(SQL, new Object[] { firstName, lastName, email, roomNumber, idProgram});
-		
-		System.out.println("Created Record Name = " + firstName + " " + lastName +
-				"\nemail = " + email + ", roomNumber = " + roomNumber + ", idProgram = " + idProgram);
-
-	}
-
-	@Override
-	public Lecturer getLecturer(Integer id) {
-		String SQL = "select * from songwriter where id = ?";
-		Lecturer lecturer = (Lecturer) jdbcTemplateObject.queryForObject(SQL, 
-						new Object[]{id}, new LecturerMapper());
-		
-		return lecturer;
-	}
-
-	@Override
-	public List<Lecturer> listLecturers() {
-		String SQL = "select * from lecturer";
-		List<Lecturer> lecturers = jdbcTemplateObject.query(SQL, 
-						new LecturerMapper());
-		return lecturers;
-	}
-
-	@Override
-	public void updateLecturerEmail(String firstName, String lastName,
-			String email) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateLecturerEmail(Integer id, String email) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateLecturerRoomNumber(String firstName, String lastName,
-			String roomNumber) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateLecturerRoomNumber(Integer id, String roomNumber) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateLecturerManagedProgram(String firstName, String lastName,
-			Integer idManagedProgram) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateLecturerManagedProgram(Integer id, Integer managedProgram) {
-		// TODO Auto-generated method stub
-
-=======
 		System.out.println("Created Lecturer Name = " + firstName + " " + lastName +
 				"\nemail = " + email + ", roomNumber = " + roomNumber);
 
@@ -215,7 +140,6 @@ public class LecturerJdbcTemplate implements LecturerDAO {
 		jdbcTemplateObject.update(SQL, new Object[]{idManagedProgram, id});
 		
 		System.out.println("update Lecturer " + id + "'s managedProgram. Set to: " + idManagedProgram);
->>>>>>> branch 'master' of https://github.com/DeclanMurphyCit/ADFAssignment
 	}
 
 	@Override
