@@ -40,6 +40,7 @@ public interface LecturerDAO {
 	public void createLecturer(String firstName, String lastName, String email, String roomNumber, Integer idProgram);
 	
 	/**
+<<<<<<< HEAD
 	 *  This is the method to be used to list down
 	 * a record from the Lecturer table corresponding
 	 * to a passed Lecturer's id.
@@ -103,6 +104,102 @@ public interface LecturerDAO {
 	 * @param idManagedProgram
 	 */
 	public void updateLecturerManagedProgram(Integer id, Integer managedProgram);
+=======
+	 *  This is the method to be used to delete
+	 * a record from the Lecturer table corresponding
+	 * to a passed Lecturer's id.
+	 * 
+	 * @param id
+	 * @return the corresponding Lecturer
+	 */
+	public void deleteLecturer(Integer id);
+	/**
+	 *  This is the method to be used to delete
+	 * a record from the Lecturer table corresponding
+	 * to a passed Lecturer's firstName and lastName.
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @return the corresponding Lecturer
+	 */
+	public void deleteLecturer(String firstName, String lastName);
+	
+	/**
+	 *  This is the method to be used to list down
+	 * a record from the Lecturer table corresponding
+	 * to a passed Lecturer's id.
+	 * 
+	 * @param id
+	 * @return the corresponding Lecturer
+	 */
+	public Lecturer getLecturer(Integer id);
+	/**
+	 *  This is the method to be used to list down
+	 * a record from the Lecturer table corresponding
+	 * to a passed Lecturer's firstName and lastName.
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @return the corresponding Lecturer
+	 */
+	public Lecturer getLecturer(String firstName, String lastName);
+	
+	/** 
+	 *  This is the method to be used to list down
+	 * all the records from the Lecturer table.
+	 * 
+	 *  @return the list of all Lecturers present in the Lecturer table
+	 */
+	public List<Lecturer> listLecturers();   
+	
+	/**
+	 *  Update the Lecturer's email.
+	 *  
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 */
+	public void updateLecturerEmail(String firstName, String lastName, String email);
+	/**
+	 *  Update the Lecturer's email.
+	 *  
+	 * @param id
+	 * @param email
+	 */
+	public void updateLecturerEmail(Integer id, String email);
+	
+	/**
+	 *  Update the Lecturer's roomNumber.
+	 *  
+	 * @param firstName
+	 * @param lastName
+	 * @param roomNumber
+	 */
+	public void updateLecturerRoomNumber(String firstName, String lastName, String roomNumber);
+	/**
+	 *  Update the Lecturer's roomNumber.
+	 *  
+	 * @param id
+	 * @param roomNumber
+	 */
+	public void updateLecturerRoomNumber(Integer id, String roomNumber);
+	
+	/**
+	 *  Update the Lecturer's ManagedProgram.
+	 *  
+	 * @param firstName
+	 * @param lastName
+	 * @param idManagedProgram
+	 */
+	public void updateLecturerManagedProgram(String firstName, String lastName, Integer idManagedProgram);
+	/**
+	 *  Update the Lecturer's ManagedProgram.
+	 *  
+	 * @param id
+	 * @param idManagedProgram
+	 */
+	public void updateLecturerManagedProgram(Integer id, Integer idManagedProgram);
+>>>>>>> branch 'master' of https://github.com/DeclanMurphyCit/ADFAssignment
 	
 	/**
 	 *  Set the Lecturer to teach this Module
