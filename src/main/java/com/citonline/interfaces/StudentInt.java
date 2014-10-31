@@ -10,7 +10,8 @@ import com.citonline.domain.Program;
 
 public interface StudentInt {
 	
-	public void enroll (Module module);
+	public void enrollProgram (Program program);
+	public void enrollModule (Module module);
 	public void deferModule (Module module);
 	public void deferProgram (Program Program);
 

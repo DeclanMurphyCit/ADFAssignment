@@ -16,7 +16,7 @@ public class StudentImpl extends Student implements StudentInt {
 	
 	private ArrayList<Module> moduleList = new ArrayList<Module>();
 	private ArrayList<Object> deferralList = new ArrayList<Object>();
-	//TODO Is this right and if not should it be of type deferral?
+	private Program program;
 
 	public StudentImpl(String firstName, String lastName, String email,
 			String phoneNumber, String studentNumber, String addressLine1,String addressLine2,
@@ -27,8 +27,13 @@ public class StudentImpl extends Student implements StudentInt {
 	}
 
 	@Override
-	public void enroll(Module module) {
+	public void enrollModule(Module module) {
 		moduleList.add(module);
+	}
+	
+	@Override
+	public void enrollProgram(Program Program) {
+		setProgram(program);
 	}
 
 	@Override
@@ -41,4 +46,27 @@ public class StudentImpl extends Student implements StudentInt {
 		deferralList.add(Program);
 	}
 
+	public Program getProgram() {
+		return program;
+	}
+
+	public void setProgram(Program program) {
+		this.program = program;
+	}
+
+	public ArrayList<Module> getModuleList() {
+		return moduleList;
+	}
+
+	public void setModuleList(ArrayList<Module> moduleList) {
+		this.moduleList = moduleList;
+	}
+
+	public ArrayList<Object> getDeferralList() {
+		return deferralList;
+	}
+
+	public void setDeferralList(ArrayList<Object> deferralList) {
+		this.deferralList = deferralList;
+	}
 }
