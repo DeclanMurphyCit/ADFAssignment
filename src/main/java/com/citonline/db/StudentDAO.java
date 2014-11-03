@@ -28,15 +28,18 @@ public interface StudentDAO {
 	
 	public void updateStudentEmail(Integer id, String email);
 	
-	public void addProgram(Integer idProgram);
+	public void updateStudentAddress(String studentNumber, String addressLine1, String addressLine2);
 	
-	public void addModule(Integer idModule);
+	public void updateStudentAddress(Integer id, String addressLine1, String addressLine2);
+	
+	public void enrollModule(Integer idModule, Integer idStudent);
+	
+	public void enrollModules(final Integer idStudent, final List<Integer> idModuleList);
+	
+	public void removeModule(Integer idStudent, Integer idModule);
 	
 	public void addModuleDeferral(Integer idModule);
-	
-	public void addProgramDeferral(Integer idProgram);
 
 	public void removeModuleDeferral(Integer idModule);
 	
-	public void removeProgramDeferral(Integer idProgram);	
 }
