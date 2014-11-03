@@ -40,12 +40,12 @@ CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`lecturer` (
   `lastName` VARCHAR(40) NULL,
   `phoneNumber` VARCHAR(15) NULL,
   `idManagedProgram` INT NULL,
-  PRIMARY KEY (`id_lecturer`)),
+  PRIMARY KEY (`id_lecturer`),
    CONSTRAINT `fk_lecturer_is_programManager`
     FOREIGN KEY (`idManagedProgram`)
     REFERENCES `app_dev_assignment1`.`program` (`id_program`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
