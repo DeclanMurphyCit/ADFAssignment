@@ -2,26 +2,38 @@ package com.citonline.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Deferral 
 {
 	Calendar defferalDate;
-	Student student;
+	int student;
 	ArrayList<Module> defferedModules;
 	boolean programDeffered;
-	Program program;
+	int program;
 	
 	
 	
-	public Deferral(Calendar defferalDate, Student student,
-			ArrayList<Module> defferedModules, boolean programDeffered,
-			Program program) {
+	public Deferral(Calendar defferalDate, int student, boolean programDeffered,
+			int program) {
+		super();
+		this.defferalDate = defferalDate;
+		this.student = student;
+		this.programDeffered = programDeffered;
+		this.program = program;
+		
+		ArrayList<Module> defferedModules = new ArrayList<Module>();
+	}
+
+	public Deferral(Date deferralDate, int id_student, int id_program,
+			int id_deferral) {
 		super();
 		this.defferalDate = defferalDate;
 		this.student = student;
 		this.defferedModules = defferedModules;
 		this.programDeffered = programDeffered;
 		this.program = program;
+		
 	}
 
 	public boolean isProgramDeffered() {
@@ -32,11 +44,11 @@ public class Deferral
 		this.programDeffered = programDeffered;
 	}
 
-	public Program getProgram() {
+	public int getProgram() {
 		return program;
 	}
 
-	public void setProgram(Program program) {
+	public void setProgram(int program) {
 		this.program = program;
 	}
 
@@ -47,10 +59,10 @@ public class Deferral
 	public void setDefferalDate(Calendar defferalDate) {
 		this.defferalDate = defferalDate;
 	}
-	public Student getStudent() {
+	public int getStudent() {
 		return student;
 	}
-	public void setStudent(Student student) {
+	public void setStudent(int student) {
 		this.student = student;
 	}
 	public ArrayList<Module> getDefferedModules() {
