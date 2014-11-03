@@ -1,12 +1,13 @@
+/**
+ * @author Fabien
+ * 
+ * @since 25 oct. 2014
+ */
 package com.citonline.interfaces;
 
 import com.citonline.domain.Deferral;
 import com.citonline.domain.Module;
 
-/**
- * @author Fabien Dubar
- *
- */
 public interface LecturerInt {
 	
 	/**

@@ -2,7 +2,7 @@ package com.citonline.domain;
 
 public abstract class Person {
 
-	String firstName, lastName, email, phoneNumber;
+	protected String firstName, lastName, email, phoneNumber;
 
 	public Person(String firstName, String lastName, String email,
 			String phoneNumber) {

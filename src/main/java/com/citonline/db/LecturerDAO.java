@@ -1,3 +1,8 @@
+/**
+ * @author Fabien
+ * 
+ * @since 25 oct. 2014
+ */
 package com.citonline.db;
 
 import java.util.List;
@@ -25,7 +30,8 @@ public interface LecturerDAO {
 	 * @param email
 	 * @param roomNumber
 	 */
-	public void createLecturer(String firstName, String lastName, String email, String roomNumber);
+	public void createLecturer(String firstName, String lastName, String email,
+			String phoneNumber, String roomNumber);
 	
 	/**
 	 *  This is the method to be used to create
@@ -35,19 +41,20 @@ public interface LecturerDAO {
 	 * @param lastName
 	 * @param email
 	 * @param roomNumber
-	 * @param idProgram
+	 * @param idManagedProgram
 	 */
-	public void createLecturer(String firstName, String lastName, String email, String roomNumber, Integer idProgram);
+	public void createLecturer(String firstName, String lastName, String email,
+			String phoneNumber, String roomNumber, Integer idManagedProgram);
 	
 	/**
 	 *  This is the method to be used to delete
 	 * a record from the Lecturer table corresponding
-	 * to a passed Lecturer's id.
+	 * to a passed Lecturer's id_lecturer.
 	 * 
-	 * @param id
+	 * @param id_lecturer
 	 * @return the corresponding Lecturer
 	 */
-	public void deleteLecturer(Integer id);
+	public void deleteLecturer(Integer id_lecturer);
 	/**
 	 *  This is the method to be used to delete
 	 * a record from the Lecturer table corresponding
@@ -64,10 +71,10 @@ public interface LecturerDAO {
 	 * a record from the Lecturer table corresponding
 	 * to a passed Lecturer's id.
 	 * 
-	 * @param id
+	 * @param id_lecturer
 	 * @return the corresponding Lecturer
 	 */
-	public Lecturer getLecturer(Integer id);
+	public Lecturer getLecturer(Integer id_lecturer);
 	/**
 	 *  This is the method to be used to list down
 	 * a record from the Lecturer table corresponding
@@ -98,10 +105,10 @@ public interface LecturerDAO {
 	/**
 	 *  Update the Lecturer's email.
 	 *  
-	 * @param id
+	 * @param id_lecturer
 	 * @param email
 	 */
-	public void updateLecturerEmail(Integer id, String email);
+	public void updateLecturerEmail(Integer id_lecturer, String email);
 	
 	/**
 	 *  Update the Lecturer's roomNumber.
@@ -114,10 +121,10 @@ public interface LecturerDAO {
 	/**
 	 *  Update the Lecturer's roomNumber.
 	 *  
-	 * @param id
+	 * @param id_lecturer
 	 * @param roomNumber
 	 */
-	public void updateLecturerRoomNumber(Integer id, String roomNumber);
+	public void updateLecturerRoomNumber(Integer id_lecturer, String roomNumber);
 	
 	/**
 	 *  Update the Lecturer's ManagedProgram.
@@ -130,10 +137,10 @@ public interface LecturerDAO {
 	/**
 	 *  Update the Lecturer's ManagedProgram.
 	 *  
-	 * @param id
+	 * @param id_lecturer
 	 * @param idManagedProgram
 	 */
-	public void updateLecturerManagedProgram(Integer id, Integer idManagedProgram);
+	public void updateLecturerManagedProgram(Integer id_lecturer, Integer idManagedProgram);
 	
 	/**
 	 *  Set the Lecturer to teach this Module
@@ -146,10 +153,10 @@ public interface LecturerDAO {
 	/**
 	 *  Set the Lecturer to teach this Module
 	 *  
-	 * @param id
+	 * @param id_lecturer
 	 * @param idModule
 	 */
-	public void addTaughtModule(Integer id, Integer idModule);
+	public void addTaughtModule(Integer id_lecturer, Integer idModule);
 	/**
 	 *  Set the Lecturer to teach those Modules
 	 *  
@@ -157,14 +164,14 @@ public interface LecturerDAO {
 	 * @param lastName
 	 * @param idModuleList
 	 */
-	public void addTaughtModule(String firstName, String lastName, List<Integer> idModuleList);
+	public void addTaughtModule(final String firstName, final String lastName, final List<Integer> idModuleList);
 	/**
 	 *  Set the Lecturer to teach those Modules
 	 *  
-	 * @param id
+	 * @param id_lecturer
 	 * @param idModuleList
 	 */
-	public void addTaughtModule(Integer id, List<Integer> idModuleList);
+	public void addTaughtModule(final Integer id_lecturer, final List<Integer> idModuleList);
 	
 	/**
 	 *  Stop the Lecturer from teaching this Module
@@ -177,10 +184,10 @@ public interface LecturerDAO {
 	/**
 	 *  Stop the Lecturer from teaching this Module
 	 *  
-	 * @param id
+	 * @param id_lecturer
 	 * @param idModule
 	 */
-	public void removeTaughtModule(Integer id, Integer idModule);
+	public void removeTaughtModule(Integer id_lecturer, Integer idModule);
 	/**
 	 *  Stop the Lecturer from teaching those Modules
 	 *  
@@ -188,13 +195,13 @@ public interface LecturerDAO {
 	 * @param lastName
 	 * @param idModuleList
 	 */
-	public void removeTaughtModule(String firstName, String lastName, List<Integer> idModuleList);
+	public void removeTaughtModule(final String firstName, final String lastName, final List<Integer> idModuleList);
 	/**
 	 *  Stop the Lecturer from teaching those Modules
 	 *  
-	 * @param id
+	 * @param id_lecturer
 	 * @param idModuleList
 	 */
-	public void removeTaughtModule(Integer id, List<Integer> idModuleList);
+	public void removeTaughtModule(final Integer id_lecturer, final List<Integer> idModuleList);
 	
 }

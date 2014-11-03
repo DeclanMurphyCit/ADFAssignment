@@ -1,19 +1,15 @@
-package com.citonline.domain;
-
-import java.util.ArrayList;
-
-import com.citonline.interfaces.LecturerInt;
-
 /**
  * @author Fabien
- *
+ * 
+ * @since 25 oct. 2014
  */
-public class Lecturer extends Person implements LecturerInt {
+package com.citonline.domain;
+
+public class Lecturer extends Person {
 	
-	private Program managedProgram;
-	private ArrayList<Module> modulesTaught;
+	protected Program managedProgram;
 	
-	private String roomNumber;
+	protected String roomNumber;
 	
 	/**
 	 * @param firstName
@@ -57,22 +53,6 @@ public class Lecturer extends Person implements LecturerInt {
 	public void setManagedProgram(Program managedProgram) {
 		this.managedProgram = managedProgram;
 	}
-
-	/**
-	 * 
-	 * @return the modulesTaught
-	 */
-	public ArrayList<Module> getModulesTaught() {
-		return modulesTaught;
-	}
-
-	/**
-	 * 
-	 * @param modulesTaught the modulesTaught to set
-	 */
-	public void setModulesTaught(ArrayList<Module> modulesTaught) {
-		this.modulesTaught = modulesTaught;
-	}
 	
 	/**
 	 * 
@@ -88,50 +68,6 @@ public class Lecturer extends Person implements LecturerInt {
 	 */
 	public void setRoomNumber(String roomNumber) {
 		this.roomNumber = roomNumber;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.citonline.interfaces.LecturerInt#isProgramManager()
-	 */
-	@Override
-	public boolean isProgramManager() {
-		return this.managedProgram != null;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.citonline.interfaces.LecturerInt#uploadSignedDeferral(com.citonline.domain.Deferral)
-	 */
-	@Override
-	public void uploadSignedDeferral(Deferral deferral) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see com.citonline.interfaces.LecturerInt#answerSupportCall()
-	 */
-	@Override
-	public void answerSupportCall() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see com.citonline.interfaces.LecturerInt#teach(com.citonline.domain.Module)
-	 */
-	@Override
-	public void teach(Module module) {
-		modulesTaught.add(module);
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see com.citonline.interfaces.LecturerInt#stopTeach(com.citonline.domain.Module)
-	 */
-	@Override
-	public void stopTeach(Module module) {
-		modulesTaught.remove(module);
-		
 	}
 
 }

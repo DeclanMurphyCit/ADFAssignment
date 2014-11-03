@@ -35,11 +35,18 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`lecturer` (
   `id_lecturer` INT NOT NULL,
-  `lecurer_room` VARCHAR(5) NULL,
-  `lecturer_email` VARCHAR(45) NOT NULL,
-  `lecturer_name` VARCHAR(40) NULL,
-  `lecturer_phonenumber` VARCHAR(15) NULL,
-  PRIMARY KEY (`id_lecturer`))
+  `roomNumber` VARCHAR(5) NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `firstName` VARCHAR(40) NULL,
+  `lastName` VARCHAR(40) NULL,
+  `phoneNumber` VARCHAR(15) NULL,
+  `idManagedProgram` INT NULL,
+  PRIMARY KEY (`id_lecturer`)),
+   CONSTRAINT `fk_lecturer_is_programManager`
+    FOREIGN KEY (`idManagedProgram`)
+    REFERENCES `app_dev_assignment1`.`program` (`id_program`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
 ENGINE = InnoDB;
 
 
@@ -112,29 +119,6 @@ CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`lecturer_teaches_module` (
   CONSTRAINT `fk_lecturer_has_module_module1`
     FOREIGN KEY (`idModule`)
     REFERENCES `app_dev_assignment1`.`module` (`id_module`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `app_dev_assignment1`.`program_coordinator`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`program_coordinator` (
-  `id_program_coordinator` INT NOT NULL,
-  `id_program` INT NOT NULL,
-  `lecturer_id_lecturer` INT NOT NULL,
-  PRIMARY KEY (`id_program_coordinator`, `lecturer_id_lecturer`),
-  INDEX `fk_program_coordinator_program1_idx` (`id_program` ASC),
-  INDEX `fk_program_coordinator_lecturer1_idx` (`lecturer_id_lecturer` ASC),
-  CONSTRAINT `fk_program_coordinator_program1`
-    FOREIGN KEY (`id_program`)
-    REFERENCES `app_dev_assignment1`.`program` (`id_program`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_program_coordinator_lecturer1`
-    FOREIGN KEY (`lecturer_id_lecturer`)
-    REFERENCES `app_dev_assignment1`.`lecturer` (`id_lecturer`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
