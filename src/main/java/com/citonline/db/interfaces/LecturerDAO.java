@@ -5,11 +5,13 @@
  */
 package com.citonline.db.interfaces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.citonline.domain.Lecturer;
+import com.citonline.domain.Module;
+import com.citonline.interfaces.impl.LecturerImpl;
 
 public interface LecturerDAO {
 
@@ -23,7 +25,7 @@ public interface LecturerDAO {
 	
 	/**
 	 *  This is the method to be used to create
-	 * a record in the Lecturer table.
+	 * a record in the lecturer table.
 	 * 
 	 * @param firstName
 	 * @param lastName
@@ -36,7 +38,7 @@ public interface LecturerDAO {
 	
 	/**
 	 *  This is the method to be used to create
-	 * a record in the Lecturer table.
+	 * a record in the lecturer table.
 	 * 
 	 * @param firstName
 	 * @param lastName
@@ -50,7 +52,7 @@ public interface LecturerDAO {
 	
 	/**
 	 *  This is the method to be used to delete
-	 * a record from the Lecturer table corresponding
+	 * a record from the lecturer table corresponding
 	 * to a passed Lecturer's id_lecturer.
 	 * 
 	 * @param id_lecturer
@@ -58,7 +60,7 @@ public interface LecturerDAO {
 	public void deleteLecturer(Integer id_lecturer);
 	/**
 	 *  This is the method to be used to delete
-	 * a record from the Lecturer table corresponding
+	 * a record from the lecturer table corresponding
 	 * to a passed Lecturer's firstName and lastName.
 	 * 
 	 * @param firstName
@@ -68,31 +70,31 @@ public interface LecturerDAO {
 	
 	/**
 	 *  This is the method to be used to list down
-	 * a record from the Lecturer table corresponding
+	 * a record from the lecturer table corresponding
 	 * to a passed Lecturer's id.
 	 * 
 	 * @param id_lecturer
 	 * @return the corresponding Lecturer
 	 */
-	public Lecturer getLecturer(Integer id_lecturer);
+	public LecturerImpl getLecturer(Integer id_lecturer);
 	/**
 	 *  This is the method to be used to list down
-	 * a record from the Lecturer table corresponding
+	 * a record from the lecturer table corresponding
 	 * to a passed Lecturer's firstName and lastName.
 	 * 
 	 * @param firstName
 	 * @param lastName
 	 * @return the corresponding Lecturer
 	 */
-	public Lecturer getLecturer(String firstName, String lastName);
+	public LecturerImpl getLecturer(String firstName, String lastName);
 	
 	/** 
 	 *  This is the method to be used to list down
 	 * all the records from the Lecturer table.
 	 * 
-	 *  @return the list of all Lecturers present in the Lecturer table
+	 *  @return the list of all Lecturers present in the lecturer table
 	 */
-	public List<Lecturer> listLecturers();   
+	public List<LecturerImpl> listLecturers();   
 	
 	/**
 	 *  Update the Lecturer's email.
@@ -203,5 +205,30 @@ public interface LecturerDAO {
 	 * @param idModuleList
 	 */
 	public void removeTaughtModule(final Integer id_lecturer, final List<Integer> idModuleList);
+	/**
+	 * This is the method to be used to list down
+	 * all the modules that the Lecturer teach.
+	 * 
+	 * @param id_lecturer
+	 * 
+	 * @return the list of all the Modules the Lecturer teaches
+	 */
+	public ArrayList<Module> getTaughtModules(final Integer id_lecturer);
+	/**
+	 * This is the method to be used to list down
+	 * all the modules that the Lecturer teach.
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * 
+	 * @return the list of all the Modules the lecturer teaches
+	 */
+	public ArrayList<Module> getTaughtModules(final String firstName, final String lastName);
+	/**
+	 * Count the number of rows in the lecturer table
+	 * 
+	 * @return the number of rows in the lecturer table
+	 */
+	public int countRows();
 	
 }

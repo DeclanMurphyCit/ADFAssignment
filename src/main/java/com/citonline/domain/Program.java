@@ -62,6 +62,7 @@ public class Program {
 		super();
 		this.programName = programName;
 		this.programCode = programCode;
+	}
 
 	public int getProgramId() {
 		return programId;

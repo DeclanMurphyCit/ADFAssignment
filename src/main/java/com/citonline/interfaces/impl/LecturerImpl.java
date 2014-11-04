@@ -15,9 +15,10 @@ import com.citonline.interfaces.LecturerInt;
 
 public class LecturerImpl extends Lecturer implements LecturerInt {
 
-	private ArrayList<Module> modulesTaught;
 	
 	/**
+	 * Constructor of the class
+	 * 
 	 * @param firstName
 	 * @param lastName
 	 * @param email
@@ -27,13 +28,11 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	public LecturerImpl(String firstName, String lastName, String email,
 			String phoneNumber, String roomNumber) {
 		super(firstName, lastName, email, phoneNumber, roomNumber);
-		
-		// Avoid a null pointer exception in case of using addModule before setting it.
-		modulesTaught = new ArrayList<Module>();
 	}
 	
 	/**
 	 * Constructor of the class
+	 * 
 	 * @param firstName
 	 * @param lastName
 	 * @param email
@@ -44,25 +43,6 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	public LecturerImpl(String firstName, String lastName, String email,
 			String phoneNumber, String roomNumber, Program managedProgram) {
 		super(firstName, lastName, email, phoneNumber, roomNumber, managedProgram);
-		
-		// Avoid a null pointer exception in case of using addModule before setting it.
-		modulesTaught = new ArrayList<Module>();
-	}
-
-	/**
-	 * 
-	 * @return the modulesTaught
-	 */
-	public ArrayList<Module> getModulesTaught() {
-		return modulesTaught;
-	}
-
-	/**
-	 * 
-	 * @param modulesTaught the modulesTaught to set
-	 */
-	public void setModulesTaught(ArrayList<Module> modulesTaught) {
-		this.modulesTaught = modulesTaught;
 	}
 	
 	/* (non-Javadoc)
@@ -70,7 +50,8 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	 */
 	@Override
 	public void teach(Module module) {
-		modulesTaught.add(module);
+		if(!taughtModules.contains(module))
+			taughtModules.add(module);
 	}
 
 	/* (non-Javadoc)
@@ -78,7 +59,7 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	 */
 	@Override
 	public void stopTeach(Module module) {
-		modulesTaught.remove(module);
+		taughtModules.remove(module);
 	}
 
 	/* (non-Javadoc)

@@ -45,10 +45,11 @@ public class LectureImplTest {
 		
 		LecturerImpl donna = (LecturerImpl) context.getBean("Lecturer_DonnaOshea");
 		
-		Module module = new Module( "SOFT8020", "CRN", "App Dev Frmwk", 7);
-		donna.teach(module);
+		Module adf = (Module) context.getBean("Module_ADF");
 		
-		assertTrue(donna.getModulesTaught().contains(module));
+		donna.teach(adf);
+		
+		assertTrue(donna.getModulesTaught().contains(adf));
 		
 		Module mTest = donna.getModulesTaught().get(0);
 		
@@ -65,22 +66,27 @@ public class LectureImplTest {
 	 * 
 	 * Test method for {@link com.citonline.interfaces.impl.LecturerImpl#stopTeach(com.citonline.domain.Module)}.
 	 * 
-	 * This method tests if a Module has been removed from the module list of the Lecturer.
+	 * This method tests if the good Module has been removed from the module list of the Lecturer.
 	 */
 	@Test
 	public void testStopTeach() {
-		LecturerImpl donna = new LecturerImpl("Donna", "Oshea", "donna.oshea@cit.ie",
-        		"0123456789", "C123");
+		LecturerImpl donna = (LecturerImpl) context.getBean("Lecturer_DonnaOshea");
 		
-		Module module = new Module("SOFT8020", "CRN", "App Dev Frmwk", 7);
-		donna.teach(module);
+		Module adf = (Module) context.getBean("Module_ADF");
+		donna.teach(adf);
 		
-		assertTrue(donna.getModulesTaught().contains(module));
+		Module module2 = new Module("SOFT8080", "CRN2", "NetMaybe", 8);
+		donna.teach(module2);
 		
-		donna.stopTeach(module);
+		assertTrue(donna.getModulesTaught().contains(adf));
 		
-		//assertFalse(donna.getModulesTaught().contains(module));
-		assertTrue(donna.getModulesTaught().isEmpty());
+		donna.stopTeach(adf);
+		
+		assertFalse(donna.getModulesTaught().contains(adf));
+		assertFalse(donna.getModulesTaught().isEmpty());
+		assertTrue(donna.getModulesTaught().contains(module2));
+		
+		donna.getModulesTaught().clear();
 	}
 
 	/**
@@ -95,12 +101,11 @@ public class LectureImplTest {
 	 */
 	@Test
 	public void testIsProgramManager() {
-		LecturerImpl donna = new LecturerImpl("Donna", "Oshea", "donna.oshea@cit.ie",
-        		"0123456789", "C123");
+		LecturerImpl donna = (LecturerImpl) context.getBean("Lecturer_DonnaOshea");
 		
 		assertFalse(donna.isProgramManager());
 		
-		donna.setManagedProgram(new Program("DCOM4", "DCOM4", null));
+		donna.setManagedProgram(new Program("DCOM4", "DCOM4"));
 		
 		assertTrue(donna.isProgramManager());
 		

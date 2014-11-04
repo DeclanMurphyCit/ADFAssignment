@@ -5,9 +5,12 @@
  */
 package com.citonline.domain;
 
+import java.util.ArrayList;
+
 public class Lecturer extends Person {
 	
 	protected Program managedProgram;
+	protected ArrayList<Module> taughtModules;
 	
 	protected String roomNumber;
 	
@@ -22,6 +25,9 @@ public class Lecturer extends Person {
 			String phoneNumber, String roomNumber) {
 		super(firstName, lastName, email, phoneNumber);
 		this.roomNumber = roomNumber;
+
+		// Avoid a null pointer exception in case of using addModule before setting it.
+		taughtModules = new ArrayList<Module>();
 	}
 
 	/**
@@ -37,6 +43,9 @@ public class Lecturer extends Person {
 		super(firstName, lastName, email, phoneNumber);
 		this.roomNumber = roomNumber;
 		this.managedProgram = managedProgram;
+
+		// Avoid a null pointer exception in case of using addModule before setting it.
+		taughtModules = new ArrayList<Module>();
 	}
 	
 
@@ -68,6 +77,22 @@ public class Lecturer extends Person {
 	 */
 	public void setRoomNumber(String roomNumber) {
 		this.roomNumber = roomNumber;
+	}
+	
+	/**
+	 * 
+	 * @return the taughtModules
+	 */
+	public ArrayList<Module> getModulesTaught() {
+		return taughtModules;
+	}
+
+	/**
+	 * 
+	 * @param taughtModules the taughtModules to set
+	 */
+	public void setModulesTaught(ArrayList<Module> taughtModules) {
+		this.taughtModules = taughtModules;
 	}
 
 }

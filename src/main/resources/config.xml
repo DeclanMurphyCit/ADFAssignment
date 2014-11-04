@@ -34,7 +34,7 @@
 		<property name="transactionManager" ref="transactionManager"></property>
 	</bean>
 	
-	<bean id="Lecturer_DonnaOshea" class="com.citonline.interfaces.impl.LecturerImpl">
+	<bean id="Lecturer_DonnaOshea" class="com.citonline.interfaces.impl.LecturerImpl" autowire="no">
 		<constructor-arg name="firstName" value="Donna"></constructor-arg>
  		<constructor-arg name="lastName" value="Oshea"></constructor-arg>
  		<constructor-arg name="email" value="donna.oshea@cit.ie"></constructor-arg>
@@ -64,10 +64,11 @@
 		<constructor-arg name="programName" value="Software Development"></constructor-arg>
  		<constructor-arg name="programCode" value="CR106"></constructor-arg>
 	</bean>
-	
+	<!--
 			<bean id="Deferral_deferADF" class="com.citonline.domain.Deferral">
 		<constructor-arg name="programName" value="Software Development"></constructor-arg>
  		<constructor-arg name="programCode" value="CR106"></constructor-arg>
 	</bean>
+	  -->
 	 
 </beans>
