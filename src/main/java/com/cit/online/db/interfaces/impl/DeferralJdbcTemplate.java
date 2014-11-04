@@ -1,12 +1,14 @@
-package com.citonline.db;
+package com.cit.online.db.interfaces.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.citonline.db.interfaces.DeferralDAO;
 import com.citonline.domain.Module;
 
 public class DeferralJdbcTemplate implements DeferralDAO {
@@ -52,7 +54,8 @@ public class DeferralJdbcTemplate implements DeferralDAO {
 	}
 
 	@Override
-	public void getDeferredModules(int deferral) {
+	public ArrayList<Module> getDeferredModules(int deferral) {
+		return null;
 		// TODO Auto-generated method stub
 
 	}

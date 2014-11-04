@@ -1,4 +1,4 @@
-package com.citonline.db;
+package com.citonline.db.interfaces;
 
 import java.util.ArrayList;
 import java.util.Calendar;

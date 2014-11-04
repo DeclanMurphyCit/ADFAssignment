@@ -3,7 +3,7 @@
  * 
  * @since 25 oct. 2014
  */
-package com.citonline.db;
+package com.cit.online.db.interfaces.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.citonline.db.interfaces.LecturerDAO;
 import com.citonline.domain.Lecturer;
 
 public class LecturerJdbcTemplate implements LecturerDAO {
