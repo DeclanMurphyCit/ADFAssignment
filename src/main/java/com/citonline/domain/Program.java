@@ -46,4 +46,10 @@ public class Program {
 	public ArrayList<Semester> getSemesterList() {
 		return semesterList;
 	}
+	
+	public Program(String programName, String programCode) {
+		super();
+		this.programName = programName;
+		this.programCode = programCode;
+	}
 }

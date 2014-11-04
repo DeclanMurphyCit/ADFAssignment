@@ -2,6 +2,7 @@ package com.citonline.interfaces.impl;
 
 import java.util.ArrayList;
 
+import com.citonline.domain.Deferral;
 import com.citonline.domain.Module;
 import com.citonline.domain.Program;
 import com.citonline.domain.Student;
@@ -14,36 +15,24 @@ import com.citonline.interfaces.StudentInt;
 
 public class StudentImpl extends Student implements StudentInt {
 	
-	private ArrayList<Module> moduleList = new ArrayList<Module>();
-	private ArrayList<Object> deferralList = new ArrayList<Object>();
+	private ArrayList<Module> moduleList;
+	private Deferral deferrals;
 	private Program program;
 
 	public StudentImpl(String firstName, String lastName, String email,
-			String phoneNumber, String studentNumber, String addressLine1,String addressLine2,
-			ArrayList<Module> moduleList,ArrayList<Object> deferralList) {
+			String phoneNumber, String studentNumber, String addressLine1,String addressLine2) {
 		super(firstName, lastName, email, phoneNumber, studentNumber, addressLine1, addressLine2);	
-		this.moduleList = moduleList;
-		this.deferralList = deferralList;
+		moduleList = new ArrayList<Module>();
 	}
 
 	@Override
-	public void enrollModule(Module module) {
+	public void enrolModule(Module module) {
 		moduleList.add(module);
 	}
 	
 	@Override
-	public void enrollProgram(Program Program) {
+	public void enrolProgram(Program Program) {
 		setProgram(program);
-	}
-
-	@Override
-	public void deferModule(Module module) {
-		deferralList.add(module);
-	}
-
-	@Override
-	public void deferProgram(Program Program) {
-		deferralList.add(Program);
 	}
 
 	public Program getProgram() {
@@ -62,11 +51,15 @@ public class StudentImpl extends Student implements StudentInt {
 		this.moduleList = moduleList;
 	}
 
-	public ArrayList<Object> getDeferralList() {
-		return deferralList;
+	@Override
+	public void deferModule(Module module) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void setDeferralList(ArrayList<Object> deferralList) {
-		this.deferralList = deferralList;
+	@Override
+	public void deferProgram(Program Program) {
+		// TODO Auto-generated method stub
+		
 	}
 }

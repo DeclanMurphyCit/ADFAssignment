@@ -30,4 +30,32 @@
  		<constructor-arg name="roomNumber" value="C123"></constructor-arg>
 	</bean>
 	
+	<bean id="Student_Declan" class="com.citonline.interfaces.impl.StudentImpl">
+		<constructor-arg name="firstName" value="Declan"></constructor-arg>
+ 		<constructor-arg name="lastName" value="Murphy"></constructor-arg>
+ 		<constructor-arg name="email" value="declan.murphy2@mycit.ie"></constructor-arg>
+ 		<constructor-arg name="studentNumber" value="R00058443"></constructor-arg>
+ 		<constructor-arg name="phoneNumber" value="0123456789"></constructor-arg>
+ 		<constructor-arg name="addressLine1" value="Tramore"></constructor-arg>
+ 		<constructor-arg name="addressLine2" value="Waterford"></constructor-arg>
+	</bean>
+
+
+	<bean id="Module_ADF" class="com.citonline.domain.Module">
+		<constructor-arg name="code" value="SOFT8020"></constructor-arg>
+ 		<constructor-arg name="crn" value="CRN"></constructor-arg>
+ 		<constructor-arg name="name" value="App Dev Frmwk"></constructor-arg>
+ 		<constructor-arg name="semester" value="7"></constructor-arg>
+	</bean>
+	
+		<bean id="Program_SoftwareDev" class="com.citonline.domain.Program">
+		<constructor-arg name="programName" value="Software Development"></constructor-arg>
+ 		<constructor-arg name="programCode" value="CR106"></constructor-arg>
+	</bean>
+	
+			<bean id="Deferral_deferADF" class="com.citonline.domain.Deferral">
+		<constructor-arg name="programName" value="Software Development"></constructor-arg>
+ 		<constructor-arg name="programCode" value="CR106"></constructor-arg>
+	</bean>
+	 
 </beans>

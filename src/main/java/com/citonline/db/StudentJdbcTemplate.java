@@ -53,8 +53,7 @@ public class StudentJdbcTemplate implements StudentDAO {
 	public void deleteStudent(String studentNumber) {
 		String SQL = "delete from Student where studentNumber = ?";
 		jdbcTemplateObject.update(SQL, new Object[] {studentNumber});
-		System.out.println("Deleted student where studentNumber = " + studentNumber );
-		
+		System.out.println("Deleted student where studentNumber = " + studentNumber );		
 	}
 
 	@Override
