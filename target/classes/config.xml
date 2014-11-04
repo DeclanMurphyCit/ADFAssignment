@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-autowire="byType"
+	default-init-method="init" default-destroy-method="destroy">
+
+	<context:annotation-config/>
+	<context:component-scan base-package="com.citonline" />
+	<context:property-placeholder location="classpath:prop.properties"/>
+
+	<!-- TODO: ADAPT This -->
+	<!-- Initialization for data source -->
+	<bean id="dataSource" 
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://local:3306/mydb"/>
+		<property name="username" value="root"/>
+		<property name="password" value="root"/>	
+	</bean>
+	
+	<bean id="Lecturer_DonnaOshea" class="com.citonline.interfaces.impl.LecturerImpl">
+		<constructor-arg name="firstName" value="Donna"></constructor-arg>
+ 		<constructor-arg name="lastName" value="Oshea"></constructor-arg>
+ 		<constructor-arg name="email" value="donna.oshea@cit.ie"></constructor-arg>
+ 		<constructor-arg name="phoneNumber" value="0123456789"></constructor-arg>
+ 		<constructor-arg name="roomNumber" value="C123"></constructor-arg>
+	</bean>
+	
+</beans>

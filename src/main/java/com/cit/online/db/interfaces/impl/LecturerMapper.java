@@ -3,7 +3,7 @@
  * 
  * @since 25 oct. 2014
  */
-package com.citonline.db;
+package com.cit.online.db.interfaces.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

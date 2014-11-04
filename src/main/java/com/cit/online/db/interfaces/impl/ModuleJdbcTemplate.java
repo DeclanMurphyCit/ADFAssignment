@@ -1,4 +1,4 @@
-package com.citonline.db;
+package com.cit.online.db.interfaces.impl;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.citonline.db.interfaces.ModuleDAO;
 import com.citonline.domain.Module;
 
 /*

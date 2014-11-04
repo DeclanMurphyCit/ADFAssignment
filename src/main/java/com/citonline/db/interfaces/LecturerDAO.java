@@ -3,7 +3,7 @@
  * 
  * @since 25 oct. 2014
  */
-package com.citonline.db;
+package com.citonline.db.interfaces;
 
 import java.util.List;
 
@@ -28,6 +28,7 @@ public interface LecturerDAO {
 	 * @param firstName
 	 * @param lastName
 	 * @param email
+	 * @param phoneNumber
 	 * @param roomNumber
 	 */
 	public void createLecturer(String firstName, String lastName, String email,
@@ -41,6 +42,7 @@ public interface LecturerDAO {
 	 * @param lastName
 	 * @param email
 	 * @param roomNumber
+	 * @param phoneNumber
 	 * @param idManagedProgram
 	 */
 	public void createLecturer(String firstName, String lastName, String email,
@@ -52,7 +54,6 @@ public interface LecturerDAO {
 	 * to a passed Lecturer's id_lecturer.
 	 * 
 	 * @param id_lecturer
-	 * @return the corresponding Lecturer
 	 */
 	public void deleteLecturer(Integer id_lecturer);
 	/**
@@ -62,7 +63,6 @@ public interface LecturerDAO {
 	 * 
 	 * @param firstName
 	 * @param lastName
-	 * @return the corresponding Lecturer
 	 */
 	public void deleteLecturer(String firstName, String lastName);
 	
