@@ -12,7 +12,5 @@ public interface StudentInt {
 	
 	public void enrolProgram (Program program);
 	public void enrolModule (Module module);
-	public void deferModule (Module module);
-	public void deferProgram (Program Program);
 
 }

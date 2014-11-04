@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.citonline.domain.Student;
+import com.citonline.interfaces.impl.StudentImpl;
 
 public class StudentMapper implements RowMapper {
 
@@ -18,7 +18,7 @@ public class StudentMapper implements RowMapper {
 		String phoneNumber = rs.getString("phoneNumber");	
 		String addressLine1 = rs.getString("addressLine1");
 		String addressLine2 = rs.getString("addressLine2");
-		Student student = new Student(firstName, lastName, email, phoneNumber, 
+		StudentImpl student = new StudentImpl(firstName, lastName, email, phoneNumber, 
 				studentNumber,addressLine1,addressLine2);
 		
 		return student;

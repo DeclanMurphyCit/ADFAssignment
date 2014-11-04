@@ -50,16 +50,4 @@ public class StudentImpl extends Student implements StudentInt {
 	public void setModuleList(ArrayList<Module> moduleList) {
 		this.moduleList = moduleList;
 	}
-
-	@Override
-	public void deferModule(Module module) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deferProgram(Program Program) {
-		// TODO Auto-generated method stub
-		
-	}
 }

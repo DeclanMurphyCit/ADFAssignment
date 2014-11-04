@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.citonline.domain.Student;
+import com.citonline.interfaces.impl.StudentImpl;
 
 public interface StudentDAO {
 
@@ -18,11 +18,11 @@ public interface StudentDAO {
 
 	public void deleteStudent(String studentNumber);	
 	
-	public Student getStudent(Integer id);
+	public StudentImpl getStudent(Integer id);
 
-	public Student getStudent(String studentNumber);
+	public StudentImpl getStudent(String studentNumber);
 	
-	public List<Student> listStudents();   
+	public List<StudentImpl> listStudents();   
 	
 	public void updateStudentEmail(String studentNumber, String email);
 	
@@ -36,10 +36,5 @@ public interface StudentDAO {
 	
 	public void enrollModules(final Integer idStudent, final List<Integer> idModuleList);
 	
-	public void removeModule(Integer idStudent, Integer idModule);
-	
-	public void addModuleDeferral(Integer idModule);
-
-	public void removeModuleDeferral(Integer idModule);
-	
+	public void removeModule(Integer idStudent, Integer idModule);	
 }

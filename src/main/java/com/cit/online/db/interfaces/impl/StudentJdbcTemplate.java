@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.citonline.db.interfaces.StudentDAO;
 import com.citonline.domain.Student;
+import com.citonline.interfaces.impl.StudentImpl;
 
 public class StudentJdbcTemplate implements StudentDAO {
 
@@ -58,27 +59,27 @@ public class StudentJdbcTemplate implements StudentDAO {
 	}
 
 	@Override
-	public Student getStudent(Integer id) {
+	public StudentImpl getStudent(Integer id) {
 		String SQL = "select * from Student where id_student = ?";
-		Student student = (Student) jdbcTemplateObject.queryForObject(SQL, 
+		StudentImpl student = (StudentImpl) jdbcTemplateObject.queryForObject(SQL, 
 						new Object[]{id}, new StudentMapper());
 		
 		return student;
 	}
 
 	@Override
-	public Student getStudent(String studentNumber) {
+	public StudentImpl getStudent(String studentNumber) {
 		String SQL = "select * from Student where studentNumber = ?";
-		Student student = (Student) jdbcTemplateObject.queryForObject(SQL, 
+		StudentImpl student = (StudentImpl) jdbcTemplateObject.queryForObject(SQL, 
 						new Object[]{studentNumber}, new StudentMapper());
 		
 		return student;
 	}
 
 	@Override
-	public List<Student> listStudents() {
+	public List<StudentImpl> listStudents() {
 		String SQL = "select * from student";
-		List<Student> studentList = jdbcTemplateObject.query(SQL, 
+		List<StudentImpl> studentList = jdbcTemplateObject.query(SQL, 
 						new StudentMapper());
 		return studentList;
 	}
@@ -154,17 +155,5 @@ public class StudentJdbcTemplate implements StudentDAO {
 		jdbcTemplateObject.update(SQL, new Object[]{idStudent, idModule});
 		
 		System.out.println("Student " + idStudent + " has disenrolled from moudle: " + idModule);
-	}
-
-	@Override
-	public void addModuleDeferral(Integer idModule) {
-		//????????????? Does this function belong here????????????????
-		
-	}
-
-	@Override
-	public void removeModuleDeferral(Integer idModule) {
-		// TODO Auto-generated method stub
-		
 	}
 }
