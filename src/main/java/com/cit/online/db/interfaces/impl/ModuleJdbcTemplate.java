@@ -1,5 +1,6 @@
 package com.cit.online.db.interfaces.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -8,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.citonline.db.interfaces.ModuleDAO;
 import com.citonline.domain.Module;
+import com.citonline.domain.Program;
+import com.citonline.domain.Semester;
 
 /*
  * Author: Tim Wallace
@@ -32,15 +35,15 @@ public class ModuleJdbcTemplate implements ModuleDAO {
 	}
 
 	@Override
-	public void createModule(String code, String crn, String name, int semester) {
+	public void createModule(int id, String code, String crn, String name, int semester) {
 		
 		String SQL = "INSERT INTO Module (code, crn, name, semester) "
-				+ "VALUES(?, ?, ?, ?, ?)";
+				+ "VALUES(?, ?, ?, ?)";
 		
-		jdbcTemplateObject.update(SQL, new Object[] { code, crn, name, semester});
+		jdbcTemplateObject.update(SQL, new Object[] { id , code, crn, name, semester});
 		
-		System.out.println("Created Module Name = " + name +
-				"\nCRN = " + crn + ", code= " + code + ", semester = " + semester);
+		System.out.println("Created Module ID = " + id + " Name = " + name +
+				"\nCRN = " + crn + ", Code = " + code + ", Semester = " + semester);
 	}
 
 	@Override
@@ -51,23 +54,21 @@ public class ModuleJdbcTemplate implements ModuleDAO {
 		
 	}
 
-
-
 	@Override
 	public Module getModule(String crn) {
-		// TODO Auto-generated method stub
-		return null;
+		String SQL = "select * from Module where id_module = ?";
+		Module module = (Module) jdbcTemplateObject.queryForObject(SQL, 
+						new Object[]{crn}, new ModuleMapper());
+		return module;
 	}
 
-	@Override
-	public List<Module> listModules() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void updateModule(String code, String crn, String name, int semester) {
-		// TODO Auto-generated method stub
+		String SQL = "update module set code = ?, crn = ?,name = ?,semester = ? where id_module = ?";
+		jdbcTemplateObject.update(SQL, new Object[] {code, crn, name, semester});
+		System.out.println("Updated code to " + code + "crn = " + crn + "name = " + name + 
+				"semester = " + semester + " where crn = " + crn );
 		
 	}
 

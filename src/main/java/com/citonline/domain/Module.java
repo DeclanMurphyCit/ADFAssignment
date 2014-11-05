@@ -1,18 +1,20 @@
 package com.citonline.domain;
 
+import java.util.List;
+
 /*
  * Author: Tim Wallace
  * Date: 29/10/14
  * 
  * Description:Module pojo
  * 
- * Inputs: Module semester, code, crn, name
+ * Inputs: id, Module semester, code, crn, name
  * 
- * Expected Outputs: Module semester, code, crn, name
+ * Expected Outputs: id, Module semester, code, crn, name
  */
 
 public class Module {
-	int semester;
+	int semester, id;
 	String code, crn, name;
 	
 	public int getSemester() {
@@ -39,14 +41,20 @@ public class Module {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
-	public Module(String code, String crn, String name, int semester) {
+	public Module(int id, String code, String crn, String name, int semester) {
 		super();
+		this.id = id;
 		this.code = code;
 		this.crn = crn;
 		this.name = name;
 		this.semester = semester;
 	}
-	
 	
 }
