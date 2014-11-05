@@ -11,15 +11,15 @@ import com.citonline.interfaces.ModuleInt;
  * 
  * Description:Module implementation
  * 
- * Inputs: Module semester, code, crn, name
+ * Inputs: Module id, semester, code, crn, name
  * 
  * Expected Outputs: Module semester, code, crn, name, start date
  */
 
 public class ModuleImpl  extends Module implements ModuleInt{
 	
-	public ModuleImpl(String code, String crn, String name, int semester) {
-		super(code, crn, name, semester);
+	public ModuleImpl(int id, String code, String crn, String name, int semester) {
+		super(id, code, crn, name, semester);
 	}
 
 	@Override

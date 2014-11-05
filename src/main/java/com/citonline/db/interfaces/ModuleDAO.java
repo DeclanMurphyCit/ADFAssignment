@@ -1,7 +1,9 @@
 package com.citonline.db.interfaces;
 
 import java.util.List;
+
 import javax.sql.DataSource;
+
 import com.citonline.domain.Module;
 
 /*
@@ -10,7 +12,7 @@ import com.citonline.domain.Module;
  * 
  * Description:Module DAO
  * 
- * Inputs: Module semester, code, crn, name
+ * Inputs: Module id, semester, code, crn, name
  * 
  * Expected Outputs: create, delete,modify, return modules
  */
@@ -19,14 +21,13 @@ public interface ModuleDAO {
 
 	public void setDataSource(DataSource dataSource);
 
-	public void createModule(String code, String crn, String name, int semester);
+	public void createModule(int id, String code, String crn, String name, int semester);
 
 	public void deleteModule(String crn);	
 	
-	public Module getModule(String crn);
-	
-	public List<Module> listModules();   
+	public Module getModule(String crn);  
 	
 	public void updateModule(String code, String crn, String name, int semester);
+
 	
 }
