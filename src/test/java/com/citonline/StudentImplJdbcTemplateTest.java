@@ -30,7 +30,7 @@ public class StudentImplJdbcTemplateTest {
 	@Autowired
 	StudentJdbcDaoSupport studentJT;
 
-	final Logger logger = Logger.getLogger(LecturerImplJdbcTemplateTest.class);
+	final Logger logger = Logger.getLogger(StudentImplJdbcTemplateTest.class);
 	
 	@Test
 	@DatabaseSetup(value="classpath:songwriterData.xml", type=DatabaseOperation.CLEAN_INSERT)

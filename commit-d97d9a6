@@ -1,0 +1,1432 @@
+commit d97d9a6c98a8fb4b5042ce84b066af9c549e50df
+Author: Discaulit <fabien.dubar.59@gmail.com>
+Date:   Wed Nov 5 17:50:54 2014 +0000
+
+    index on master: 0d7fcf7 All module classes updated with id
+
+diff --git a/src/main/java/com/cit/online/db/interfaces/impl/LecturerJdbcTemplate.java b/src/main/java/com/cit/online/db/interfaces/impl/LecturerJdbcTemplate.java
+deleted file mode 100644
+index ce13b67..0000000
+--- a/src/main/java/com/cit/online/db/interfaces/impl/LecturerJdbcTemplate.java
++++ /dev/null
+@@ -1,352 +0,0 @@
+-/**
+- * @author Fabien
+- * 
+- * @since 25 oct. 2014
+- */
+-package com.cit.online.db.interfaces.impl;
+-
+-import java.sql.PreparedStatement;
+-import java.sql.SQLException;
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-import javax.sql.DataSource;
+-
+-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+-import org.springframework.jdbc.core.JdbcTemplate;
+-
+-import com.citonline.db.interfaces.LecturerDAO;
+-import com.citonline.domain.Lecturer;
+-import com.citonline.domain.Module;
+-import com.citonline.interfaces.impl.LecturerImpl;
+-
+-public class LecturerJdbcTemplate implements LecturerDAO {
+-	
+-	private DataSource dataSource;
+-	private JdbcTemplate jdbcTemplateObject;
+-
+-	@Override
+-	public void setDataSource(DataSource dataSource) {
+-		this.dataSource = dataSource;
+-		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+-	}
+-
+-	@Override
+-	public void createLecturer(String firstName, String lastName, String email,
+-			String phoneNumber, String roomNumber) {
+-		
+-		String SQL = "INSERT INTO lecturer (firstName, lastName, email, phoneNumber, roomNumber)"
+-				+ "VALUES(?, ?, ?, ?, ?)";
+-		
+-		jdbcTemplateObject.update(SQL, new Object[] { firstName, lastName, email,
+-				phoneNumber, roomNumber});
+-		
+-		System.out.println("Created lecturer Name = " + firstName + " " + lastName +
+-				"\nemail = " + email + ", phoneNumber =" + phoneNumber + ", roomNumber = " + roomNumber);
+-
+-	}
+-
+-	@Override
+-	public void createLecturer(String firstName, String lastName, String email,
+-			String phoneNumber, String roomNumber, Integer idManagedProgram) {
+-
+-		String SQL = "INSERT INTO lecturer (firstName, lastName, email, phoneNumber, roomNumber, idManagedProgram)"
+-				+ "VALUES(?, ?, ?, ?, ?, ?)";
+-		
+-		jdbcTemplateObject.update(SQL, new Object[] { firstName, lastName, email,
+-				phoneNumber, roomNumber, idManagedProgram});
+-		
+-		System.out.println("Created lecturer Name = " + firstName + " " + lastName +
+-				"\nemail = " + email+ ", phoneNumber =" + phoneNumber +
+-				", roomNumber = " + roomNumber + ", idManagedProgram = " + idManagedProgram);
+-
+-	}	
+-
+-	@Override
+-	public void deleteLecturer(Integer id_lecturer) {
+-		String SQL = "delete from lecturer where id_lecturer = ?";
+-		jdbcTemplateObject.update(SQL, new Object[] {id_lecturer});
+-		System.out.println("Deleted lecturer with ID = " + id_lecturer );
+-	}
+-
+-	@Override
+-	public void deleteLecturer(String firstName, String lastName) {
+-		String SQL = "delete from lecturer where firstName = ? and lastName = ?";
+-		jdbcTemplateObject.update(SQL, new Object[] {firstName, lastName});
+-		System.out.println("Deleted lecturer with Name = " + firstName + " " + lastName );
+-	}
+-
+-	@Override
+-	public LecturerImpl getLecturer(Integer id_lecturer) {
+-		String SQL = "select * from lecturer where id_lecturer = ?";
+-		LecturerImpl lecturer = (LecturerImpl) jdbcTemplateObject.queryForObject(SQL, 
+-						new Object[]{id_lecturer}, new LecturerMapper());
+-		
+-		ArrayList<Module> taughtModules = getTaughtModules(id_lecturer);
+-		lecturer.setModulesTaught(taughtModules);
+-		
+-		return lecturer;
+-	}
+-	
+-
+-	@Override
+-	public LecturerImpl getLecturer(String firstName, String lastName) {
+-		String SQL = "select * from lecturer where firstName = ? and lastName = ? ";
+-		LecturerImpl lecturer = (LecturerImpl) jdbcTemplateObject.queryForObject(SQL, 
+-						new Object[]{firstName, lastName}, new LecturerMapper());
+-		
+-		ArrayList<Module> taughtModules = getTaughtModules(firstName, lastName);
+-		lecturer.setModulesTaught(taughtModules);
+-		
+-		return lecturer;
+-	}
+-
+-	@Override
+-	public List<LecturerImpl> listLecturers() {
+-		String SQL = "select * from lecturer";
+-		List<LecturerImpl> lecturers = jdbcTemplateObject.query(SQL, 
+-						new LecturerMapper());
+-		return lecturers;
+-	}
+-
+-	@Override
+-	public void updateLecturerEmail(String firstName, String lastName,
+-			String email) {
+-		String SQL = "UPDATE lecturer SET email=? where firstName = ? and lastName = ?";
+-		jdbcTemplateObject.update(SQL, new Object[]{email, firstName, lastName});
+-		
+-		System.out.println("update lecturer " + firstName + " " + lastName +
+-				"'s email. Set to: " + email);
+-	}
+-
+-	@Override
+-	public void updateLecturerEmail(Integer id_lecturer, String email) {
+-		String SQL = "UPDATE lecturer SET email=? where id_lecturer = ?";
+-		jdbcTemplateObject.update(SQL, new Object[]{email, id_lecturer});
+-		
+-		System.out.println("update lecturer " + id_lecturer + "'s email. Set to: " + email);
+-	}
+-
+-	@Override
+-	public void updateLecturerRoomNumber(String firstName, String lastName,
+-			String roomNumber) {
+-		String SQL = "UPDATE lecturer SET roomNumber=? where firstName = ? and lastName = ?";
+-		jdbcTemplateObject.update(SQL, new Object[]{roomNumber, firstName, lastName});
+-		
+-		System.out.println("update lecturer " + firstName + " " + lastName +
+-				"'s roomNumber. Set to: " + roomNumber);
+-	}
+-
+-	@Override
+-	public void updateLecturerRoomNumber(Integer id_lecturer, String roomNumber) {
+-		String SQL = "UPDATE lecturer SET roomNumber=? where id_lecturer = ?";
+-		jdbcTemplateObject.update(SQL, new Object[]{roomNumber, id_lecturer});
+-		
+-		System.out.println("update lecturer " + id_lecturer + "'s roomNumber. Set to: " + roomNumber);
+-	}
+-
+-	@Override
+-	public void updateLecturerManagedProgram(String firstName, String lastName,
+-		Integer idManagedProgram) {
+-	String SQL = "UPDATE lecturer SET managedProgram=? where firstName = ? and lastName = ?";
+-	jdbcTemplateObject.update(SQL, new Object[]{idManagedProgram, firstName, lastName});
+-	
+-	System.out.println("update lecturer " + firstName + " " + lastName +
+-			"'s managedProgram. Set to: " + idManagedProgram);
+-	}
+-
+-	@Override
+-	public void updateLecturerManagedProgram(Integer id_lecturer, Integer idManagedProgram) {
+-		String SQL = "UPDATE lecturer SET managedProgram=? where id_lecturer = ?";
+-	jdbcTemplateObject.update(SQL, new Object[]{idManagedProgram, id_lecturer});
+-	
+-	System.out.println("update lecturer " + id_lecturer + "'s managedProgram. Set to: " + idManagedProgram);
+-	}
+-
+-	@Override
+-	public void addTaughtModule(String firstName, String lastName,
+-				Integer idModule) {
+-		
+-		String SQL = "SELECT id_lecturer from lecturer WHERE firstName = ? AND nastName = ?";
+-		final int id_lecturer=jdbcTemplateObject.queryForObject(SQL, Integer.class);
+-
+-		String SQL2 = "INSERT INTO  lecturer_teaches_module(id_lecturer, idModule)" +
+-			"VALUES managedProgram=? where id_lecturer = ?";
+-		jdbcTemplateObject.update(SQL2, new Object[]{id_lecturer, idModule});
+-		
+-		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add " + idModule);
+-		
+-	}
+-
+-	@Override
+-	public void addTaughtModule(Integer id_lecturer, Integer idModule) {
+-		String SQL = "INSERT INTO lecturer_teaches_module(id_lecturer, idModule)" +
+-				"VALUES (?, ?)";
+-		jdbcTemplateObject.update(SQL, new Object[]{id_lecturer, idModule});
+-		
+-		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add " + idModule);
+-	}
+-
+-	@Override
+-	public void addTaughtModule(String firstName, String lastName,
+-			final List<Integer> idModuleList) {
+-		String SQL = "SELECT id_lecturer from lecturer WHERE firstName = ? AND nastName = ?";
+-		final int id_lecturer=jdbcTemplateObject.queryForObject(SQL, Integer.class);
+-		
+-		String SQL2 = "INSERT INTO lecturer_teaches_module(id_lecturer, idModule)" +
+-				"VALUES (?, ?)";
+-		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add ");
+-		jdbcTemplateObject.update(SQL2, new BatchPreparedStatementSetter() {
+-
+-			public int getBatchSize() {
+-				return idModuleList.size();
+-			}
+-			
+-			@Override
+-			public void setValues(PreparedStatement ps, int i) throws SQLException {
+-				Integer idModule = idModuleList.get(i);
+-				ps.setInt(1, id_lecturer);
+-				ps.setInt(2, idModule);
+-				System.out.print(idModule + ", ");
+-			}		
+-		});
+-	}
+-
+-	@Override
+-	public void addTaughtModule(final Integer id_lecturer, final List<Integer> idModuleList) {
+-		String SQL = "INSERT INTO lecturer_teaches_module(id_lecturer, idModule)" +
+-				"VALUES (?, ?)";
+-		
+-		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add ");
+-		jdbcTemplateObject.update(SQL, new BatchPreparedStatementSetter() {
+-
+-			public int getBatchSize() {
+-				return idModuleList.size();
+-			}
+-			
+-			@Override
+-			public void setValues(PreparedStatement ps, int i) throws SQLException {
+-				Integer idModule = idModuleList.get(i);
+-				ps.setInt(1, id_lecturer);
+-				ps.setInt(2, idModule);
+-				System.out.print(idModule + ", ");
+-			}		
+-		});
+-	}
+-
+-	@Override
+-	public void removeTaughtModule(String firstName, String lastName,
+-			Integer idModule) {
+-		String SQL= "SELECT id_lecturer from lecturer WHERE firstName= ? AND lastName= ?";
+-		final int id_lecturer=jdbcTemplateObject.queryForObject(SQL, Integer.class);
+-		
+-		String SQL2 = "DELETE from lecturer_teaches_module WHERE id_lecturer= ?";
+-		jdbcTemplateObject.update(SQL2, new Object[]{id_lecturer, idModule});
+-		
+-		System.out.println("update lecturer " + id_lecturer + "'s taught modules: remove " + idModule);
+-		
+-	}
+-
+-	@Override
+-	public void removeTaughtModule(Integer id_lecturer, Integer idModule) {
+-		String SQL = "DELETE from lecturer_teaches_module WHERE id_lecturer= ?";
+-		jdbcTemplateObject.update(SQL, new Object[]{id_lecturer, idModule});
+-		
+-		System.out.println("update lecturer " + id_lecturer + "'s taught modules: remove " + idModule);
+-	}
+-
+-	@Override
+-	public void removeTaughtModule(final String firstName, final String lastName,
+-			final List<Integer> idModuleList) {
+-
+-		String SQL= "SELECT id_lecturer from lecturer WHERE firstName= ? AND lastName= ?";
+-		final int id_lecturer=jdbcTemplateObject.queryForObject(SQL, Integer.class);
+-		
+-		String SQL2 = "DELETE FROM lecturer_teaches_module WHERE id_lecturer = ? " +
+-			"AND idModule = ?";
+-		
+-		System.out.println("update lecturer " + id_lecturer + "'s taught modules: removing ");
+-		jdbcTemplateObject.update(SQL2, new BatchPreparedStatementSetter() {
+-
+-			public int getBatchSize() {
+-				return idModuleList.size();
+-			}
+-			
+-			@Override
+-			public void setValues(PreparedStatement ps, int i) throws SQLException {
+-				Integer idModule = idModuleList.get(i);
+-				ps.setInt(1, id_lecturer);
+-				ps.setInt(2, idModule);
+-				System.out.print(idModule + ", ");
+-			}		
+-		});
+-	}
+-
+-	@Override
+-	public void removeTaughtModule(final Integer id_lecturer, final List<Integer> idModuleList) {
+-		String SQL = "DELETE FROM lecturer_teaches_module WHERE id_lecturer = ? " +
+-				"AND idModule = ?";
+-			
+-		System.out.println("update lecturer " + id_lecturer + "'s taught modules: remove ");
+-		jdbcTemplateObject.update(SQL, new BatchPreparedStatementSetter() {
+-
+-			public int getBatchSize() {
+-				return idModuleList.size();
+-			}
+-			
+-			@Override
+-			public void setValues(PreparedStatement ps, int i) throws SQLException {
+-				Integer idModule = idModuleList.get(i);
+-				ps.setInt(1, id_lecturer);
+-				ps.setInt(2, idModule);
+-				System.out.print(idModule + ", ");
+-			}		
+-		});
+-	}
+-
+-	/* (non-Javadoc)
+-	 * @see com.citonline.db.interfaces.LecturerDAO#getTaughtModules(java.lang.Integer)
+-	 */
+-	@Override
+-	public ArrayList<Module> getTaughtModules(Integer id_lecturer) {
+-		ArrayList<Module> taughtModules;
+-		
+-		String SQL="SELECT * from module"
+-				+ " JOIN lecturer_teaches_module on "
+-				+ " lecturer_teaches_module.idModule = module.id_module"
+-				+ " AND lecturer_teaches_module.idLecturer= ?";
+-		
+-		taughtModules = (ArrayList<Module>) jdbcTemplateObject.query(SQL,
+-				new Object[] {id_lecturer}, new ModuleMapper());
+-		
+-		return taughtModules;
+-	}
+-
+-	/* (non-Javadoc)
+-	 * @see com.citonline.db.interfaces.LecturerDAO#getTaughtModules(java.lang.String, java.lang.String)
+-	 */
+-	@Override
+-	public ArrayList<Module> getTaughtModules(String firstName, String lastName) {
+-		ArrayList<Module> taughtModules;
+-		
+-		String SQL="SELECT * from module"
+-				+ " JOIN lecturer_teaches_module on "
+-				+ " lecturer_teaches_module.idModule = module.id_module"
+-				+ " JOIN lecturer on "
+-				+ " lecturer_teaches_module.idLecturer = lecturer.id_lecturer"
+-				+ " AND lecturer.firstName= ? AND lecturer.lastName = ?";
+-		
+-		taughtModules = (ArrayList<Module>) jdbcTemplateObject.query(SQL,
+-				new Object[] {firstName, lastName}, new ModuleMapper());
+-		
+-		return taughtModules;
+-	}
+-
+-	@Override
+-	public int countRows() {
+-		String SQL = "select count(id_lecturer) from lecturer";
+-		int rows=jdbcTemplateObject.queryForObject(SQL, Integer.class);
+-		return rows;
+-	}
+-	
+-}
+diff --git a/src/test/java/com/citonline/LectureImplTest.java b/src/test/java/com/citonline/LectureImplTest.java
+deleted file mode 100644
+index a1e50fd..0000000
+--- a/src/test/java/com/citonline/LectureImplTest.java
++++ /dev/null
+@@ -1,117 +0,0 @@
+-/**
+- * @author Fabien
+- *
+- * @since 3 nov. 2014
+- */
+-package com.citonline;
+-
+-import static org.junit.Assert.*;
+-
+-import org.junit.Test;
+-import org.junit.runner.RunWith;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.context.ApplicationContext;
+-import org.springframework.test.context.ContextConfiguration;
+-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+-
+-import com.citonline.domain.Module;
+-import com.citonline.domain.Program;
+-import com.citonline.interfaces.impl.LecturerImpl;
+-
+-/**
+- * @author Fabien
+- *
+- */
+-@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration({"classpath:config.xml"}) 
+-public class LectureImplTest {
+-	
+-	@Autowired
+-	ApplicationContext context; 
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * @date 3 nov. 2014
+-	 * 
+-	 * Test method for {@link com.citonline.interfaces.impl.LecturerImpl#teach(com.citonline.domain.Module)}.
+-	 * 
+-	 * This method tests if a Module has been added in the module list of the Lecturer and also check that
+-	 * the module is effectively the one it has been put in by verifying all its properties.
+-	 */
+-	@Test
+-	public void testTeach() {
+-//		LecturerImpl donna = new LecturerImpl("Donna", "Oshea", "donna.oshea@cit.ie",
+-//        		"0123456789", "C123");
+-		
+-		LecturerImpl donna = (LecturerImpl) context.getBean("Lecturer_DonnaOshea");
+-		
+-		Module adf = (Module) context.getBean("Module_ADF");
+-		
+-		donna.teach(adf);
+-		
+-		assertTrue(donna.getModulesTaught().contains(adf));
+-		
+-		Module mTest = donna.getModulesTaught().get(0);
+-		
+-		assertEquals("SOFT8020", mTest.getCode());
+-		assertEquals("CRN", mTest.getCrn());
+-		assertEquals("App Dev Frmwk", mTest.getName());
+-		assertEquals(7, mTest.getSemester());
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * @date 3 nov. 2014
+-	 * 
+-	 * Test method for {@link com.citonline.interfaces.impl.LecturerImpl#stopTeach(com.citonline.domain.Module)}.
+-	 * 
+-	 * This method tests if the good Module has been removed from the module list of the Lecturer.
+-	 */
+-	@Test
+-	public void testStopTeach() {
+-		LecturerImpl donna = (LecturerImpl) context.getBean("Lecturer_DonnaOshea");
+-		
+-		Module adf = (Module) context.getBean("Module_ADF");
+-		donna.teach(adf);
+-		
+-		Module module2 = new Module("SOFT8080", "CRN2", "NetMaybe", 8);
+-		donna.teach(module2);
+-		
+-		assertTrue(donna.getModulesTaught().contains(adf));
+-		
+-		donna.stopTeach(adf);
+-		
+-		assertFalse(donna.getModulesTaught().contains(adf));
+-		assertFalse(donna.getModulesTaught().isEmpty());
+-		assertTrue(donna.getModulesTaught().contains(module2));
+-		
+-		donna.getModulesTaught().clear();
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * @date 3 nov. 2014
+-	 * 
+-	 * Test method for {@link com.citonline.interfaces.impl.LecturerImpl#isProgramManager()}.
+-	 * 
+-	 * This method check if a Lecturer is a Program Manager or not, before and after setting a Program,
+-	 * and also after removing (set to null) the Program that the Lecturer managed.
+-	 */
+-	@Test
+-	public void testIsProgramManager() {
+-		LecturerImpl donna = (LecturerImpl) context.getBean("Lecturer_DonnaOshea");
+-		
+-		assertFalse(donna.isProgramManager());
+-		
+-		donna.setManagedProgram(new Program("DCOM4", "DCOM4"));
+-		
+-		assertTrue(donna.isProgramManager());
+-		
+-		donna.setManagedProgram(null);
+-		
+-		assertFalse(donna.isProgramManager());
+-	}
+-
+-}
+diff --git a/src/test/java/com/citonline/LecturerImplJdbcDAOSupportTest.java b/src/test/java/com/citonline/LecturerImplJdbcDAOSupportTest.java
+new file mode 100644
+index 0000000..d9e4d25
+--- /dev/null
++++ b/src/test/java/com/citonline/LecturerImplJdbcDAOSupportTest.java
+@@ -0,0 +1,405 @@
++/**
++ * @author Fabien
++ *
++ * @since 3 nov. 2014
++ */
++package com.citonline;
++
++import static org.junit.Assert.*;
++
++import org.apache.log4j.Logger;
++import org.junit.Test;
++import org.junit.runner.RunWith;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.context.ApplicationContext;
++import org.springframework.expression.spel.ast.Projection;
++import org.springframework.test.context.ContextConfiguration;
++import org.springframework.test.context.TestExecutionListeners;
++import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
++import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
++
++import com.cit.online.db.interfaces.impl.LecturerJdbcTemplate;
++import com.cit.online.db.interfaces.impl.ProgramJdbcTemplate;
++import com.github.springtestdbunit.DbUnitTestExecutionListener;
++import com.github.springtestdbunit.annotation.DatabaseOperation;
++import com.github.springtestdbunit.annotation.DatabaseSetup;
++
++/**
++ * @author Fabien
++ *
++ */
++@RunWith(SpringJUnit4ClassRunner.class)
++@ContextConfiguration({"classpath:configuration.xml"})
++@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
++    DbUnitTestExecutionListener.class })
++public class LecturerImplJdbcTemplateTest {
++	
++	@Autowired
++	ApplicationContext autoWireContext;
++	@Autowired
++	LecturerJdbcTemplate lecJT;
++
++	final Logger logger = Logger.getLogger(LecturerImplJdbcTemplateTest.class);
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
++	 * 
++	 * This method tests the creation of a new Lecturer providing the  these params:
++	 * firstName, lastName, email, phoneNumber, roomNumber.
++	 * 
++	 * It will check the number of rows added only. The details of the record would be
++	 * check in another test.
++	 * 
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testCreateLecturerStringStringStringStringString() {
++		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123");
++		
++		int nbRow = lecJT.countRows();
++		assertEquals(1,nbRow);
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer)}.
++	 *
++	 * This method tests the creation of a new Lecturer providing these params:
++	 * firstName, lastName, email, phoneNumber, roomNumber, idManagedProgram.
++	 * 
++	 * It will check the number of rows added and the detail of the record.
++	 * 
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testCreateLecturerStringStringStringStringStringInteger() {
++		ProgramJdbcTemplate progJT = (ProgramJdbcTemplate) autoWireContext.getBean("ProgJdbcTemplate");
++		progJT.createProgram("DCOM4", "DCOM4");
++		
++		fail("Cannot go further because of ProgramJdbcTemplate does not allow me to get a program from name");
++		int progID = 1; // progJT.getProgram("DCOM4")
++		
++		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123", progID);
++		
++		int nbRow = lecJT.countRows();
++		assertEquals(1,nbRow);
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.Integer)}.
++	 * 
++	 * This method tests the deletion of a Lecturer providing its id.
++	 * 
++	 * After creating a random Lecturer, it will remove it from the table and checks the number of row.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testDeleteLecturerInteger() {
++		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123");
++		
++		int nbRow = lecJT.countRows();
++		assertEquals(1,nbRow);
++		
++		lecJT.deleteLecturer("Donna","OShea");
++		assertEquals(0,nbRow);
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.String, java.lang.String)}.
++	 * 
++	 * This method tests the deletion of a Lecturer providing its firstName and lastName.
++	 * 
++	 * After adding a Lecturer in the db, it will remove it from the table and checks the number of row.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testDeleteLecturerStringString() {
++		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123");
++		
++		int nbRow = lecJT.countRows();
++		assertEquals(1,nbRow);
++		
++		lecJT.deleteLecturer("Donna","OShea");
++		assertEquals(0,nbRow);
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.Integer)}.
++	 * 
++	 * This method tests if we are able to get a Lecturer from the database providing its id
++	 * and create its corresponding object.
++	 * 
++	 * After creating a random Lecturer, it will add it in the db, then try to get the details
++	 * of the record in order to generate a new Lecturer which should be exactly the same as the first one.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testGetLecturerInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.String, java.lang.String)}.
++	 * 
++	 * This method tests if we are able to get a Lecturer from the database providing its firstName and lastName
++	 * and create its corresponding object.
++	 * 
++	 * After creating a random Lecturer, it will add it in the db, then try to get the details
++	 * of the record in order to generate a new Lecturer which should be exactly the same as the first one.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testGetLecturerStringString() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#listLecturers()}.
++	 * 
++	 * This method tests if we are able to get the list of all Lecturers presents in the db.
++	 * 
++	 * After adding some Lecturers in the db, it will try to get all of them, and check only
++	 * their firstName and lastName (other tests checks all the fields).
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testListLecturers() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.String, java.lang.String, java.lang.String)}.
++	 * 
++	 * This methods checks the update of the email of a Lecturer, providing its firstName and lastName.
++	 * 
++	 * It will check the first email, then change it and tests the email again to verify the update.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testUpdateLecturerEmailStringStringString() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.Integer, java.lang.String)}.
++	 * 
++	 * This methods checks the update of the email of a Lecturer, providing its id.
++	 * 
++	 * It will check the first email, then change it and tests the email again to verify the update.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testUpdateLecturerEmailIntegerString() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.String, java.lang.String, java.lang.String)}.
++	 * 
++	 * This methods checks the update of the roomNumber of a Lecturer, providing its firstName and lastName.
++	 * 
++	 * It will check the first roomNumber, then change it and tests the roomNumber again to verify the update.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testUpdateLecturerRoomNumberStringStringString() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.Integer, java.lang.String)}.
++	 * 
++	 * This methods checks the update of the roomNumber of a Lecturer, providing its id.
++	 * 
++	 * It will check the first roomNumber, then change it and tests the roomNumber again to verify the update.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testUpdateLecturerRoomNumberIntegerString() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.String, java.lang.String, java.lang.Integer)}.
++	 * 
++	 * This methods checks the update of the managedProgram of a Lecturer, providing its firstName and lastName.
++	 * 
++	 * It will check the first managedProgram, then change it and tests the managedProgram again to verify the update.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testUpdateLecturerManagedProgramStringStringInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.Integer, java.lang.Integer)}.
++	 * 
++	 * This methods checks the update of the managedProgram of a Lecturer, providing its id.
++	 * 
++	 * It will check the first managedProgram, then change it and tests the managedProgram again to verify the update.
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testUpdateLecturerManagedProgramIntegerInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
++	 * 
++	 * This methods checks the addition of a module that a Lecturer teaches, providing its firstName and lastName.
++	 * 
++	 * It will check the absence of taught modules, then add one and tests again to verify the update.
++	 * It will check the number of row only (checking the module is part of another test file).
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testAddTaughtModuleStringStringInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.lang.Integer)}.
++	 * 
++	 * This methods checks the addition of a module that a Lecturer teaches, providing its id.
++	 * 
++	 * It will check the absence of taught modules, then add one and tests again to verify the update.
++	 * It will check the number of row only (checking the module is part of another test file).
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testAddTaughtModuleIntegerInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
++	 * 
++	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its firstName and lastName.
++	 * 
++	 * It will check the absence of taught modules, then add them and tests again to verify the update.
++	 * It will check the number of row only (checking the module is part of another test file).
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testAddTaughtModuleStringStringListOfInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.util.List)}.
++	 * 
++	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its id.
++	 * 
++	 * It will check the absence of taught modules, then add them and tests again to verify the update.
++	 * It will check the number of row only (checking the module is part of another test file).
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testAddTaughtModuleIntegerListOfInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
++	 * 
++	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its firstName and lastName.
++	 * 
++	 * It will add two modules, then delete one and tests again to verify the update.
++	 * It will check the number of row only and the id to be sure it deletes the good one
++	 * (checking the module is part of another test file).
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testRemoveTaughtModuleStringStringInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.lang.Integer)}.
++	 * 
++	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its id.
++	 * 
++	 * It will add two modules, then delete one and tests again to verify the update.
++	 * It will check the number of row only and the id to be sure it deletes the good one
++	 * (checking the module is part of another test file).
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testRemoveTaughtModuleIntegerInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
++	 * 
++	 * This methods checks the deletion of a list modules that a Lecturer stop teaching, providing its firstName and lastName.
++	 * 
++	 * It will add many modules, then delete the given lists and tests again to verify the update.
++	 * It will check the ids of the number of rows and the ids to be sure it deletes the good ones
++	 * (checking the module is part of another test file).
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testRemoveTaughtModuleStringStringListOfInteger() {
++		fail("Not yet implemented");
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.util.List)}.
++	 * 
++	 * This methods checks the deletion of a list of modules that a Lecturer stop teaching, providing its id.
++	 * 
++	 * It will add many modules, then delete the given lists and tests again to verify the update.
++	 * It will check the number of row only and the id to be sure it deletes the good ones
++	 * (checking the module is part of another test file).
++	 */
++	@Test
++	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
++	public void testRemoveTaughtModuleIntegerListOfInteger() {
++		fail("Not yet implemented");
++	}
++
++}
+diff --git a/src/test/java/com/citonline/LecturerImplJdbcTemplateTest.java b/src/test/java/com/citonline/LecturerImplJdbcTemplateTest.java
+deleted file mode 100644
+index d9e4d25..0000000
+--- a/src/test/java/com/citonline/LecturerImplJdbcTemplateTest.java
++++ /dev/null
+@@ -1,405 +0,0 @@
+-/**
+- * @author Fabien
+- *
+- * @since 3 nov. 2014
+- */
+-package com.citonline;
+-
+-import static org.junit.Assert.*;
+-
+-import org.apache.log4j.Logger;
+-import org.junit.Test;
+-import org.junit.runner.RunWith;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.context.ApplicationContext;
+-import org.springframework.expression.spel.ast.Projection;
+-import org.springframework.test.context.ContextConfiguration;
+-import org.springframework.test.context.TestExecutionListeners;
+-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+-
+-import com.cit.online.db.interfaces.impl.LecturerJdbcTemplate;
+-import com.cit.online.db.interfaces.impl.ProgramJdbcTemplate;
+-import com.github.springtestdbunit.DbUnitTestExecutionListener;
+-import com.github.springtestdbunit.annotation.DatabaseOperation;
+-import com.github.springtestdbunit.annotation.DatabaseSetup;
+-
+-/**
+- * @author Fabien
+- *
+- */
+-@RunWith(SpringJUnit4ClassRunner.class)
+-@ContextConfiguration({"classpath:configuration.xml"})
+-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
+-    DbUnitTestExecutionListener.class })
+-public class LecturerImplJdbcTemplateTest {
+-	
+-	@Autowired
+-	ApplicationContext autoWireContext;
+-	@Autowired
+-	LecturerJdbcTemplate lecJT;
+-
+-	final Logger logger = Logger.getLogger(LecturerImplJdbcTemplateTest.class);
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
+-	 * 
+-	 * This method tests the creation of a new Lecturer providing the  these params:
+-	 * firstName, lastName, email, phoneNumber, roomNumber.
+-	 * 
+-	 * It will check the number of rows added only. The details of the record would be
+-	 * check in another test.
+-	 * 
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testCreateLecturerStringStringStringStringString() {
+-		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123");
+-		
+-		int nbRow = lecJT.countRows();
+-		assertEquals(1,nbRow);
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer)}.
+-	 *
+-	 * This method tests the creation of a new Lecturer providing these params:
+-	 * firstName, lastName, email, phoneNumber, roomNumber, idManagedProgram.
+-	 * 
+-	 * It will check the number of rows added and the detail of the record.
+-	 * 
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testCreateLecturerStringStringStringStringStringInteger() {
+-		ProgramJdbcTemplate progJT = (ProgramJdbcTemplate) autoWireContext.getBean("ProgJdbcTemplate");
+-		progJT.createProgram("DCOM4", "DCOM4");
+-		
+-		fail("Cannot go further because of ProgramJdbcTemplate does not allow me to get a program from name");
+-		int progID = 1; // progJT.getProgram("DCOM4")
+-		
+-		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123", progID);
+-		
+-		int nbRow = lecJT.countRows();
+-		assertEquals(1,nbRow);
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.Integer)}.
+-	 * 
+-	 * This method tests the deletion of a Lecturer providing its id.
+-	 * 
+-	 * After creating a random Lecturer, it will remove it from the table and checks the number of row.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testDeleteLecturerInteger() {
+-		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123");
+-		
+-		int nbRow = lecJT.countRows();
+-		assertEquals(1,nbRow);
+-		
+-		lecJT.deleteLecturer("Donna","OShea");
+-		assertEquals(0,nbRow);
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.String, java.lang.String)}.
+-	 * 
+-	 * This method tests the deletion of a Lecturer providing its firstName and lastName.
+-	 * 
+-	 * After adding a Lecturer in the db, it will remove it from the table and checks the number of row.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testDeleteLecturerStringString() {
+-		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123");
+-		
+-		int nbRow = lecJT.countRows();
+-		assertEquals(1,nbRow);
+-		
+-		lecJT.deleteLecturer("Donna","OShea");
+-		assertEquals(0,nbRow);
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.Integer)}.
+-	 * 
+-	 * This method tests if we are able to get a Lecturer from the database providing its id
+-	 * and create its corresponding object.
+-	 * 
+-	 * After creating a random Lecturer, it will add it in the db, then try to get the details
+-	 * of the record in order to generate a new Lecturer which should be exactly the same as the first one.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testGetLecturerInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.String, java.lang.String)}.
+-	 * 
+-	 * This method tests if we are able to get a Lecturer from the database providing its firstName and lastName
+-	 * and create its corresponding object.
+-	 * 
+-	 * After creating a random Lecturer, it will add it in the db, then try to get the details
+-	 * of the record in order to generate a new Lecturer which should be exactly the same as the first one.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testGetLecturerStringString() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#listLecturers()}.
+-	 * 
+-	 * This method tests if we are able to get the list of all Lecturers presents in the db.
+-	 * 
+-	 * After adding some Lecturers in the db, it will try to get all of them, and check only
+-	 * their firstName and lastName (other tests checks all the fields).
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testListLecturers() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.String, java.lang.String, java.lang.String)}.
+-	 * 
+-	 * This methods checks the update of the email of a Lecturer, providing its firstName and lastName.
+-	 * 
+-	 * It will check the first email, then change it and tests the email again to verify the update.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testUpdateLecturerEmailStringStringString() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.Integer, java.lang.String)}.
+-	 * 
+-	 * This methods checks the update of the email of a Lecturer, providing its id.
+-	 * 
+-	 * It will check the first email, then change it and tests the email again to verify the update.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testUpdateLecturerEmailIntegerString() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.String, java.lang.String, java.lang.String)}.
+-	 * 
+-	 * This methods checks the update of the roomNumber of a Lecturer, providing its firstName and lastName.
+-	 * 
+-	 * It will check the first roomNumber, then change it and tests the roomNumber again to verify the update.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testUpdateLecturerRoomNumberStringStringString() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.Integer, java.lang.String)}.
+-	 * 
+-	 * This methods checks the update of the roomNumber of a Lecturer, providing its id.
+-	 * 
+-	 * It will check the first roomNumber, then change it and tests the roomNumber again to verify the update.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testUpdateLecturerRoomNumberIntegerString() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.String, java.lang.String, java.lang.Integer)}.
+-	 * 
+-	 * This methods checks the update of the managedProgram of a Lecturer, providing its firstName and lastName.
+-	 * 
+-	 * It will check the first managedProgram, then change it and tests the managedProgram again to verify the update.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testUpdateLecturerManagedProgramStringStringInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.Integer, java.lang.Integer)}.
+-	 * 
+-	 * This methods checks the update of the managedProgram of a Lecturer, providing its id.
+-	 * 
+-	 * It will check the first managedProgram, then change it and tests the managedProgram again to verify the update.
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testUpdateLecturerManagedProgramIntegerInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
+-	 * 
+-	 * This methods checks the addition of a module that a Lecturer teaches, providing its firstName and lastName.
+-	 * 
+-	 * It will check the absence of taught modules, then add one and tests again to verify the update.
+-	 * It will check the number of row only (checking the module is part of another test file).
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testAddTaughtModuleStringStringInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.lang.Integer)}.
+-	 * 
+-	 * This methods checks the addition of a module that a Lecturer teaches, providing its id.
+-	 * 
+-	 * It will check the absence of taught modules, then add one and tests again to verify the update.
+-	 * It will check the number of row only (checking the module is part of another test file).
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testAddTaughtModuleIntegerInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
+-	 * 
+-	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its firstName and lastName.
+-	 * 
+-	 * It will check the absence of taught modules, then add them and tests again to verify the update.
+-	 * It will check the number of row only (checking the module is part of another test file).
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testAddTaughtModuleStringStringListOfInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.util.List)}.
+-	 * 
+-	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its id.
+-	 * 
+-	 * It will check the absence of taught modules, then add them and tests again to verify the update.
+-	 * It will check the number of row only (checking the module is part of another test file).
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testAddTaughtModuleIntegerListOfInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
+-	 * 
+-	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its firstName and lastName.
+-	 * 
+-	 * It will add two modules, then delete one and tests again to verify the update.
+-	 * It will check the number of row only and the id to be sure it deletes the good one
+-	 * (checking the module is part of another test file).
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testRemoveTaughtModuleStringStringInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.lang.Integer)}.
+-	 * 
+-	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its id.
+-	 * 
+-	 * It will add two modules, then delete one and tests again to verify the update.
+-	 * It will check the number of row only and the id to be sure it deletes the good one
+-	 * (checking the module is part of another test file).
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testRemoveTaughtModuleIntegerInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
+-	 * 
+-	 * This methods checks the deletion of a list modules that a Lecturer stop teaching, providing its firstName and lastName.
+-	 * 
+-	 * It will add many modules, then delete the given lists and tests again to verify the update.
+-	 * It will check the ids of the number of rows and the ids to be sure it deletes the good ones
+-	 * (checking the module is part of another test file).
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testRemoveTaughtModuleStringStringListOfInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-	/**
+-	 * @author Fabien
+-	 * 
+-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.util.List)}.
+-	 * 
+-	 * This methods checks the deletion of a list of modules that a Lecturer stop teaching, providing its id.
+-	 * 
+-	 * It will add many modules, then delete the given lists and tests again to verify the update.
+-	 * It will check the number of row only and the id to be sure it deletes the good ones
+-	 * (checking the module is part of another test file).
+-	 */
+-	@Test
+-	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+-	public void testRemoveTaughtModuleIntegerListOfInteger() {
+-		fail("Not yet implemented");
+-	}
+-
+-}
+diff --git a/src/test/java/com/citonline/LecturerImplTest.java b/src/test/java/com/citonline/LecturerImplTest.java
+new file mode 100644
+index 0000000..a1e50fd
+--- /dev/null
++++ b/src/test/java/com/citonline/LecturerImplTest.java
+@@ -0,0 +1,117 @@
++/**
++ * @author Fabien
++ *
++ * @since 3 nov. 2014
++ */
++package com.citonline;
++
++import static org.junit.Assert.*;
++
++import org.junit.Test;
++import org.junit.runner.RunWith;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.context.ApplicationContext;
++import org.springframework.test.context.ContextConfiguration;
++import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
++
++import com.citonline.domain.Module;
++import com.citonline.domain.Program;
++import com.citonline.interfaces.impl.LecturerImpl;
++
++/**
++ * @author Fabien
++ *
++ */
++@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration({"classpath:config.xml"}) 
++public class LectureImplTest {
++	
++	@Autowired
++	ApplicationContext context; 
++
++	/**
++	 * @author Fabien
++	 * 
++	 * @date 3 nov. 2014
++	 * 
++	 * Test method for {@link com.citonline.interfaces.impl.LecturerImpl#teach(com.citonline.domain.Module)}.
++	 * 
++	 * This method tests if a Module has been added in the module list of the Lecturer and also check that
++	 * the module is effectively the one it has been put in by verifying all its properties.
++	 */
++	@Test
++	public void testTeach() {
++//		LecturerImpl donna = new LecturerImpl("Donna", "Oshea", "donna.oshea@cit.ie",
++//        		"0123456789", "C123");
++		
++		LecturerImpl donna = (LecturerImpl) context.getBean("Lecturer_DonnaOshea");
++		
++		Module adf = (Module) context.getBean("Module_ADF");
++		
++		donna.teach(adf);
++		
++		assertTrue(donna.getModulesTaught().contains(adf));
++		
++		Module mTest = donna.getModulesTaught().get(0);
++		
++		assertEquals("SOFT8020", mTest.getCode());
++		assertEquals("CRN", mTest.getCrn());
++		assertEquals("App Dev Frmwk", mTest.getName());
++		assertEquals(7, mTest.getSemester());
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * @date 3 nov. 2014
++	 * 
++	 * Test method for {@link com.citonline.interfaces.impl.LecturerImpl#stopTeach(com.citonline.domain.Module)}.
++	 * 
++	 * This method tests if the good Module has been removed from the module list of the Lecturer.
++	 */
++	@Test
++	public void testStopTeach() {
++		LecturerImpl donna = (LecturerImpl) context.getBean("Lecturer_DonnaOshea");
++		
++		Module adf = (Module) context.getBean("Module_ADF");
++		donna.teach(adf);
++		
++		Module module2 = new Module("SOFT8080", "CRN2", "NetMaybe", 8);
++		donna.teach(module2);
++		
++		assertTrue(donna.getModulesTaught().contains(adf));
++		
++		donna.stopTeach(adf);
++		
++		assertFalse(donna.getModulesTaught().contains(adf));
++		assertFalse(donna.getModulesTaught().isEmpty());
++		assertTrue(donna.getModulesTaught().contains(module2));
++		
++		donna.getModulesTaught().clear();
++	}
++
++	/**
++	 * @author Fabien
++	 * 
++	 * @date 3 nov. 2014
++	 * 
++	 * Test method for {@link com.citonline.interfaces.impl.LecturerImpl#isProgramManager()}.
++	 * 
++	 * This method check if a Lecturer is a Program Manager or not, before and after setting a Program,
++	 * and also after removing (set to null) the Program that the Lecturer managed.
++	 */
++	@Test
++	public void testIsProgramManager() {
++		LecturerImpl donna = (LecturerImpl) context.getBean("Lecturer_DonnaOshea");
++		
++		assertFalse(donna.isProgramManager());
++		
++		donna.setManagedProgram(new Program("DCOM4", "DCOM4"));
++		
++		assertTrue(donna.isProgramManager());
++		
++		donna.setManagedProgram(null);
++		
++		assertFalse(donna.isProgramManager());
++	}
++
++}

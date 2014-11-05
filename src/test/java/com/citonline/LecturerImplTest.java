@@ -23,7 +23,7 @@ import com.citonline.interfaces.impl.LecturerImpl;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration({"classpath:config.xml"}) 
-public class LectureImplTest {
+public class LecturerImplTest {
 	
 	@Autowired
 	ApplicationContext context; 
@@ -75,7 +75,7 @@ public class LectureImplTest {
 		Module adf = (Module) context.getBean("Module_ADF");
 		donna.teach(adf);
 		
-		Module module2 = new Module("SOFT8080", "CRN2", "NetMaybe", 8);
+		Module module2 = new Module(1, "SOFT8080", "CRN2", "NetMaybe", 8);
 		donna.teach(module2);
 		
 		assertTrue(donna.getModulesTaught().contains(adf));

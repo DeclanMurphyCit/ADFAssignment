@@ -34,12 +34,6 @@
 		<property name="transactionManager" ref="transactionManager"></property>
 	</bean>
 	
-	<bean id="LectJdbcTemplate" class="com.cit.online.db.interfaces.impl.LecturerJdbcTemplate">
-	</bean>
-	
-	<bean id="ProgJdbcTemplate" class="com.cit.online.db.interfaces.impl.ProgramJdbcTemplate">
-	</bean>
-	
 	<bean id="Lecturer_DonnaOshea" class="com.citonline.interfaces.impl.LecturerImpl" autowire="no">
 		<constructor-arg name="firstName" value="Donna"></constructor-arg>
  		<constructor-arg name="lastName" value="Oshea"></constructor-arg>
