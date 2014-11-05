@@ -5,8 +5,11 @@ import java.util.Calendar;
 
 import javax.sql.DataSource;
 
+import org.springframework.stereotype.Service;
+
 import com.citonline.domain.Module;
 
+@Service
 public interface DeferralDAO 
 {
 	public void setDataSource(DataSource dataSource);

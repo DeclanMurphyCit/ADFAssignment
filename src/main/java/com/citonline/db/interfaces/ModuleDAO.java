@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.stereotype.Service;
+
 import com.citonline.domain.Module;
 
 /*
@@ -17,6 +19,7 @@ import com.citonline.domain.Module;
  * Expected Outputs: create, delete,modify, return modules
  */
 
+@Service
 public interface ModuleDAO {
 
 	public void setDataSource(DataSource dataSource);

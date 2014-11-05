@@ -19,9 +19,8 @@ public class StudentMapper implements RowMapper {
 		String phoneNumber = rs.getString("phoneNumber");	
 		String addressLine1 = rs.getString("addressLine1");
 		String addressLine2 = rs.getString("addressLine2");
-		StudentImpl student = new StudentImpl(firstName, lastName, email, phoneNumber, 
+		StudentImpl student = new StudentImpl(id, firstName, lastName, email, phoneNumber, 
 				studentNumber,addressLine1,addressLine2);
-		student.setId(id);
 		
 		return student;
 	}

@@ -19,20 +19,22 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	/**
 	 * Constructor of the class
 	 *
+	 * @param id
 	 * @param firstName
 	 * @param lastName
 	 * @param email
 	 * @param phoneNumber
 	 * @param roomNumber
 	 */
-	public LecturerImpl(String firstName, String lastName, String email,
+	public LecturerImpl(int id, String firstName, String lastName, String email,
 			String phoneNumber, String roomNumber) {
-		super(firstName, lastName, email, phoneNumber, roomNumber);
+		super(id, firstName, lastName, email, phoneNumber, roomNumber);
 	}
 	
 	/**
 	 * Constructor of the class
 	 * 
+	 * @param id
 	 * @param firstName
 	 * @param lastName
 	 * @param email
@@ -40,9 +42,9 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	 * @param roomNumber
 	 * @param managedProgram
 	 */
-	public LecturerImpl(String firstName, String lastName, String email,
+	public LecturerImpl(int id, String firstName, String lastName, String email,
 			String phoneNumber, String roomNumber, Program managedProgram) {
-		super(firstName, lastName, email, phoneNumber, roomNumber, managedProgram);
+		super(id, firstName, lastName, email, phoneNumber, roomNumber, managedProgram);
 	}
 	
 	/* (non-Javadoc)

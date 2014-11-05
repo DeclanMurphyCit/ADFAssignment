@@ -10,9 +10,12 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.stereotype.Service;
+
 import com.citonline.domain.Module;
 import com.citonline.interfaces.impl.LecturerImpl;
 
+@Service
 public interface LecturerDAO {
 
 	/**

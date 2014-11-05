@@ -5,12 +5,15 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.sql.DataSource;
+
 //
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.citonline.db.interfaces.DeferralDAO;
 import com.citonline.domain.Module;
 
+@Repository
 public class DeferralJdbcTemplate implements DeferralDAO {
 
 	private DataSource dataSource;

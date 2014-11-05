@@ -8,8 +8,8 @@ package com.citonline;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import com.cit.online.db.interfaces.impl.LecturerJdbcDaoSupport;
+import com.citonline.domain.Module;
 import com.citonline.interfaces.impl.LecturerImpl;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
@@ -203,7 +204,7 @@ public class LecturerImplJdbcDAOSupportTest {
 			String fn = l.getFirstName();
 			String ln = l.getLastName();
 			
-			boolean isDonna = fn.equals("Donna") && ln.equals("Oshea");
+			boolean isDonna = fn.equals("Donna") && ln.equals("OShea");
 			boolean isTed = fn.equals("Ted") && ln.equals("Scully");
 			assertTrue( isDonna || isTed );
 		}
@@ -216,7 +217,7 @@ public class LecturerImplJdbcDAOSupportTest {
   	 * 
   	 * It will check the first email, then change it and tests the email again to verify the update.
 	 * 
-	 * INPUT: lecturer Donna Oshea with mail= "donna.oshea@cit.ie".
+	 * INPUT: lecturer Donna OShea with mail= "donna.oshea@cit.ie".
 	 * EXPECTED OUTPUT: new mail = "bestTeacher@cit.ie".
   	 */
   	@Test
@@ -225,7 +226,7 @@ public class LecturerImplJdbcDAOSupportTest {
 		LecturerImpl donna = lecturerJdbcDaoSupportObject.getLecturer(1);
 		assertEquals("donna.oshea@cit.ie",donna.getEmail());
 		
-		lecturerJdbcDaoSupportObject.updateLecturerEmail("Donna","Oshea", "bestLecturer@cit.ie");
+		lecturerJdbcDaoSupportObject.updateLecturerEmail("Donna","OShea", "bestLecturer@cit.ie");
 		donna = lecturerJdbcDaoSupportObject.getLecturer(1);
 		assertEquals("bestLecturer@cit.ie",donna.getEmail());
   	}
@@ -237,7 +238,7 @@ public class LecturerImplJdbcDAOSupportTest {
   	 * 
   	 * It will check the first email, then change it and tests the email again to verify the update.
 	 * 
-	 * INPUT: lecturer Donna Oshea with mail= "donna.oshea@cit.ie".
+	 * INPUT: lecturer Donna OShea with mail= "donna.oshea@cit.ie".
 	 * EXPECTED OUTPUT: new mail = "bestTeacher@cit.ie".
   	 */
   	@Test
@@ -258,7 +259,7 @@ public class LecturerImplJdbcDAOSupportTest {
   	 * 
   	 * It will check the first roomNumber, then change it and tests the roomNumber again to verify the update.
 	 * 
-	 * INPUT: lecturer Donna Oshea with roomNumber= "B180A".
+	 * INPUT: lecturer Donna OShea with roomNumber= "B180A".
 	 * EXPECTED OUTPUT: new roomNumber = "HeadRoom".
   	 */
   	@Test
@@ -267,7 +268,7 @@ public class LecturerImplJdbcDAOSupportTest {
 		LecturerImpl donna = lecturerJdbcDaoSupportObject.getLecturer(1);
 		assertEquals("B180A",donna.getRoomNumber());
 		
-		lecturerJdbcDaoSupportObject.updateLecturerRoomNumber("Donna","Oshea", "HeadRoom");
+		lecturerJdbcDaoSupportObject.updateLecturerRoomNumber("Donna","OShea", "HeadRoom");
 		donna = lecturerJdbcDaoSupportObject.getLecturer(1);
 		assertEquals("HeadRoom",donna.getRoomNumber());
   	}
@@ -279,7 +280,7 @@ public class LecturerImplJdbcDAOSupportTest {
   	 * 
   	 * It will check the first roomNumber, then change it and tests the roomNumber again to verify the update.
 	 * 
-	 * INPUT: lecturer Donna Oshea with roomNumber= "B180A".
+	 * INPUT: lecturer Donna OShea with roomNumber= "B180A".
 	 * EXPECTED OUTPUT: new roomNumber = "HeadRoom".
   	 */
   	@Test
@@ -309,7 +310,7 @@ public class LecturerImplJdbcDAOSupportTest {
 		LecturerImpl ted = lecturerJdbcDaoSupportObject.getLecturer(2);
 		assertFalse(ted.isProgramManager());
 		
-		lecturerJdbcDaoSupportObject.updateLecturerManagedProgram(2, 1);
+		lecturerJdbcDaoSupportObject.updateLecturerManagedProgram("Ted","Scully", 1);
 		ted = lecturerJdbcDaoSupportObject.getLecturer(2);
 		assertEquals(1,ted.getManagedProgram().getProgramId());
   	}
@@ -323,6 +324,9 @@ public class LecturerImplJdbcDAOSupportTest {
 	 * This methods checks the update of the managedProgram of a Lecturer, providing its id.
 	 * 
 	 * It will check the first managedProgram, then change it and tests the managedProgram again to verify the update.
+	 * 
+	 * INPUT: Ted Scully with no managedProgram.
+	 * EXPECTED OUTPUT: Ted Scully managed the program of id=1
 	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
@@ -343,12 +347,21 @@ public class LecturerImplJdbcDAOSupportTest {
 	 * This methods checks the addition of a module that a Lecturer teaches, providing its firstName and lastName.
 	 * 
 	 * It will check the absence of taught modules, then add one and tests again to verify the update.
-	 * It will check the number of row only (checking the module is part of another test file).
+	 * It will check the id of the module only.
+	 * 
+	 * INPUT: Donna OShea with no taught module.
+	 * EXPECTED OUTPUT: Donna OShea teaching the module of id=1
 	 */
 	@Test
 	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testAddTaughtModuleStringStringInteger() {
-		fail("Not yet implemented");
+		LecturerImpl donna = lecturerJdbcDaoSupportObject.getLecturer(1);
+		
+		assertTrue(donna.getModulesTaught().isEmpty());
+		lecturerJdbcDaoSupportObject.addTaughtModule("Donna", "OShea", 1);
+		
+		donna = lecturerJdbcDaoSupportObject.getLecturer(1);
+		assertEquals(1,donna.getModulesTaught().get(0).getId());
 	}
 
 	/**
@@ -359,12 +372,21 @@ public class LecturerImplJdbcDAOSupportTest {
 	 * This methods checks the addition of a module that a Lecturer teaches, providing its id.
 	 * 
 	 * It will check the absence of taught modules, then add one and tests again to verify the update.
-	 * It will check the number of row only (checking the module is part of another test file).
+	 * It will check the id of the module only.
+	 * 
+	 * INPUT: Donna OShea with no taught module.
+	 * EXPECTED OUTPUT: Donna OShea teaching the module of id=1
 	 */
 	@Test
 	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testAddTaughtModuleIntegerInteger() {
-		fail("Not yet implemented");
+		LecturerImpl donna = lecturerJdbcDaoSupportObject.getLecturer(1);
+		
+		assertTrue(donna.getModulesTaught().isEmpty());
+		lecturerJdbcDaoSupportObject.addTaughtModule(1, 1);
+		
+		donna = lecturerJdbcDaoSupportObject.getLecturer(1);
+		assertEquals(1,donna.getModulesTaught().get(0).getId());
 	}
 
 	/**
@@ -376,11 +398,25 @@ public class LecturerImplJdbcDAOSupportTest {
 	 * 
 	 * It will check the absence of taught modules, then add them and tests again to verify the update.
 	 * It will check the number of row only (checking the module is part of another test file).
+	 * 
+	 * INPUT: Donna OShea with no taught module.
+	 * EXPECTED OUTPUT: Donna OShea teaching 3 modules
 	 */
 	@Test
 	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testAddTaughtModuleStringStringListOfInteger() {
-		fail("Not yet implemented");
+		LecturerImpl donna = lecturerJdbcDaoSupportObject.getLecturer(1);
+		List<Integer> modules = new ArrayList<Integer>();
+		modules.add(2);
+		modules.add(3);
+		modules.add(4);
+		
+		assertTrue(donna.getModulesTaught().isEmpty());
+		lecturerJdbcDaoSupportObject.addTaughtModule("Donna", "OShea", modules);
+		
+		donna = lecturerJdbcDaoSupportObject.getLecturer(1);
+		List<Module> donnasModules = donna.getModulesTaught();
+		assertEquals(3, donnasModules.size());
 	}
 
 	/**
@@ -392,11 +428,25 @@ public class LecturerImplJdbcDAOSupportTest {
 	 * 
 	 * It will check the absence of taught modules, then add them and tests again to verify the update.
 	 * It will check the number of row only (checking the module is part of another test file).
+	 * 
+	 * INPUT: Donna OShea with no taught module.
+	 * EXPECTED OUTPUT: Donna OShea teaching 3 modules
 	 */
 	@Test
 	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testAddTaughtModuleIntegerListOfInteger() {
-		fail("Not yet implemented");
+		LecturerImpl donna = lecturerJdbcDaoSupportObject.getLecturer(1);
+		List<Integer> modules = new ArrayList<Integer>();
+		modules.add(2);
+		modules.add(3);
+		modules.add(4);
+		
+		assertTrue(donna.getModulesTaught().isEmpty());
+		lecturerJdbcDaoSupportObject.addTaughtModule(1, modules);
+		
+		donna = lecturerJdbcDaoSupportObject.getLecturer(1);
+		List<Module> donnasModules = donna.getModulesTaught();
+		assertEquals(3, donnasModules.size());
 	}
 
 	/**
@@ -409,11 +459,20 @@ public class LecturerImplJdbcDAOSupportTest {
 	 * It will add two modules, then delete one and tests again to verify the update.
 	 * It will check the number of row only and the id to be sure it deletes the good one
 	 * (checking the module is part of another test file).
+	 * 
+	 * INPUT: Ted Scully teaching 2 modules
+	 * EXPECTED OUTPUT: Ted Scully teaching only 1 module
 	 */
 	@Test
 	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testRemoveTaughtModuleStringStringInteger() {
-		fail("Not yet implemented");
+		LecturerImpl ted = lecturerJdbcDaoSupportObject.getLecturer(2);
+		assertEquals(2, ted.getModulesTaught().size());
+		
+		lecturerJdbcDaoSupportObject.removeTaughtModule("Ted", "Scully", 1);
+		ted = lecturerJdbcDaoSupportObject.getLecturer(2);
+		assertEquals(1, ted.getModulesTaught().size());
+		assertEquals(2,ted.getModulesTaught().get(0).getId());
 	}
 
 	/**
@@ -426,11 +485,20 @@ public class LecturerImplJdbcDAOSupportTest {
 	 * It will add two modules, then delete one and tests again to verify the update.
 	 * It will check the number of row only and the id to be sure it deletes the good one
 	 * (checking the module is part of another test file).
+	 * 
+	 * INPUT: Ted Scully teaching 2 modules
+	 * EXPECTED OUTPUT: Ted Scully teaching only 1 module
 	 */
 	@Test
 	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testRemoveTaughtModuleIntegerInteger() {
-		fail("Not yet implemented");
+		LecturerImpl ted = lecturerJdbcDaoSupportObject.getLecturer(2);
+		assertEquals(2, ted.getModulesTaught().size());
+		
+		lecturerJdbcDaoSupportObject.removeTaughtModule(2, 1);
+		ted = lecturerJdbcDaoSupportObject.getLecturer(2);
+		assertEquals(1, ted.getModulesTaught().size());
+		assertEquals(2,ted.getModulesTaught().get(0).getId());
 	}
 
 	/**
@@ -443,11 +511,23 @@ public class LecturerImplJdbcDAOSupportTest {
 	 * It will add many modules, then delete the given lists and tests again to verify the update.
 	 * It will check the ids of the number of rows and the ids to be sure it deletes the good ones
 	 * (checking the module is part of another test file).
+	 * 
+	 * INPUT: Ted Scully teaching 2 modules
+	 * EXPECTED OUTPUT: Ted Scully teaching no module
 	 */
 	@Test
 	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testRemoveTaughtModuleStringStringListOfInteger() {
-		fail("Not yet implemented");
+		LecturerImpl ted = lecturerJdbcDaoSupportObject.getLecturer(2);
+		assertEquals(2, ted.getModulesTaught().size());
+		
+		List<Integer> modules = new ArrayList<Integer>();
+		modules.add(1);
+		modules.add(2);
+		
+		lecturerJdbcDaoSupportObject.removeTaughtModule("Ted", "Scully", modules);
+		ted = lecturerJdbcDaoSupportObject.getLecturer(2);
+		assertTrue(ted.getModulesTaught().isEmpty());
 	}
 
 	/**
@@ -460,11 +540,23 @@ public class LecturerImplJdbcDAOSupportTest {
 	 * It will add many modules, then delete the given lists and tests again to verify the update.
 	 * It will check the number of row only and the id to be sure it deletes the good ones
 	 * (checking the module is part of another test file).
+	 * 
+	 * INPUT: Ted Scully teaching 2 modules
+	 * EXPECTED OUTPUT: Ted Scully teaching no module
 	 */
 	@Test
 	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testRemoveTaughtModuleIntegerListOfInteger() {
-		fail("Not yet implemented");
+		LecturerImpl ted = lecturerJdbcDaoSupportObject.getLecturer(2);
+		assertEquals(2, ted.getModulesTaught().size());
+		
+		List<Integer> modules = new ArrayList<Integer>();
+		modules.add(1);
+		modules.add(2);
+		
+		lecturerJdbcDaoSupportObject.removeTaughtModule(2, modules);
+		ted = lecturerJdbcDaoSupportObject.getLecturer(2);
+		assertTrue(ted.getModulesTaught().isEmpty());
 	}
 
 }

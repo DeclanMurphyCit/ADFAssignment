@@ -22,8 +22,7 @@ public class LecturerMapper implements RowMapper {
 		String email = rs.getString("email");
 		String phoneNumber = rs.getString("phoneNumber");
 		String roomNumber = rs.getString("roomNumber");
-		LecturerImpl lecturer = new LecturerImpl(firstName, lastName, email, phoneNumber, roomNumber);
-		lecturer.setId(id);
+		LecturerImpl lecturer = new LecturerImpl(id, firstName, lastName, email, phoneNumber, roomNumber);
 		
 		return lecturer;
 	}

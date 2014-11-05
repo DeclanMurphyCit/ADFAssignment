@@ -6,6 +6,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.citonline.db.interfaces.ModuleDAO;
 import com.citonline.domain.Module;
@@ -23,6 +24,7 @@ import com.citonline.domain.Semester;
  * Expected Outputs: create, delete,modify, return modules in the database
  */
 
+@Repository
 public class ModuleJdbcTemplate implements ModuleDAO {
 
 	private DataSource dataSource;

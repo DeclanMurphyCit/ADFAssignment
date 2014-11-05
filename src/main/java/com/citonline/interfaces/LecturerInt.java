@@ -5,9 +5,12 @@
  */
 package com.citonline.interfaces;
 
+import org.springframework.stereotype.Service;
+
 import com.citonline.domain.Deferral;
 import com.citonline.domain.Module;
 
+@Service
 public interface LecturerInt {
 	
 	/**

@@ -19,9 +19,9 @@ public class StudentImpl extends Student implements StudentInt {
 	private Deferral deferrals;
 	private Program program;
 
-	public StudentImpl(String firstName, String lastName, String email,
+	public StudentImpl(int id, String firstName, String lastName, String email,
 			String phoneNumber, String studentNumber, String addressLine1,String addressLine2) {
-		super(firstName, lastName, email, phoneNumber, studentNumber, addressLine1, addressLine2);	
+		super(id, firstName, lastName, email, phoneNumber, studentNumber, addressLine1, addressLine2);	
 		moduleList = new ArrayList<Module>();
 	}
 
