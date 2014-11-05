@@ -4,8 +4,11 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.stereotype.Service;
+
 import com.citonline.interfaces.impl.StudentImpl;
 
+@Service
 public interface StudentDAO {
 
 	public void setDataSource(DataSource dataSource);

@@ -18,7 +18,7 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	
 	/**
 	 * Constructor of the class
-	 * 
+	 *
 	 * @param firstName
 	 * @param lastName
 	 * @param email

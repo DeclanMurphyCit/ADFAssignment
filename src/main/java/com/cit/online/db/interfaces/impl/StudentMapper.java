@@ -11,6 +11,7 @@ public class StudentMapper implements RowMapper {
 
 	@Override
 	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		int id = rs.getInt("id_Student");
 		String firstName = rs.getString("firstName");
 		String lastName = rs.getString("lastName");
 		String studentNumber = rs.getString("studentNumber");
@@ -20,6 +21,7 @@ public class StudentMapper implements RowMapper {
 		String addressLine2 = rs.getString("addressLine2");
 		StudentImpl student = new StudentImpl(firstName, lastName, email, phoneNumber, 
 				studentNumber,addressLine1,addressLine2);
+		student.setId(id);
 		
 		return student;
 	}

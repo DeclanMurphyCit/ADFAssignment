@@ -1,5 +1,7 @@
 package com.citonline.interfaces;
 
+import org.springframework.stereotype.Service;
+
 import com.citonline.domain.Module;
 import com.citonline.domain.Program;
 
@@ -8,6 +10,7 @@ import com.citonline.domain.Program;
 * @since   29-10-2014
 */
 
+@Service
 public interface StudentInt {
 	
 	public void enrolProgram (Program program);

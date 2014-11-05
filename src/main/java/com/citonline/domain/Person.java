@@ -1,9 +1,10 @@
 package com.citonline.domain;
 
 public abstract class Person {
-
+	
 	protected String firstName, lastName, email, phoneNumber;
-
+	protected int id;
+	
 	public Person(String firstName, String lastName, String email,
 			String phoneNumber) {
 		super();
@@ -43,5 +44,13 @@ public abstract class Person {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}		
+	}	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }
