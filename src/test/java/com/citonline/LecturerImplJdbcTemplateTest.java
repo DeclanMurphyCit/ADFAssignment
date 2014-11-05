@@ -7,13 +7,39 @@ package com.citonline;
 
 import static org.junit.Assert.*;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.expression.spel.ast.Projection;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+
+import com.cit.online.db.interfaces.impl.LecturerJdbcTemplate;
+import com.cit.online.db.interfaces.impl.ProgramJdbcTemplate;
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 
 /**
  * @author Fabien
  *
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"classpath:configuration.xml"})
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
+    DbUnitTestExecutionListener.class })
 public class LecturerImplJdbcTemplateTest {
+	
+	@Autowired
+	ApplicationContext autoWireContext;
+	@Autowired
+	LecturerJdbcTemplate lecJT;
+
+	final Logger logger = Logger.getLogger(LecturerImplJdbcTemplateTest.class);
 
 	/**
 	 * @author Fabien
@@ -23,12 +49,17 @@ public class LecturerImplJdbcTemplateTest {
 	 * This method tests the creation of a new Lecturer providing the  these params:
 	 * firstName, lastName, email, phoneNumber, roomNumber.
 	 * 
-	 * It will check the number of rows added and the details of the record.
+	 * It will check the number of rows added only. The details of the record would be
+	 * check in another test.
 	 * 
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testCreateLecturerStringStringStringStringString() {
-		fail("Not yet implemented");
+		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123");
+		
+		int nbRow = lecJT.countRows();
+		assertEquals(1,nbRow);
 	}
 
 	/**
@@ -43,8 +74,18 @@ public class LecturerImplJdbcTemplateTest {
 	 * 
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testCreateLecturerStringStringStringStringStringInteger() {
-		fail("Not yet implemented");
+		ProgramJdbcTemplate progJT = (ProgramJdbcTemplate) autoWireContext.getBean("ProgJdbcTemplate");
+		progJT.createProgram("DCOM4", "DCOM4");
+		
+		fail("Cannot go further because of ProgramJdbcTemplate does not allow me to get a program from name");
+		int progID = 1; // progJT.getProgram("DCOM4")
+		
+		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123", progID);
+		
+		int nbRow = lecJT.countRows();
+		assertEquals(1,nbRow);
 	}
 
 	/**
@@ -57,8 +98,15 @@ public class LecturerImplJdbcTemplateTest {
 	 * After creating a random Lecturer, it will remove it from the table and checks the number of row.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testDeleteLecturerInteger() {
-		fail("Not yet implemented");
+		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123");
+		
+		int nbRow = lecJT.countRows();
+		assertEquals(1,nbRow);
+		
+		lecJT.deleteLecturer("Donna","OShea");
+		assertEquals(0,nbRow);
 	}
 
 	/**
@@ -71,8 +119,15 @@ public class LecturerImplJdbcTemplateTest {
 	 * After adding a Lecturer in the db, it will remove it from the table and checks the number of row.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testDeleteLecturerStringString() {
-		fail("Not yet implemented");
+		lecJT.createLecturer("Donna", "OShea", "donna.oshea@cit.ie", "0123456789", "C123");
+		
+		int nbRow = lecJT.countRows();
+		assertEquals(1,nbRow);
+		
+		lecJT.deleteLecturer("Donna","OShea");
+		assertEquals(0,nbRow);
 	}
 
 	/**
@@ -87,6 +142,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * of the record in order to generate a new Lecturer which should be exactly the same as the first one.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testGetLecturerInteger() {
 		fail("Not yet implemented");
 	}
@@ -103,6 +159,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * of the record in order to generate a new Lecturer which should be exactly the same as the first one.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testGetLecturerStringString() {
 		fail("Not yet implemented");
 	}
@@ -118,6 +175,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * their firstName and lastName (other tests checks all the fields).
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testListLecturers() {
 		fail("Not yet implemented");
 	}
@@ -132,6 +190,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the first email, then change it and tests the email again to verify the update.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testUpdateLecturerEmailStringStringString() {
 		fail("Not yet implemented");
 	}
@@ -146,6 +205,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the first email, then change it and tests the email again to verify the update.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testUpdateLecturerEmailIntegerString() {
 		fail("Not yet implemented");
 	}
@@ -160,6 +220,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the first roomNumber, then change it and tests the roomNumber again to verify the update.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testUpdateLecturerRoomNumberStringStringString() {
 		fail("Not yet implemented");
 	}
@@ -174,6 +235,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the first roomNumber, then change it and tests the roomNumber again to verify the update.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testUpdateLecturerRoomNumberIntegerString() {
 		fail("Not yet implemented");
 	}
@@ -188,6 +250,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the first managedProgram, then change it and tests the managedProgram again to verify the update.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testUpdateLecturerManagedProgramStringStringInteger() {
 		fail("Not yet implemented");
 	}
@@ -202,6 +265,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the first managedProgram, then change it and tests the managedProgram again to verify the update.
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testUpdateLecturerManagedProgramIntegerInteger() {
 		fail("Not yet implemented");
 	}
@@ -217,6 +281,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the number of row only (checking the module is part of another test file).
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testAddTaughtModuleStringStringInteger() {
 		fail("Not yet implemented");
 	}
@@ -232,6 +297,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the number of row only (checking the module is part of another test file).
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testAddTaughtModuleIntegerInteger() {
 		fail("Not yet implemented");
 	}
@@ -247,6 +313,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the number of row only (checking the module is part of another test file).
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testAddTaughtModuleStringStringListOfInteger() {
 		fail("Not yet implemented");
 	}
@@ -262,6 +329,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * It will check the number of row only (checking the module is part of another test file).
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testAddTaughtModuleIntegerListOfInteger() {
 		fail("Not yet implemented");
 	}
@@ -278,6 +346,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * (checking the module is part of another test file).
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testRemoveTaughtModuleStringStringInteger() {
 		fail("Not yet implemented");
 	}
@@ -294,6 +363,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * (checking the module is part of another test file).
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testRemoveTaughtModuleIntegerInteger() {
 		fail("Not yet implemented");
 	}
@@ -310,6 +380,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * (checking the module is part of another test file).
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testRemoveTaughtModuleStringStringListOfInteger() {
 		fail("Not yet implemented");
 	}
@@ -326,6 +397,7 @@ public class LecturerImplJdbcTemplateTest {
 	 * (checking the module is part of another test file).
 	 */
 	@Test
+	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
 	public void testRemoveTaughtModuleIntegerListOfInteger() {
 		fail("Not yet implemented");
 	}
