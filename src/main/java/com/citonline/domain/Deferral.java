@@ -6,12 +6,13 @@ import java.util.Date;
 
 public class Deferral 
 {
+
 	Calendar defferalDate;
 	int student;
 	ArrayList<Module> defferedModules;
 	boolean programDeffered;
 	int program;
-	
+	int status;
 	
 	
 	public Deferral(Calendar defferalDate, int student, boolean programDeffered,
@@ -35,7 +36,13 @@ public class Deferral
 		this.program = program;
 		
 	}
+	public int getStatus() {
+		return status;
+	}
 
+	public void setStatus(Enum<DeferralStatus> e) {
+		this.status = e.ordinal();
+	}
 	public boolean isProgramDeffered() {
 		return programDeffered;
 	}

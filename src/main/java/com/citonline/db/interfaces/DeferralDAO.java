@@ -15,10 +15,12 @@ public interface DeferralDAO
 	
 	public void deleteDeferral(int id_defferal);
 	
-	public void updateDeferal(int id_defferal, int id_student, int id_program);
-	
-	public void addDeferredModules(ArrayList<Module> defered);
-	
 	public ArrayList<Module> getDeferredModules(int deferral);
+
+	void updateDeferal(int id_deferral, String firstName, String lastName);
+
+	void updateDeferal(int status, String studentNumber);
+
+	void addDeferredModules(int id_deferral, final ArrayList<Module> defered);
 
 }
