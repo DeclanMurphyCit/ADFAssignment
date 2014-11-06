@@ -12,27 +12,30 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.citonline.db.interfaces.DeferralDAO;
+import com.citonline.domain.Deferral;
 import com.citonline.domain.Lecturer;
 import com.citonline.domain.Module;
 
-public class DeferralJdbcTemplate extends JdbcDaoSupport implements DeferralDAO 
 @Repository
+public class DeferralJdbDaoSupport extends JdbcDaoSupport implements DeferralDAO 
 {
 	@Autowired
     private DataSource dataSource;
 
     @PostConstruct
-    private void initialize() {
+    private void initialize() 
+    {
 
            setDataSource(dataSource);
 
     }
 
-	@Override
-	public void createDeferral(Calendar date, int id_student, int id_program) {
+	public void createDeferral(Calendar date, int id_student, int id_program, boolean proframDeferred, int status) 
+	{
 		String SQL = "INSERT INTO  defferal(date, id_student, id_program)"
 				+ "VALUES(?, ?, ?, ?, ?)";
 		
@@ -98,6 +101,45 @@ public void updateDeferal(int status, String firstName, String lastName) {
 						new ModuleMapper());
 		return modules;
 
+	}
+
+	@Override
+	public void setDataSource(DataSource dataSource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void createDeferral(Calendar date, int id_student, int id_program,
+			boolean proframDeferred, int status) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Deferral> getDeferralsStudentName(String firstName,
+			String lastName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Deferral> getDefferalsStatus(int status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateDeferalStatus(int id_deferral, String firstName,
+			String lastName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateDeferalStatus(int status, String studentNumber) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -7,35 +7,24 @@ import java.util.Date;
 public class Deferral 
 {
 
-	Calendar defferalDate;
+	Date defferalDate;
 	int student;
 	ArrayList<Module> defferedModules;
 	boolean programDeffered;
-	int program;
+	int program_id;
 	int status;
 	
 	
-	public Deferral(Calendar defferalDate, int student, boolean programDeffered,
-			int program) {
+	public Deferral(Date deferralDate, int student,int program, boolean programDeffered, int status) {
 		super();
-		this.defferalDate = defferalDate;
+		this.defferalDate = deferralDate;
 		this.student = student;
 		this.programDeffered = programDeffered;
-		this.program = program;
+		this.program_id = program;
 		
 		ArrayList<Module> defferedModules = new ArrayList<Module>();
 	}
 
-	public Deferral(Date deferralDate, int id_student, int id_program,
-			int id_deferral) {
-		super();
-		this.defferalDate = defferalDate;
-		this.student = student;
-		this.defferedModules = defferedModules;
-		this.programDeffered = programDeffered;
-		this.program = program;
-		
-	}
 	public int getStatus() {
 		return status;
 	}
@@ -52,18 +41,18 @@ public class Deferral
 	}
 
 	public int getProgram() {
-		return program;
+		return program_id;
 	}
 
 	public void setProgram(int program) {
-		this.program = program;
+		this.program_id = program;
 	}
 
 	
-	public Calendar getDefferalDate() {
+	public Date getDefferalDate() {
 		return defferalDate;
 	}
-	public void setDefferalDate(Calendar defferalDate) {
+	public void setDefferalDate(Date defferalDate) {
 		this.defferalDate = defferalDate;
 	}
 	public int getStudent() {
