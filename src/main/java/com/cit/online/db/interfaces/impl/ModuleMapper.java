@@ -17,11 +17,12 @@ public class ModuleMapper implements RowMapper {
 
 	@Override
 	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		int id = rs.getInt("id_module");
 		String code = rs.getString("code");
 		String crn = rs.getString("crn");
 		String name = rs.getString("name");
 		int semester = rs.getInt("semester");
-		Module module = new Module(crn, name, code, 
+		Module module = new Module(0, crn, name, code, 
 				semester);
 		
 		return module;

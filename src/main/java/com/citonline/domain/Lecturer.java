@@ -15,15 +15,16 @@ public class Lecturer extends Person {
 	protected String roomNumber;
 	
 	/**
+	 * @param id
 	 * @param firstName
 	 * @param lastName
 	 * @param email
 	 * @param phoneNumber
 	 * @param roomNumber
 	 */
-	public Lecturer(String firstName, String lastName, String email,
+	public Lecturer(int id, String firstName, String lastName, String email,
 			String phoneNumber, String roomNumber) {
-		super(firstName, lastName, email, phoneNumber);
+		super(id, firstName, lastName, email, phoneNumber);
 		this.roomNumber = roomNumber;
 
 		// Avoid a null pointer exception in case of using addModule before setting it.
@@ -31,6 +32,7 @@ public class Lecturer extends Person {
 	}
 
 	/**
+	 * @param id
 	 * @param firstName
 	 * @param lastName
 	 * @param email
@@ -38,9 +40,9 @@ public class Lecturer extends Person {
 	 * @param roomNumber
 	 * @param managedProgram the program the lecturer managed, if any
 	 */
-	public Lecturer(String firstName, String lastName, String email,
+	public Lecturer(int id, String firstName, String lastName, String email,
 			String phoneNumber, String roomNumber, Program managedProgram) {
-		super(firstName, lastName, email, phoneNumber);
+		super(id, firstName, lastName, email, phoneNumber);
 		this.roomNumber = roomNumber;
 		this.managedProgram = managedProgram;
 

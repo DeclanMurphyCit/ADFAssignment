@@ -1,12 +1,14 @@
 package com.citonline.domain;
 
 public abstract class Person {
-
+	
 	protected String firstName, lastName, email, phoneNumber;
-
-	public Person(String firstName, String lastName, String email,
+	protected int id;
+	
+	public Person(int id, String firstName, String lastName, String email,
 			String phoneNumber) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -43,5 +45,13 @@ public abstract class Person {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}		
+	}	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

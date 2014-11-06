@@ -12,13 +12,14 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.citonline.db.interfaces.DeferralDAO;
 import com.citonline.domain.Lecturer;
 import com.citonline.domain.Module;
 
 public class DeferralJdbcTemplate extends JdbcDaoSupport implements DeferralDAO 
+@Repository
 {
 	@Autowired
     private DataSource dataSource;

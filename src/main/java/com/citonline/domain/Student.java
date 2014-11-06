@@ -8,11 +8,12 @@ package com.citonline.domain;
 
 public class Student extends Person{	
 	
+	
 	String studentNumber, addressLine1,addressLine2;
 	
-	public Student(String firstName, String lastName, String email,
+	public Student(int id, String firstName, String lastName, String email,
 			String phoneNumber, String studentNumber, String addressLine1, String addressLine2) {
-		super(firstName, lastName, email, phoneNumber);
+		super(id, firstName, lastName, email, phoneNumber);
 		this.studentNumber = studentNumber;
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;

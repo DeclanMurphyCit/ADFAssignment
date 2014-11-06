@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.stereotype.Service;
+
 import com.citonline.domain.Program;
 import com.citonline.domain.Semester;
 
@@ -19,6 +21,7 @@ import com.citonline.domain.Semester;
  * Expected Outputs: create, delete, update, list semesters, return Program
  */
 
+@Service
 public interface ProgramDAO {
 
 	public void setDataSource(DataSource dataSource);

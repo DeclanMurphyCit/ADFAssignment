@@ -21,7 +21,7 @@
 	<bean id="dataSource" 
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://local:3306/mydb"/>
+		<property name="url" value="jdbc:mysql://local:3306/app_dev_assignment1"/>
 		<property name="username" value="root"/>
 		<property name="password" value="root"/>	
 	</bean>
@@ -34,13 +34,8 @@
 		<property name="transactionManager" ref="transactionManager"></property>
 	</bean>
 	
-	<bean id="LectJdbcTemplate" class="com.cit.online.db.interfaces.impl.LecturerJdbcTemplate">
-	</bean>
-	
-	<bean id="ProgJdbcTemplate" class="com.cit.online.db.interfaces.impl.ProgramJdbcTemplate">
-	</bean>
-	
 	<bean id="Lecturer_DonnaOshea" class="com.citonline.interfaces.impl.LecturerImpl" autowire="no">
+		<constructor-arg name="id" value="1"></constructor-arg>
 		<constructor-arg name="firstName" value="Donna"></constructor-arg>
  		<constructor-arg name="lastName" value="Oshea"></constructor-arg>
  		<constructor-arg name="email" value="donna.oshea@cit.ie"></constructor-arg>
@@ -49,6 +44,7 @@
 	</bean>
 	
 	<bean id="Student_Declan" class="com.citonline.interfaces.impl.StudentImpl">
+		<constructor-arg name="id" value="1"></constructor-arg>
 		<constructor-arg name="firstName" value="Declan"></constructor-arg>
  		<constructor-arg name="lastName" value="Murphy"></constructor-arg>
  		<constructor-arg name="email" value="declan.murphy2@mycit.ie"></constructor-arg>
@@ -60,13 +56,14 @@
 
 
 	<bean id="Module_ADF" class="com.citonline.domain.Module">
+		<constructor-arg name="id" value="1"></constructor-arg>
 		<constructor-arg name="code" value="SOFT8020"></constructor-arg>
  		<constructor-arg name="crn" value="CRN"></constructor-arg>
  		<constructor-arg name="name" value="App Dev Frmwk"></constructor-arg>
  		<constructor-arg name="semester" value="7"></constructor-arg>
 	</bean>
 	
-		<bean id="Program_SoftwareDev" class="com.citonline.domain.Program">
+	<bean id="Program_SoftwareDev" class="com.citonline.domain.Program">
 		<constructor-arg name="programName" value="Software Development"></constructor-arg>
  		<constructor-arg name="programCode" value="CR106"></constructor-arg>
 	</bean>
