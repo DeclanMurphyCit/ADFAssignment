@@ -172,4 +172,12 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 		
 		System.out.println("Student " + idStudent + " has disenrolled from moudle: " + idModule);
 	}
+	
+	@Override
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public int countRows() {
+		String SQL = "select count(id_student) from student";
+		int rows=getJdbcTemplate().queryForObject(SQL, Integer.class);
+		return rows;
+	}
 }

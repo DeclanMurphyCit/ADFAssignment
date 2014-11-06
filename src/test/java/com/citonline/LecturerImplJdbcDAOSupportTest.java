@@ -34,7 +34,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:configuration.xml"})
+@ContextConfiguration({"classpath:config.xml"})
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
     DbUnitTestExecutionListener.class })
 public class LecturerImplJdbcDAOSupportTest {
