@@ -13,7 +13,6 @@ import com.citonline.domain.Module;
 @Service
 public interface DeferralDAO 
 {
-	public void setDataSource(DataSource dataSource);
 	
 	public void createDeferral(Calendar date, int id_student, int id_program, boolean proframDeferred, int status);
 	
