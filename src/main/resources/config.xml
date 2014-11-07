@@ -21,7 +21,7 @@
 	<bean id="dataSource" 
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://local:3306/app_dev_assignment1"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/app_dev_assignment1"/>
 		<property name="username" value="root"/>
 		<property name="password" value="root"/>	
 	</bean>
@@ -33,6 +33,10 @@
 	<bean id="txTemplate" class="org.springframework.transaction.support.TransactionTemplate">
 		<property name="transactionManager" ref="transactionManager"></property>
 	</bean>
+	
+	<!-- No beans were created by the @Repository -->
+	<bean id="StudentJdbcDaoSupport" class="com.cit.online.db.interfaces.impl.StudentJdbcDaoSupport"></bean>	
+	<bean id="LecturerJdbcDaoSupport" class="com.cit.online.db.interfaces.impl.LecturerJdbcDaoSupport"></bean>
 	
 	<bean id="Lecturer_DonnaOshea" class="com.citonline.interfaces.impl.LecturerImpl" autowire="no">
 		<constructor-arg name="id" value="1"></constructor-arg>

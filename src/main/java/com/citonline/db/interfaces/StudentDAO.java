@@ -39,5 +39,7 @@ public interface StudentDAO {
 	
 	public void enrollModules(final Integer idStudent, final List<Integer> idModuleList);
 	
-	public void removeModule(Integer idStudent, Integer idModule);	
+	public void removeModule(Integer idStudent, Integer idModule);
+	
+	public int countRows();
 }
