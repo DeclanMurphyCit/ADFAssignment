@@ -55,7 +55,7 @@ public class DeferralJdbDaoSupport extends JdbcDaoSupport implements DeferralDAO
 	}
 
 	@Override
-	public void updateDeferal(int status, String studentNumber) {
+	public void updateDeferalStatus(int status, String studentNumber) {
 		
 		String SQL = "UPDATE deferral SET status=? where id_student in (SELECT id_student from Student where studentNumber =?)";
 		getJdbcTemplate().update(SQL, new Object[]{status, studentNumber});
@@ -63,7 +63,9 @@ public class DeferralJdbDaoSupport extends JdbcDaoSupport implements DeferralDAO
 		System.out.println("update Defferal status " + status + " student :" + studentNumber);
 
 	}
-public void updateDeferal(int status, String firstName, String lastName) {
+	
+	public void updateDeferal(int status, String firstName, String lastName) 
+	{
 		
 		String SQL = "UPDATE deferral SET status=? where id_student in (SELECT id_student from Student where firstName =? and secondName =?)";
 		getJdbcTemplate().update(SQL, new Object[]{status, firstName, lastName});
@@ -95,12 +97,21 @@ public void updateDeferal(int status, String firstName, String lastName) {
 
 	@Override
 	public ArrayList<Module> getDeferredModules(int deferral) {
-		String SQL = "select * from deferredModules where deferralId";
+		String SQL = "select * from deferredModules where id_deferral= ?";
 		ArrayList<Module> modules = (ArrayList<Module>) getJdbcTemplate().query(SQL, 
-						new ModuleMapper());
+				new Object[]{deferral},new ModuleMapper());
 		return modules;
 
 	}
+	
+	public ArrayList<Module> getDeferredModulesName(String firstName, String lastName) 
+	{
+		String SQL = "select * from deferredModules where id_deferral= ?";
+		ArrayList<Module> modules = (ArrayList<Module>) getJdbcTemplate().query(SQL, 
+				new Object[]{deferral},new ModuleMapper());
+		return modules;
+	}
+	
 
 	@Override
 	public ArrayList<Deferral> getDeferralsStudentName(String firstName,
@@ -113,19 +124,6 @@ public void updateDeferal(int status, String firstName, String lastName) {
 	public ArrayList<Deferral> getDefferalsStatus(int status) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void updateDeferalStatus(int id_deferral, String firstName,
-			String lastName) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateDeferalStatus(int status, String studentNumber) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
