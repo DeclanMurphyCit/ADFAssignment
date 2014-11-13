@@ -36,8 +36,8 @@
 	</bean>
 	
 	<!-- No beans were created by the @Repository -->
-	<bean id="StudentJdbcDaoSupport" class="com.cit.online.db.interfaces.impl.StudentJdbcDaoSupport"></bean>	
-	<bean id="LecturerJdbcDaoSupport" class="com.cit.online.db.interfaces.impl.LecturerJdbcDaoSupport"></bean>
+	<bean id="StudentJdbcDaoSupport" class="com.citonline.db.interfaces.impl.StudentJdbcDaoSupport"></bean>	
+	<bean id="LecturerJdbcDaoSupport" class="com.citonline.db.interfaces.impl.LecturerJdbcDaoSupport"></bean>
 	<bean id="DeferralJdbcDaoSupport" class="com.cit.online.db.interfaces.impl.DeferralJdbcDaoSupport"></bean>	
 	
 	<bean id="deferal1" class="com.citonline.domain.Deferral" autowire="no">

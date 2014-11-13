@@ -21,7 +21,7 @@ USE `app_dev_assignment1` ;
 -- Table `app_dev_assignment1`.`student`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`student` (
-  `id_student` INT NOT NULL,
+  `id_student` INT AUTO_INCREMENT NOT NULL,
   `firstName` VARCHAR(20) NULL DEFAULT NULL,
   `lastName` VARCHAR(30) NULL DEFAULT NULL,
   `studentNumber` VARCHAR(10) NULL DEFAULT NULL,
@@ -37,7 +37,7 @@ ENGINE = InnoDB;
 -- Table `app_dev_assignment1`.`defferal_status_types`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`defferal_status_types` (
-  `id_deferral_status` INT NOT NULL,
+  `id_deferral_status` INT AUTO_INCREMENT NOT NULL,
   `defferal_status` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id_deferral_status`))
 ENGINE = InnoDB;
@@ -47,7 +47,7 @@ ENGINE = InnoDB;
 -- Table `app_dev_assignment1`.`deferral`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`deferral` (
-  `id_deferral` INT NOT NULL,
+  `id_deferral` INT AUTO_INCREMENT NOT NULL,
   `deferral_date` DATE NOT NULL,
   `id_program` INT NOT NULL,
   `id_student` INT NOT NULL,
@@ -73,18 +73,13 @@ ENGINE = InnoDB;
 -- Table `app_dev_assignment1`.`program`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`program` (
-  `id_program` INT NOT NULL,
+  `id_program` INT AUTO_INCREMENT NOT NULL,
   `program_name` VARCHAR(30) NULL DEFAULT NULL,
   `year_number` MEDIUMINT(9) NULL DEFAULT NULL,
   `program_code` VARCHAR(10) NULL DEFAULT NULL,
-  `deferral_id_deferral` INT NOT NULL,
   PRIMARY KEY (`id_program`),
-  INDEX `fk_program_deferral1_idx` (`deferral_id_deferral` ASC),
-  CONSTRAINT `fk_program_deferral1`
-    FOREIGN KEY (`deferral_id_deferral`)
-    REFERENCES `app_dev_assignment1`.`deferral` (`id_deferral`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  INDEX `fk_program_deferral1_idx` (`deferral_id_deferral` ASC)
+  )
 ENGINE = InnoDB;
 
 
@@ -92,7 +87,7 @@ ENGINE = InnoDB;
 -- Table `app_dev_assignment1`.`lecturer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`lecturer` (
-  `id_lecturer` INT NOT NULL,
+  `id_lecturer` INT AUTO_INCREMENT NOT NULL,
   `roomNumber` VARCHAR(5) NULL DEFAULT NULL,
   `email` VARCHAR(45) NOT NULL,
   `firstName` VARCHAR(40) NULL DEFAULT NULL,
@@ -113,7 +108,7 @@ ENGINE = InnoDB;
 -- Table `app_dev_assignment1`.`module`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`module` (
-  `id_module` INT NOT NULL,
+  `id_module` INT AUTO_INCREMENT NOT NULL,
   `code` VARCHAR(9) NULL DEFAULT NULL,
   `crn` VARCHAR(6) NULL DEFAULT NULL,
   `name` VARCHAR(50) NULL DEFAULT NULL,
@@ -194,7 +189,7 @@ ENGINE = InnoDB;
 -- Table `app_dev_assignment1`.`deferred_modules`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `app_dev_assignment1`.`deferred_modules` (
-  `id_modules_deferred` INT NOT NULL,
+  `id_modules_deferred` INT AUTO_INCREMENT NOT NULL,
   `id_module` INT NOT NULL,
   `id_deferral` INT NOT NULL,
   INDEX `fk_defferal_has_module_module1_idx` (`id_module` ASC),

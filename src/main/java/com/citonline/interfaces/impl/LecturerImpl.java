@@ -40,7 +40,7 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	 * @param email
 	 * @param phoneNumber
 	 * @param roomNumber
-	 * @param managedProgram
+	 * @param idManagedProgram
 	 */
 	public LecturerImpl(int id, String firstName, String lastName, String email,
 			String phoneNumber, String roomNumber, Program managedProgram) {
@@ -69,7 +69,7 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	 */
 	@Override
 	public boolean isProgramManager() {
-		return managedProgram != null;
+		return idManagedProgram != null;
 	}
 
 	/* (non-Javadoc)

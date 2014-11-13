@@ -268,9 +268,9 @@ public class LecturerImplJdbcDAOSupportTest {
 		LecturerImpl donna = lecturerJdbcDaoSupportObject.getLecturer(1);
 		assertEquals("B180A",donna.getRoomNumber());
 		
-		lecturerJdbcDaoSupportObject.updateLecturerRoomNumber("Donna","OShea", "HeadRoom");
+		lecturerJdbcDaoSupportObject.updateLecturerRoomNumber("Donna","OShea", "HRoom");
 		donna = lecturerJdbcDaoSupportObject.getLecturer(1);
-		assertEquals("HeadRoom",donna.getRoomNumber());
+		assertEquals("HRoom",donna.getRoomNumber());
   	}
   
   	/**
@@ -297,11 +297,11 @@ public class LecturerImplJdbcDAOSupportTest {
   	/**
   	 * @author Fabien
   	 * 
-  	 * This methods checks the update of the managedProgram of a Lecturer, providing its firstName and lastName.
+  	 * This methods checks the update of the idManagedProgram of a Lecturer, providing its firstName and lastName.
   	 * 
-  	 * It will check the first managedProgram, then change it and tests the managedProgram again to verify the update.
+  	 * It will check the first idManagedProgram, then change it and tests the idManagedProgram again to verify the update.
 	 * 
-	 * INPUT: Ted Scully with no managedProgram.
+	 * INPUT: Ted Scully with no idManagedProgram.
 	 * EXPECTED OUTPUT: Ted Scully managed the program of id=1
   	 */
   	@Test
@@ -319,13 +319,13 @@ public class LecturerImplJdbcDAOSupportTest {
 	/**
 	 * @author Fabien
 	 * 
-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.Integer, java.lang.Integer)}.
+	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.Integer, java.lang.Integer)}.
 	 * 
-	 * This methods checks the update of the managedProgram of a Lecturer, providing its id.
+	 * This methods checks the update of the idManagedProgram of a Lecturer, providing its id.
 	 * 
-	 * It will check the first managedProgram, then change it and tests the managedProgram again to verify the update.
+	 * It will check the first idManagedProgram, then change it and tests the idManagedProgram again to verify the update.
 	 * 
-	 * INPUT: Ted Scully with no managedProgram.
+	 * INPUT: Ted Scully with no idManagedProgram.
 	 * EXPECTED OUTPUT: Ted Scully managed the program of id=1
 	 */
   	@Test
@@ -342,7 +342,7 @@ public class LecturerImplJdbcDAOSupportTest {
 	/**
 	 * @author Fabien
 	 * 
-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
+	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
 	 * 
 	 * This methods checks the addition of a module that a Lecturer teaches, providing its firstName and lastName.
 	 * 
@@ -367,7 +367,7 @@ public class LecturerImplJdbcDAOSupportTest {
 	/**
 	 * @author Fabien
 	 * 
-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.lang.Integer)}.
+	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.lang.Integer)}.
 	 * 
 	 * This methods checks the addition of a module that a Lecturer teaches, providing its id.
 	 * 
@@ -392,7 +392,7 @@ public class LecturerImplJdbcDAOSupportTest {
 	/**
 	 * @author Fabien
 	 * 
-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
+	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
 	 * 
 	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its firstName and lastName.
 	 * 
@@ -422,7 +422,7 @@ public class LecturerImplJdbcDAOSupportTest {
 	/**
 	 * @author Fabien
 	 * 
-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.util.List)}.
+	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.util.List)}.
 	 * 
 	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its id.
 	 * 
@@ -452,7 +452,7 @@ public class LecturerImplJdbcDAOSupportTest {
 	/**
 	 * @author Fabien
 	 * 
-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
+	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
 	 * 
 	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its firstName and lastName.
 	 * 
@@ -478,7 +478,7 @@ public class LecturerImplJdbcDAOSupportTest {
 	/**
 	 * @author Fabien
 	 * 
-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.lang.Integer)}.
+	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.lang.Integer)}.
 	 * 
 	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its id.
 	 * 
@@ -504,7 +504,7 @@ public class LecturerImplJdbcDAOSupportTest {
 	/**
 	 * @author Fabien
 	 * 
-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
+	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
 	 * 
 	 * This methods checks the deletion of a list modules that a Lecturer stop teaching, providing its firstName and lastName.
 	 * 
@@ -533,7 +533,7 @@ public class LecturerImplJdbcDAOSupportTest {
 	/**
 	 * @author Fabien
 	 * 
-	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.util.List)}.
+	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.util.List)}.
 	 * 
 	 * This methods checks the deletion of a list of modules that a Lecturer stop teaching, providing its id.
 	 * 

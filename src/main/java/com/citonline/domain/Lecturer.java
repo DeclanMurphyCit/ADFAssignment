@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Lecturer extends Person {
 	
-	protected Program managedProgram;
+	protected Program idManagedProgram;
 	protected ArrayList<Module> taughtModules;
 	
 	protected String roomNumber;
@@ -38,13 +38,13 @@ public class Lecturer extends Person {
 	 * @param email
 	 * @param phoneNumber
 	 * @param roomNumber
-	 * @param managedProgram the program the lecturer managed, if any
+	 * @param idManagedProgram the program the lecturer managed, if any
 	 */
 	public Lecturer(int id, String firstName, String lastName, String email,
 			String phoneNumber, String roomNumber, Program managedProgram) {
 		super(id, firstName, lastName, email, phoneNumber);
 		this.roomNumber = roomNumber;
-		this.managedProgram = managedProgram;
+		this.idManagedProgram = managedProgram;
 
 		// Avoid a null pointer exception in case of using addModule before setting it.
 		taughtModules = new ArrayList<Module>();
@@ -52,17 +52,17 @@ public class Lecturer extends Person {
 	
 
 	/**
-	 * @return the managedProgram
+	 * @return the idManagedProgram
 	 */
 	public Program getManagedProgram() {
-		return managedProgram;
+		return idManagedProgram;
 	}
 
 	/**
-	 * @param managedProgram the managedProgram to set
+	 * @param idManagedProgram the idManagedProgram to set
 	 */
 	public void setManagedProgram(Program managedProgram) {
-		this.managedProgram = managedProgram;
+		this.idManagedProgram = managedProgram;
 	}
 	
 	/**
