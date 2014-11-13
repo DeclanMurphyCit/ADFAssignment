@@ -1,11 +1,13 @@
 package com.citonline.db.interfaces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.stereotype.Service;
 
+import com.citonline.domain.Module;
 import com.citonline.interfaces.impl.StudentImpl;
 
 @Service
@@ -42,4 +44,6 @@ public interface StudentDAO {
 	public void removeModule(Integer idStudent, Integer idModule);
 	
 	public int countRows();
+
+	public ArrayList<Module> getEnrolledModules(Integer id_student);
 }
