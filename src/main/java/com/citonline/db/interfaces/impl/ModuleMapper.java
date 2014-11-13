@@ -1,4 +1,4 @@
-package com.cit.online.db.interfaces.impl;
+package com.citonline.db.interfaces.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
