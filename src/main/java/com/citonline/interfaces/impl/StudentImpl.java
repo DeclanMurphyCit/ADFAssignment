@@ -31,6 +31,11 @@ public class StudentImpl extends Student implements StudentInt {
 	}
 	
 	@Override
+	public void enrolModules(ArrayList<Module> moduleList) {
+		moduleList.addAll(moduleList);
+	}
+	
+	@Override
 	public void enrolProgram(Program Program) {
 		setProgram(program);
 	}

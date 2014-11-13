@@ -2,6 +2,7 @@ package com.cit.online.db.interfaces.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.citonline.db.interfaces.StudentDAO;
+import com.citonline.domain.Module;
 import com.citonline.interfaces.impl.StudentImpl;
 
 @Repository
@@ -116,7 +118,7 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 	@Transactional
 	public void updateStudentAddress(String studentNumber, String addressLine1, String addressLine2) {
 		String SQL = "update student set addressLine1 = ?, addressLine2 = ? where studentNumber = ?";
-		getJdbcTemplate().update(SQL, new Object[] {addressLine1,addressLine1,studentNumber});
+		getJdbcTemplate().update(SQL, new Object[] {addressLine1,addressLine2,studentNumber});
 		System.out.println("Updated student address to " + addressLine1 + ", "+addressLine1+ " where studentNumber = " + studentNumber );
 		
 	}
@@ -124,8 +126,8 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 	@Override
 	@Transactional
 	public void updateStudentAddress(Integer id, String addressLine1, String addressLine2) {
-		String SQL = "update student set email = ? where id_student = ?";
-		getJdbcTemplate().update(SQL, new Object[] {addressLine1,addressLine1,id});
+		String SQL = "update student set addressLine1 = ?, addressLine2 = ? where id_student = ?";
+		getJdbcTemplate().update(SQL, new Object[] {addressLine1,addressLine2,id});
 		System.out.println("Updated student address to " + addressLine1 + ", "+addressLine1+ " where id_student = " + id );
 	}
 
@@ -162,7 +164,24 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 				System.out.print(idModule + ",");
 			}		
 		});
-	}	
+	}
+	
+	@Override
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public ArrayList<Module> getEnrolledModules(Integer id_student) {
+		
+		ArrayList<Module> enrolledModules;
+		
+		String SQL="SELECT * from module"
+				+ " JOIN student_enrolls_for on "
+				+ " student_enrolls_for.idModule = module.id_module"
+				+ " AND student_enrolls_for.idStudent= ?";
+				
+		enrolledModules = (ArrayList<Module>) getJdbcTemplate().query(SQL,
+				new Object[] {id_student}, new ModuleMapper());
+		
+		return enrolledModules;
+	}
 
 	@Override
 	@Transactional

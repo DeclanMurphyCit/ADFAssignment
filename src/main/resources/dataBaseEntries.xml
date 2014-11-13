@@ -4,11 +4,18 @@
 	<module id_module="2"/>
 	<module id_module="3"/>
 	<module id_module="4"/>
-	<program id_program="1" program_name="DCOM4" program_code="DCOM4"/>
+	<program  program_name="DCOM4" program_code="DCOM4"/>
 	<lecturer id_lecturer="1" firstName="Donna" lastName="OShea" email="donna.oshea@cit.ie"
 		phoneNumber="0123456789" roomNumber="B180A"/>
 	<lecturer id_lecturer="2" firstName="Ted" lastName="Scully" email="ted.scully@cit.ie"
 		phoneNumber="0123456789" roomNumber="B180A"/>
 	<lecturer_teaches_module idLecturer="2" idModule="1" />
 	<lecturer_teaches_module idLecturer="2" idModule="2" />
+	
+	<student id_student="1" firstName="Simon" lastName="Casey" email="simon.casey@mycit.ie"
+		studentNumber="R00058441" phoneNumber="098765433" addressLine1="Tramore" addressLine2="Waterford"/>
+	<student id_student="2" firstName="Mary" lastName="Casey" email="mary.casey@mycit.ie"
+		studentNumber="R00058442" phoneNumber="5436356432" addressLine1="Bishopstown" addressLine2="Cork"/>
+	
+		
 </dataset>
