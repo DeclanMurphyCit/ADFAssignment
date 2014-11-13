@@ -3,7 +3,7 @@
  *
  * @since 5 nov. 2014
  */
-package com.cit.online.db.interfaces.impl;
+package com.citonline.db.interfaces.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -175,20 +175,20 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Transactional
 	public void updateLecturerManagedProgram(String firstName, String lastName,
 		Integer idManagedProgram) {
-	String SQL = "UPDATE lecturer SET managedProgram=? where firstName = ? and lastName = ?";
+	String SQL = "UPDATE lecturer SET idManagedProgram=? where firstName = ? and lastName = ?";
 	getJdbcTemplate().update(SQL, new Object[]{idManagedProgram, firstName, lastName});
 	
 	System.out.println("update lecturer " + firstName + " " + lastName +
-			"'s managedProgram. Set to: " + idManagedProgram);
+			"'s idManagedProgram. Set to: " + idManagedProgram);
 	}
 
 	@Override
 	@Transactional
 	public void updateLecturerManagedProgram(Integer id_lecturer, Integer idManagedProgram) {
-		String SQL = "UPDATE lecturer SET managedProgram=? where id_lecturer = ?";
+		String SQL = "UPDATE lecturer SET idManagedProgram=? where id_lecturer = ?";
 	getJdbcTemplate().update(SQL, new Object[]{idManagedProgram, id_lecturer});
 	
-	System.out.println("update lecturer " + id_lecturer + "'s managedProgram. Set to: " + idManagedProgram);
+	System.out.println("update lecturer " + id_lecturer + "'s idManagedProgram. Set to: " + idManagedProgram);
 	}
 
 	@Override
@@ -199,8 +199,8 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 		String SQL = "SELECT id_lecturer from lecturer WHERE firstName = ? AND nastName = ?";
 		final int id_lecturer=getJdbcTemplate().queryForObject(SQL, Integer.class);
 
-		String SQL2 = "INSERT INTO  lecturer_teaches_module(id_lecturer, idModule)" +
-			"VALUES managedProgram=? where id_lecturer = ?";
+		String SQL2 = "INSERT INTO  lecturer_teaches_module(idLecturer, idModule)" +
+			"VALUES idManagedProgram=? where idLecturer = ?";
 		getJdbcTemplate().update(SQL2, new Object[]{id_lecturer, idModule});
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add " + idModule);
@@ -210,7 +210,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Override
 	@Transactional
 	public void addTaughtModule(Integer id_lecturer, Integer idModule) {
-		String SQL = "INSERT INTO lecturer_teaches_module(id_lecturer, idModule)" +
+		String SQL = "INSERT INTO lecturer_teaches_module(idLecturer, idModule)" +
 				"VALUES (?, ?)";
 		getJdbcTemplate().update(SQL, new Object[]{id_lecturer, idModule});
 		
@@ -224,7 +224,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 		String SQL = "SELECT id_lecturer from lecturer WHERE firstName = ? AND nastName = ?";
 		final int id_lecturer=getJdbcTemplate().queryForObject(SQL, Integer.class);
 		
-		String SQL2 = "INSERT INTO lecturer_teaches_module(id_lecturer, idModule)" +
+		String SQL2 = "INSERT INTO lecturer_teaches_module(idLecturer, idModule)" +
 				"VALUES (?, ?)";
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add ");
 		getJdbcTemplate().update(SQL2, new BatchPreparedStatementSetter() {
@@ -246,7 +246,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Override
 	@Transactional
 	public void addTaughtModule(final Integer id_lecturer, final List<Integer> idModuleList) {
-		String SQL = "INSERT INTO lecturer_teaches_module(id_lecturer, idModule)" +
+		String SQL = "INSERT INTO lecturer_teaches_module(idLecturer, idModule)" +
 				"VALUES (?, ?)";
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add ");
@@ -273,7 +273,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 		String SQL= "SELECT id_lecturer from lecturer WHERE firstName= ? AND lastName= ?";
 		final int id_lecturer=getJdbcTemplate().queryForObject(SQL, Integer.class);
 		
-		String SQL2 = "DELETE from lecturer_teaches_module WHERE id_lecturer= ?";
+		String SQL2 = "DELETE from lecturer_teaches_module WHERE idLecturer= ?";
 		getJdbcTemplate().update(SQL2, new Object[]{id_lecturer, idModule});
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: remove " + idModule);
@@ -283,7 +283,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Override
 	@Transactional
 	public void removeTaughtModule(Integer id_lecturer, Integer idModule) {
-		String SQL = "DELETE from lecturer_teaches_module WHERE id_lecturer= ?";
+		String SQL = "DELETE from lecturer_teaches_module WHERE idLecturer= ?";
 		getJdbcTemplate().update(SQL, new Object[]{id_lecturer, idModule});
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: remove " + idModule);
@@ -297,7 +297,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 		String SQL= "SELECT id_lecturer from lecturer WHERE firstName= ? AND lastName= ?";
 		final int id_lecturer=getJdbcTemplate().queryForObject(SQL, Integer.class);
 		
-		String SQL2 = "DELETE FROM lecturer_teaches_module WHERE id_lecturer = ? " +
+		String SQL2 = "DELETE FROM lecturer_teaches_module WHERE idLecturer = ? " +
 			"AND idModule = ?";
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: removing ");
@@ -320,7 +320,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Override
 	@Transactional
 	public void removeTaughtModule(final Integer id_lecturer, final List<Integer> idModuleList) {
-		String SQL = "DELETE FROM lecturer_teaches_module WHERE id_lecturer = ? " +
+		String SQL = "DELETE FROM lecturer_teaches_module WHERE idLecturer = ? " +
 				"AND idModule = ?";
 			
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: remove ");

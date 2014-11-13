@@ -15,7 +15,7 @@ index ce13b67..0000000
 - * 
 - * @since 25 oct. 2014
 - */
--package com.cit.online.db.interfaces.impl;
+-package com.citonline.db.interfaces.impl;
 -
 -import java.sql.PreparedStatement;
 -import java.sql.SQLException;
@@ -511,8 +511,8 @@ index 0000000..d9e4d25
 +import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 +import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 +
-+import com.cit.online.db.interfaces.impl.LecturerJdbcTemplate;
-+import com.cit.online.db.interfaces.impl.ProgramJdbcTemplate;
++import com.citonline.db.interfaces.impl.LecturerJdbcTemplate;
++import com.citonline.db.interfaces.impl.ProgramJdbcTemplate;
 +import com.github.springtestdbunit.DbUnitTestExecutionListener;
 +import com.github.springtestdbunit.annotation.DatabaseOperation;
 +import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -537,7 +537,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
 +	 * 
 +	 * This method tests the creation of a new Lecturer providing the  these params:
 +	 * firstName, lastName, email, phoneNumber, roomNumber.
@@ -558,7 +558,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer)}.
 +	 *
 +	 * This method tests the creation of a new Lecturer providing these params:
 +	 * firstName, lastName, email, phoneNumber, roomNumber, idManagedProgram.
@@ -584,7 +584,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.Integer)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.Integer)}.
 +	 * 
 +	 * This method tests the deletion of a Lecturer providing its id.
 +	 * 
@@ -605,7 +605,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.String, java.lang.String)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.String, java.lang.String)}.
 +	 * 
 +	 * This method tests the deletion of a Lecturer providing its firstName and lastName.
 +	 * 
@@ -626,7 +626,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.Integer)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.Integer)}.
 +	 * 
 +	 * This method tests if we are able to get a Lecturer from the database providing its id
 +	 * and create its corresponding object.
@@ -643,7 +643,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.String, java.lang.String)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.String, java.lang.String)}.
 +	 * 
 +	 * This method tests if we are able to get a Lecturer from the database providing its firstName and lastName
 +	 * and create its corresponding object.
@@ -660,7 +660,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#listLecturers()}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#listLecturers()}.
 +	 * 
 +	 * This method tests if we are able to get the list of all Lecturers presents in the db.
 +	 * 
@@ -676,7 +676,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.String, java.lang.String, java.lang.String)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.String, java.lang.String, java.lang.String)}.
 +	 * 
 +	 * This methods checks the update of the email of a Lecturer, providing its firstName and lastName.
 +	 * 
@@ -691,7 +691,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.Integer, java.lang.String)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.Integer, java.lang.String)}.
 +	 * 
 +	 * This methods checks the update of the email of a Lecturer, providing its id.
 +	 * 
@@ -706,7 +706,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.String, java.lang.String, java.lang.String)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.String, java.lang.String, java.lang.String)}.
 +	 * 
 +	 * This methods checks the update of the roomNumber of a Lecturer, providing its firstName and lastName.
 +	 * 
@@ -721,7 +721,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.Integer, java.lang.String)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.Integer, java.lang.String)}.
 +	 * 
 +	 * This methods checks the update of the roomNumber of a Lecturer, providing its id.
 +	 * 
@@ -736,7 +736,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.String, java.lang.String, java.lang.Integer)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.String, java.lang.String, java.lang.Integer)}.
 +	 * 
 +	 * This methods checks the update of the managedProgram of a Lecturer, providing its firstName and lastName.
 +	 * 
@@ -751,7 +751,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.Integer, java.lang.Integer)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.Integer, java.lang.Integer)}.
 +	 * 
 +	 * This methods checks the update of the managedProgram of a Lecturer, providing its id.
 +	 * 
@@ -766,7 +766,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
 +	 * 
 +	 * This methods checks the addition of a module that a Lecturer teaches, providing its firstName and lastName.
 +	 * 
@@ -782,7 +782,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.lang.Integer)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.lang.Integer)}.
 +	 * 
 +	 * This methods checks the addition of a module that a Lecturer teaches, providing its id.
 +	 * 
@@ -798,7 +798,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
 +	 * 
 +	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its firstName and lastName.
 +	 * 
@@ -814,7 +814,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.util.List)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.util.List)}.
 +	 * 
 +	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its id.
 +	 * 
@@ -830,7 +830,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
 +	 * 
 +	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its firstName and lastName.
 +	 * 
@@ -847,7 +847,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.lang.Integer)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.lang.Integer)}.
 +	 * 
 +	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its id.
 +	 * 
@@ -864,7 +864,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
 +	 * 
 +	 * This methods checks the deletion of a list modules that a Lecturer stop teaching, providing its firstName and lastName.
 +	 * 
@@ -881,7 +881,7 @@ index 0000000..d9e4d25
 +	/**
 +	 * @author Fabien
 +	 * 
-+	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.util.List)}.
++	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.util.List)}.
 +	 * 
 +	 * This methods checks the deletion of a list of modules that a Lecturer stop teaching, providing its id.
 +	 * 
@@ -922,8 +922,8 @@ index d9e4d25..0000000
 -import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 -import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 -
--import com.cit.online.db.interfaces.impl.LecturerJdbcTemplate;
--import com.cit.online.db.interfaces.impl.ProgramJdbcTemplate;
+-import com.citonline.db.interfaces.impl.LecturerJdbcTemplate;
+-import com.citonline.db.interfaces.impl.ProgramJdbcTemplate;
 -import com.github.springtestdbunit.DbUnitTestExecutionListener;
 -import com.github.springtestdbunit.annotation.DatabaseOperation;
 -import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -948,7 +948,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
 -	 * 
 -	 * This method tests the creation of a new Lecturer providing the  these params:
 -	 * firstName, lastName, email, phoneNumber, roomNumber.
@@ -969,7 +969,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#createLecturer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer)}.
 -	 *
 -	 * This method tests the creation of a new Lecturer providing these params:
 -	 * firstName, lastName, email, phoneNumber, roomNumber, idManagedProgram.
@@ -995,7 +995,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.Integer)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.Integer)}.
 -	 * 
 -	 * This method tests the deletion of a Lecturer providing its id.
 -	 * 
@@ -1016,7 +1016,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.String, java.lang.String)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#deleteLecturer(java.lang.String, java.lang.String)}.
 -	 * 
 -	 * This method tests the deletion of a Lecturer providing its firstName and lastName.
 -	 * 
@@ -1037,7 +1037,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.Integer)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.Integer)}.
 -	 * 
 -	 * This method tests if we are able to get a Lecturer from the database providing its id
 -	 * and create its corresponding object.
@@ -1054,7 +1054,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.String, java.lang.String)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#getLecturer(java.lang.String, java.lang.String)}.
 -	 * 
 -	 * This method tests if we are able to get a Lecturer from the database providing its firstName and lastName
 -	 * and create its corresponding object.
@@ -1071,7 +1071,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#listLecturers()}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#listLecturers()}.
 -	 * 
 -	 * This method tests if we are able to get the list of all Lecturers presents in the db.
 -	 * 
@@ -1087,7 +1087,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.String, java.lang.String, java.lang.String)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.String, java.lang.String, java.lang.String)}.
 -	 * 
 -	 * This methods checks the update of the email of a Lecturer, providing its firstName and lastName.
 -	 * 
@@ -1102,7 +1102,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.Integer, java.lang.String)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerEmail(java.lang.Integer, java.lang.String)}.
 -	 * 
 -	 * This methods checks the update of the email of a Lecturer, providing its id.
 -	 * 
@@ -1117,7 +1117,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.String, java.lang.String, java.lang.String)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.String, java.lang.String, java.lang.String)}.
 -	 * 
 -	 * This methods checks the update of the roomNumber of a Lecturer, providing its firstName and lastName.
 -	 * 
@@ -1132,7 +1132,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.Integer, java.lang.String)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerRoomNumber(java.lang.Integer, java.lang.String)}.
 -	 * 
 -	 * This methods checks the update of the roomNumber of a Lecturer, providing its id.
 -	 * 
@@ -1147,7 +1147,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.String, java.lang.String, java.lang.Integer)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.String, java.lang.String, java.lang.Integer)}.
 -	 * 
 -	 * This methods checks the update of the managedProgram of a Lecturer, providing its firstName and lastName.
 -	 * 
@@ -1162,7 +1162,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.Integer, java.lang.Integer)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#updateLecturerManagedProgram(java.lang.Integer, java.lang.Integer)}.
 -	 * 
 -	 * This methods checks the update of the managedProgram of a Lecturer, providing its id.
 -	 * 
@@ -1177,7 +1177,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
 -	 * 
 -	 * This methods checks the addition of a module that a Lecturer teaches, providing its firstName and lastName.
 -	 * 
@@ -1193,7 +1193,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.lang.Integer)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.lang.Integer)}.
 -	 * 
 -	 * This methods checks the addition of a module that a Lecturer teaches, providing its id.
 -	 * 
@@ -1209,7 +1209,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
 -	 * 
 -	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its firstName and lastName.
 -	 * 
@@ -1225,7 +1225,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.util.List)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#addTaughtModule(java.lang.Integer, java.util.List)}.
 -	 * 
 -	 * This methods checks the addition of a list of modules that a Lecturer teaches, providing its id.
 -	 * 
@@ -1241,7 +1241,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.lang.Integer)}.
 -	 * 
 -	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its firstName and lastName.
 -	 * 
@@ -1258,7 +1258,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.lang.Integer)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.lang.Integer)}.
 -	 * 
 -	 * This methods checks the deletion of a module that a Lecturer stop teaching, providing its id.
 -	 * 
@@ -1275,7 +1275,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.String, java.lang.String, java.util.List)}.
 -	 * 
 -	 * This methods checks the deletion of a list modules that a Lecturer stop teaching, providing its firstName and lastName.
 -	 * 
@@ -1292,7 +1292,7 @@ index d9e4d25..0000000
 -	/**
 -	 * @author Fabien
 -	 * 
--	 * Test method for {@link com.cit.online.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.util.List)}.
+-	 * Test method for {@link com.citonline.db.interfaces.impl.LecturerJdbcTemplate#removeTaughtModule(java.lang.Integer, java.util.List)}.
 -	 * 
 -	 * This methods checks the deletion of a list of modules that a Lecturer stop teaching, providing its id.
 -	 * 

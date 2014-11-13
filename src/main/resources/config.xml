@@ -35,8 +35,8 @@
 	</bean>
 	
 	<!-- No beans were created by the @Repository -->
-	<bean id="StudentJdbcDaoSupport" class="com.cit.online.db.interfaces.impl.StudentJdbcDaoSupport"></bean>	
-	<bean id="LecturerJdbcDaoSupport" class="com.cit.online.db.interfaces.impl.LecturerJdbcDaoSupport"></bean>
+	<bean id="StudentJdbcDaoSupport" class="com.citonline.db.interfaces.impl.StudentJdbcDaoSupport"></bean>	
+	<bean id="LecturerJdbcDaoSupport" class="com.citonline.db.interfaces.impl.LecturerJdbcDaoSupport"></bean>
 	
 	<bean id="Lecturer_DonnaOshea" class="com.citonline.interfaces.impl.LecturerImpl" autowire="no">
 		<constructor-arg name="id" value="1"></constructor-arg>

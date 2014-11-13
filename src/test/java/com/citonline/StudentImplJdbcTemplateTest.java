@@ -17,7 +17,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import com.cit.online.db.interfaces.impl.StudentJdbcDaoSupport;
+import com.citonline.db.interfaces.impl.StudentJdbcDaoSupport;
 import com.citonline.domain.Module;
 import com.citonline.interfaces.impl.StudentImpl;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;

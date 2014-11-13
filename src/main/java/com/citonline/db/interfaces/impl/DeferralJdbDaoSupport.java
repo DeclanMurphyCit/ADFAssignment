@@ -1,4 +1,4 @@
-package com.cit.online.db.interfaces.impl;
+package com.citonline.db.interfaces.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -54,7 +54,7 @@ public class DeferralJdbDaoSupport extends JdbcDaoSupport implements DeferralDAO
 
 	}
 
-	@Override
+	//@Override
 	public void updateDeferal(int status, String studentNumber) {
 		
 		String SQL = "UPDATE deferral SET status=? where id_student in (SELECT id_student from Student where studentNumber =?)";
@@ -72,7 +72,7 @@ public void updateDeferal(int status, String firstName, String lastName) {
 
 	}
 	@Override
-	public void addDeferredModules(int id_deferral, final ArrayList<Module> deferred) 
+	public void addDeferredModules(final int id_deferral, final ArrayList<Module> deferred) 
 	{
 			String SQL = "insert into deferredModules (id_defferal, id_module) values (?, ?)";
 			getJdbcTemplate().batchUpdate(SQL, new BatchPreparedStatementSetter() 
