@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.citonline.domain.Program;
 import com.citonline.domain.Semester;
+import com.citonline.interfaces.impl.ProgramImpl;
 
 /*
  * Author: Tim Wallace
@@ -37,6 +38,10 @@ public interface ProgramDAO {
 	public List<Semester> listSemesters();
 
 	Program getProgram(Integer id);
+
+	int countRows();
+
+	List<ProgramImpl> listPrograms();
   
 	
 }
