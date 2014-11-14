@@ -38,10 +38,11 @@
 	<!-- No beans were created by the @Repository
 	<bean id="StudentJdbcDaoSupport" class="com.citonline.db.interfaces.impl.StudentJdbcDaoSupport"></bean>	
 	<bean id="LecturerJdbcDaoSupport" class="com.citonline.db.interfaces.impl.LecturerJdbcDaoSupport"></bean>
-	-->
-
 	<bean id="DeferralJdbcDaoSupport" class="com.cit.online.db.interfaces.impl.DeferralJdbcDaoSupport"></bean>	
+	-->
 	
+	<!-- Commented by Fabien because it is non-fonctionnal:
+	no constructor for Deferral using such args names (name here == name in constructor)
 	<bean id="deferal1" class="com.citonline.domain.Deferral" autowire="no">
 		<constructor-arg name="id" value="1"></constructor-arg>
 		<constructor-arg name="deferral_date" value="2014-10-01"></constructor-arg>
@@ -50,6 +51,7 @@
  		<constructor-arg name="program_deferred" value="false"></constructor-arg>
  		<constructor-arg name="id_deferral_status" value="1"></constructor-arg>
 	</bean>
+	-->
 	
 	<bean id="Lecturer_DonnaOshea" class="com.citonline.interfaces.impl.LecturerImpl" autowire="no">
 		<constructor-arg name="id" value="1"></constructor-arg>
