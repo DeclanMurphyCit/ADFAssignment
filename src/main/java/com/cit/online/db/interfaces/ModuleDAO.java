@@ -1,4 +1,4 @@
-package com.citonline.db.interfaces;
+package com.cit.online.db.interfaces;
 
 import java.util.List;
 

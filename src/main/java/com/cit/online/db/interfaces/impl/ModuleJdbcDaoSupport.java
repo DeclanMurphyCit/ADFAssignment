@@ -1,4 +1,6 @@
-package com.citonline.db.interfaces.impl;
+package com.cit.online.db.interfaces.impl;
+
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -6,9 +8,14 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.citonline.db.interfaces.ModuleDAO;
+import com.citonline.db.interfaces.impl.ModuleMapper;
 import com.citonline.domain.Module;
+import com.citonline.interfaces.impl.LecturerImpl;
+import com.citonline.interfaces.impl.ModuleImpl;
 
 /*
  * Author: Tim Wallace
@@ -18,7 +25,7 @@ import com.citonline.domain.Module;
  * 
  * Inputs: Module semester, code, crn, name
  * 
- * Expected Outputs: create, delete,modify, return modules in the database
+ * Expected Outputs: create, delete, modify, return modules in the database
  */
 
  @Repository
@@ -33,7 +40,7 @@ import com.citonline.domain.Module;
 	 
 
 	@Override
-	public void createModule(int id, String code, String crn, String name, int semester) {
+	public void createModule(String code, String crn, String name, int semester) {
 		
 		String SQL = "INSERT INTO Module (code, crn, name, semester) "
 				+ "VALUES(?, ?, ?, ?)";
@@ -54,7 +61,7 @@ import com.citonline.domain.Module;
 
 	@Override
 	public Module getModule(String crn) {
-		String SQL = "select * from Module where id_module = ?";
+		String SQL = "select * from Module where crn = ?";
 		Module module = (Module) getJdbcTemplate().queryForObject(SQL, 
 						new Object[]{crn}, new ModuleMapper());
 		return module;
@@ -69,5 +76,31 @@ import com.citonline.domain.Module;
 				"semester = " + semester + " where crn = " + crn );
 		
 	}
+	
+	@Override
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public List<ModuleImpl> listModules() {
+		String SQL = "select * from module";
+		List<ModuleImpl> modules = getJdbcTemplate().query(SQL, 
+						new ModuleMapper());
+		return modules;
+	}
+	
+	@Override
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public int countRows() {
+		String SQL = "select count(id_module) from module";
+		int rows=getJdbcTemplate().queryForObject(SQL, Integer.class);
+		return rows;
+	}
+
+
+	public ModuleImpl getCode(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 }
