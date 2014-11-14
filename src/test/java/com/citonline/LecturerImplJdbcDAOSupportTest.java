@@ -91,7 +91,7 @@ public class LecturerImplJdbcDAOSupportTest {
 		assertEquals("vincent.ryan@cit.ie",vincent.getEmail());
 		assertEquals("9876543210", vincent.getPhoneNumber());
 		assertEquals("C123", vincent.getRoomNumber());
-		assertEquals(1, vincent.getManagedProgram());
+		assertEquals(1, vincent.getIdManagedProgram());
   	}
   
   	/**
@@ -175,7 +175,7 @@ public class LecturerImplJdbcDAOSupportTest {
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testGetLecturerStringString() {
-		LecturerImpl ted = lecturerJdbcDaoSupportObject.getLecturer("Ted","Scully");
+		LecturerImpl ted = lecturerJdbcDaoSupportObject.getLecturer("Ted", "Scully");
 		
 		//assertEquals(2,ted.getId());
 		assertEquals("ted.scully@cit.ie",ted.getEmail());
@@ -289,9 +289,9 @@ public class LecturerImplJdbcDAOSupportTest {
 		LecturerImpl donna = lecturerJdbcDaoSupportObject.getLecturer(1);
 		assertEquals("B180A",donna.getRoomNumber());
 		
-		lecturerJdbcDaoSupportObject.updateLecturerRoomNumber(1, "HeadRoom");
+		lecturerJdbcDaoSupportObject.updateLecturerRoomNumber(1, "HRoom");
 		donna = lecturerJdbcDaoSupportObject.getLecturer(1);
-		assertEquals("HeadRoom",donna.getRoomNumber());
+		assertEquals("HRoom",donna.getRoomNumber());
   	}
   
   	/**
@@ -312,7 +312,7 @@ public class LecturerImplJdbcDAOSupportTest {
 		
 		lecturerJdbcDaoSupportObject.updateLecturerManagedProgram("Ted","Scully", 1);
 		ted = lecturerJdbcDaoSupportObject.getLecturer(2);
-		assertEquals(1,ted.getManagedProgram().getProgramId());
+		assertEquals(1,ted.getIdManagedProgram());
   	}
   
 
@@ -336,7 +336,7 @@ public class LecturerImplJdbcDAOSupportTest {
 		
 		lecturerJdbcDaoSupportObject.updateLecturerManagedProgram(2, 1);
 		ted = lecturerJdbcDaoSupportObject.getLecturer(2);
-		assertEquals(1,ted.getManagedProgram().getProgramId());
+		assertEquals(1,ted.getIdManagedProgram());
   	}
 
 	/**

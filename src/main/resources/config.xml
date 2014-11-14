@@ -34,10 +34,10 @@
 		<property name="transactionManager" ref="transactionManager"></property>
 	</bean>
 	
-	<!-- No beans were created by the @Repository -->
+	<!-- No beans were created by the @Repository
 	<bean id="StudentJdbcDaoSupport" class="com.citonline.db.interfaces.impl.StudentJdbcDaoSupport"></bean>	
 	<bean id="LecturerJdbcDaoSupport" class="com.citonline.db.interfaces.impl.LecturerJdbcDaoSupport"></bean>
-	
+	-->
 	<bean id="Lecturer_DonnaOshea" class="com.citonline.interfaces.impl.LecturerImpl" autowire="no">
 		<constructor-arg name="id" value="1"></constructor-arg>
 		<constructor-arg name="firstName" value="Donna"></constructor-arg>

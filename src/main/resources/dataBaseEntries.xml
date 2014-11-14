@@ -4,7 +4,7 @@
 	<module id_module="2"/>
 	<module id_module="3"/>
 	<module id_module="4"/>
-	<program  program_name="DCOM4" program_code="DCOM4"/>
+	<program  id_program="1" program_name="DCOM4" program_code="DCOM4"/>
 	<lecturer id_lecturer="1" firstName="Donna" lastName="OShea" email="donna.oshea@cit.ie"
 		phoneNumber="0123456789" roomNumber="B180A"/>
 	<lecturer id_lecturer="2" firstName="Ted" lastName="Scully" email="ted.scully@cit.ie"

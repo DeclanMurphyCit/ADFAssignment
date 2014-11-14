@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import org.springframework.stereotype.Service;
 
 import com.citonline.domain.Module;
+import com.citonline.domain.Program;
 import com.citonline.interfaces.impl.LecturerImpl;
 
 @Service
@@ -233,5 +234,20 @@ public interface LecturerDAO {
 	 * @return the number of rows in the lecturer table
 	 */
 	public int countRows();
+	/**
+	 * Get the managedProgram of the Lecturer
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @return the managedProgram of the Lecturer
+	 */
+	public Program getManagedProgram(final String firstName, final String lastName);
+	/**
+	 * Get the managedProgram of the Lecturer
+	 * 
+	 * @param id_lecturer
+	 * @return the managedProgram of the Lecturer
+	 */
+	public Program getManagedProgram(final Integer id_lecturer);
 	
 }

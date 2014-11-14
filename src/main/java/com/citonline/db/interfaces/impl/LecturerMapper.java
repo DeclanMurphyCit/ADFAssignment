@@ -22,7 +22,9 @@ public class LecturerMapper implements RowMapper {
 		String email = rs.getString("email");
 		String phoneNumber = rs.getString("phoneNumber");
 		String roomNumber = rs.getString("roomNumber");
-		LecturerImpl lecturer = new LecturerImpl(id, firstName, lastName, email, phoneNumber, roomNumber);
+		int idManagedProgram = rs.getInt("idManagedProgram");
+		LecturerImpl lecturer = new LecturerImpl(id, firstName, lastName,
+				email, phoneNumber, roomNumber, idManagedProgram);
 		
 		return lecturer;
 	}

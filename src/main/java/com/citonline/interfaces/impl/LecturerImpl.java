@@ -43,8 +43,8 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	 * @param idManagedProgram
 	 */
 	public LecturerImpl(int id, String firstName, String lastName, String email,
-			String phoneNumber, String roomNumber, Program managedProgram) {
-		super(id, firstName, lastName, email, phoneNumber, roomNumber, managedProgram);
+			String phoneNumber, String roomNumber, int idManagedProgram) {
+		super(id, firstName, lastName, email, phoneNumber, roomNumber, idManagedProgram);
 	}
 	
 	/* (non-Javadoc)
@@ -69,7 +69,7 @@ public class LecturerImpl extends Lecturer implements LecturerInt {
 	 */
 	@Override
 	public boolean isProgramManager() {
-		return idManagedProgram != null;
+		return managedProgram != null;
 	}
 
 	/* (non-Javadoc)

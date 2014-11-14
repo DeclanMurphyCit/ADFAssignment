@@ -23,6 +23,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.citonline.db.interfaces.LecturerDAO;
 import com.citonline.domain.Module;
+import com.citonline.domain.Program;
 import com.citonline.interfaces.impl.LecturerImpl;
 
 /**
@@ -55,11 +56,16 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 		String SQL = "INSERT INTO lecturer (firstName, lastName, email, phoneNumber, roomNumber)"
 				+ "VALUES(?, ?, ?, ?, ?)";
 		
-		getJdbcTemplate().update(SQL, new Object[] { firstName, lastName, email,
+		int added = getJdbcTemplate().update(SQL, new Object[] { firstName, lastName, email,
 				phoneNumber, roomNumber});
-		
-		System.out.println("Created lecturer Name = " + firstName + " " + lastName +
+		if(added == 1){
+			System.out.println("Created lecturer Name = " + firstName + " " + lastName +
 				"\nemail = " + email + ", phoneNumber =" + phoneNumber + ", roomNumber = " + roomNumber);
+		}
+		else{
+			System.err.println("Error creating lecturer Name = " + firstName + " " + lastName +
+				"\nemail = " + email + ", phoneNumber =" + phoneNumber + ", roomNumber = " + roomNumber);
+		}
 	}
 
 	@Override
@@ -70,12 +76,19 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 		String SQL = "INSERT INTO lecturer (firstName, lastName, email, phoneNumber, roomNumber, idManagedProgram)"
 				+ "VALUES(?, ?, ?, ?, ?, ?)";
 		
-		getJdbcTemplate().update(SQL, new Object[] { firstName, lastName, email,
+		int added = getJdbcTemplate().update(SQL, new Object[] { firstName, lastName, email,
 				phoneNumber, roomNumber, idManagedProgram});
 		
-		System.out.println("Created lecturer Name = " + firstName + " " + lastName +
-				"\nemail = " + email+ ", phoneNumber =" + phoneNumber +
+		if(added == 1){
+			System.out.println("Created lecturer Name = " + firstName + " " + lastName +
+				"\nemail = " + email + ", phoneNumber =" + phoneNumber +
 				", roomNumber = " + roomNumber + ", idManagedProgram = " + idManagedProgram);
+		}
+		else{
+			System.err.println("Error creating lecturer Name = " + firstName + " " + lastName +
+				"\nemail = " + email + ", phoneNumber =" + phoneNumber +
+				", roomNumber = " + roomNumber + ", idManagedProgram = " + idManagedProgram);
+		}
 
 	}	
 
@@ -83,16 +96,26 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Transactional
 	public void deleteLecturer(Integer id_lecturer) {
 		String SQL = "delete from lecturer where id_lecturer = ?";
-		getJdbcTemplate().update(SQL, new Object[] {id_lecturer});
-		System.out.println("Deleted lecturer with ID = " + id_lecturer );
+		
+		int deleted = getJdbcTemplate().update(SQL, new Object[] {id_lecturer});
+		
+		if(deleted == 1)
+			System.out.println("Deleted lecturer with ID = " + id_lecturer );
+		else
+			System.err.println("Error deleting lecturer with ID = " + id_lecturer );
 	}
 
 	@Override
 	@Transactional
 	public void deleteLecturer(String firstName, String lastName) {
 		String SQL = "delete from lecturer where firstName = ? and lastName = ?";
-		getJdbcTemplate().update(SQL, new Object[] {firstName, lastName});
-		System.out.println("Deleted lecturer with Name = " + firstName + " " + lastName );
+		
+		int deleted = getJdbcTemplate().update(SQL, new Object[] {firstName, lastName});
+		
+		if(deleted == 1)
+			System.out.println("Deleted lecturer with Name = " + firstName + " " + lastName );
+		else
+			System.err.println("Error deleting lecturer with Name = " + firstName + " " + lastName );
 	}
 
 	@Override
@@ -105,6 +128,9 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 		ArrayList<Module> taughtModules = getTaughtModules(id_lecturer);
 		lecturer.setModulesTaught(taughtModules);
 		
+		Program prog = getManagedProgram(id_lecturer);
+		lecturer.setManagedProgram(prog);
+		
 		return lecturer;
 	}
 	
@@ -112,12 +138,15 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public LecturerImpl getLecturer(String firstName, String lastName) {
-		String SQL = "select * from lecturer where firstName = ? and lastName = ? ";
+		String SQL = "select * from lecturer where firstName =? and lastName =?";
 		LecturerImpl lecturer = (LecturerImpl) getJdbcTemplate().queryForObject(SQL, 
 						new Object[]{firstName, lastName}, new LecturerMapper());
 		
 		ArrayList<Module> taughtModules = getTaughtModules(firstName, lastName);
 		lecturer.setModulesTaught(taughtModules);
+		
+		Program prog = getManagedProgram(firstName, lastName);
+		lecturer.setManagedProgram(prog);
 		
 		return lecturer;
 	}
@@ -196,11 +225,12 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	public void addTaughtModule(String firstName, String lastName,
 				Integer idModule) {
 		
-		String SQL = "SELECT id_lecturer from lecturer WHERE firstName = ? AND nastName = ?";
-		final int id_lecturer=getJdbcTemplate().queryForObject(SQL, Integer.class);
+		String SQL = "select id_lecturer from lecturer where firstName =? and lastName =?";
+		final int id_lecturer=getJdbcTemplate().queryForObject(SQL,
+				new Object[]{firstName, lastName}, Integer.class);
 
-		String SQL2 = "INSERT INTO  lecturer_teaches_module(idLecturer, idModule)" +
-			"VALUES idManagedProgram=? where idLecturer = ?";
+		String SQL2 = "INSERT INTO lecturer_teaches_module(idLecturer, idModule) " +
+			"VALUES (?, ?)";
 		getJdbcTemplate().update(SQL2, new Object[]{id_lecturer, idModule});
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add " + idModule);
@@ -221,13 +251,14 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Transactional
 	public void addTaughtModule(String firstName, String lastName,
 			final List<Integer> idModuleList) {
-		String SQL = "SELECT id_lecturer from lecturer WHERE firstName = ? AND nastName = ?";
-		final int id_lecturer=getJdbcTemplate().queryForObject(SQL, Integer.class);
+		String SQL = "select id_lecturer from lecturer where firstName =? and lastName =?";
+		final int id_lecturer=getJdbcTemplate().queryForObject(SQL,
+				new Object[]{firstName, lastName}, Integer.class);
 		
 		String SQL2 = "INSERT INTO lecturer_teaches_module(idLecturer, idModule)" +
 				"VALUES (?, ?)";
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add ");
-		getJdbcTemplate().update(SQL2, new BatchPreparedStatementSetter() {
+		getJdbcTemplate().batchUpdate(SQL2, new BatchPreparedStatementSetter() {
 
 			public int getBatchSize() {
 				return idModuleList.size();
@@ -250,7 +281,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 				"VALUES (?, ?)";
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: add ");
-		getJdbcTemplate().update(SQL, new BatchPreparedStatementSetter() {
+		getJdbcTemplate().batchUpdate(SQL, new BatchPreparedStatementSetter() {
 
 			public int getBatchSize() {
 				return idModuleList.size();
@@ -270,10 +301,11 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Transactional
 	public void removeTaughtModule(String firstName, String lastName,
 			Integer idModule) {
-		String SQL= "SELECT id_lecturer from lecturer WHERE firstName= ? AND lastName= ?";
-		final int id_lecturer=getJdbcTemplate().queryForObject(SQL, Integer.class);
+		String SQL= "select id_lecturer from lecturer where firstName =? and lastName =?";
+		final int id_lecturer=getJdbcTemplate().queryForObject(SQL,
+				new Object[]{firstName, lastName}, Integer.class);
 		
-		String SQL2 = "DELETE from lecturer_teaches_module WHERE idLecturer= ?";
+		String SQL2 = "DELETE from lecturer_teaches_module WHERE idLecturer= ? AND idModule= ?";
 		getJdbcTemplate().update(SQL2, new Object[]{id_lecturer, idModule});
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: remove " + idModule);
@@ -283,7 +315,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	@Override
 	@Transactional
 	public void removeTaughtModule(Integer id_lecturer, Integer idModule) {
-		String SQL = "DELETE from lecturer_teaches_module WHERE idLecturer= ?";
+		String SQL = "DELETE from lecturer_teaches_module WHERE idLecturer= ? AND idModule= ?";
 		getJdbcTemplate().update(SQL, new Object[]{id_lecturer, idModule});
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: remove " + idModule);
@@ -294,14 +326,15 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 	public void removeTaughtModule(final String firstName, final String lastName,
 			final List<Integer> idModuleList) {
 
-		String SQL= "SELECT id_lecturer from lecturer WHERE firstName= ? AND lastName= ?";
-		final int id_lecturer=getJdbcTemplate().queryForObject(SQL, Integer.class);
+		String SQL= "select id_lecturer from lecturer where firstName =? and lastName =?";
+		final int id_lecturer=getJdbcTemplate().queryForObject(SQL,
+				new Object[]{firstName, lastName}, Integer.class);
 		
 		String SQL2 = "DELETE FROM lecturer_teaches_module WHERE idLecturer = ? " +
 			"AND idModule = ?";
 		
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: removing ");
-		getJdbcTemplate().update(SQL2, new BatchPreparedStatementSetter() {
+		getJdbcTemplate().batchUpdate(SQL2, new BatchPreparedStatementSetter() {
 
 			public int getBatchSize() {
 				return idModuleList.size();
@@ -324,7 +357,7 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 				"AND idModule = ?";
 			
 		System.out.println("update lecturer " + id_lecturer + "'s taught modules: remove ");
-		getJdbcTemplate().update(SQL, new BatchPreparedStatementSetter() {
+		getJdbcTemplate().batchUpdate(SQL, new BatchPreparedStatementSetter() {
 
 			public int getBatchSize() {
 				return idModuleList.size();
@@ -386,6 +419,47 @@ public class LecturerJdbcDaoSupport extends JdbcDaoSupport implements LecturerDA
 		String SQL = "select count(id_lecturer) from lecturer";
 		int rows=getJdbcTemplate().queryForObject(SQL, Integer.class);
 		return rows;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.citonline.db.interfaces.LecturerDAO#getManagedProgram(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Program getManagedProgram(String firstName, String lastName) {
+		Program prog =null;
+		
+		String SQL = "SELECT * FROM program "
+				+ "JOIN lecturer ON "
+				+ "lecturer.idManagedProgram = program.id_program "
+				+ "AND lecturer.firstName = ? AND lecturer.lastName = ?";
+		try{
+			prog = (Program) getJdbcTemplate().queryForObject(SQL,
+					new Object[] {firstName, lastName}, new ProgramMapper());
+		}
+		catch(Exception e){}
+		
+		return prog;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.citonline.db.interfaces.LecturerDAO#getManagedProgram(java.lang.Integer)
+	 */
+	@Override
+	public Program getManagedProgram(Integer id_lecturer) {
+		Program prog = null;
+		
+		String SQL = "SELECT * FROM program "
+				+ "JOIN lecturer ON "
+				+ "lecturer.idManagedProgram = program.id_program "
+				+ "AND lecturer.id_lecturer = ?";
+		
+		try{
+			prog = (Program) getJdbcTemplate().queryForObject(SQL,
+					new Object[] {id_lecturer}, new ProgramMapper());
+		}
+		catch(Exception e){}
+		
+		return prog;
 	}
 
 }

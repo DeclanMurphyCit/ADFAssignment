@@ -26,10 +26,11 @@ public class ProgramMapper implements RowMapper {
 	
 	@Override
 	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-		String programName = rs.getString("programName");
-		String programCode = rs.getString("programCode");
+		int programID = rs.getInt("id_program");
+		String programName = rs.getString("program_name");
+		String programCode = rs.getString("program_code");
 	
-		Program program = new Program(rowNum, programName, programCode);
+		Program program = new Program(programID, programName, programCode);
 		
 		return program;
 	}

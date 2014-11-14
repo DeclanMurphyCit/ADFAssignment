@@ -9,7 +9,9 @@ import java.util.ArrayList;
 
 public class Lecturer extends Person {
 	
-	protected Program idManagedProgram;
+	protected Program managedProgram;
+	protected int idManagedProgram;
+
 	protected ArrayList<Module> taughtModules;
 	
 	protected String roomNumber;
@@ -38,13 +40,13 @@ public class Lecturer extends Person {
 	 * @param email
 	 * @param phoneNumber
 	 * @param roomNumber
-	 * @param idManagedProgram the program the lecturer managed, if any
+	 * @param idManagedProgram the id of the program the lecturer managed, if any
 	 */
 	public Lecturer(int id, String firstName, String lastName, String email,
-			String phoneNumber, String roomNumber, Program managedProgram) {
+			String phoneNumber, String roomNumber, int idManagedProgram) {
 		super(id, firstName, lastName, email, phoneNumber);
 		this.roomNumber = roomNumber;
-		this.idManagedProgram = managedProgram;
+		this.idManagedProgram = idManagedProgram;
 
 		// Avoid a null pointer exception in case of using addModule before setting it.
 		taughtModules = new ArrayList<Module>();
@@ -52,17 +54,17 @@ public class Lecturer extends Person {
 	
 
 	/**
-	 * @return the idManagedProgram
+	 * @return the managedProgram
 	 */
 	public Program getManagedProgram() {
-		return idManagedProgram;
+		return managedProgram;
 	}
 
 	/**
-	 * @param idManagedProgram the idManagedProgram to set
+	 * @param managedProgram the managedProgram to set
 	 */
 	public void setManagedProgram(Program managedProgram) {
-		this.idManagedProgram = managedProgram;
+		this.managedProgram = managedProgram;
 	}
 	
 	/**
@@ -97,4 +99,19 @@ public class Lecturer extends Person {
 		this.taughtModules = taughtModules;
 	}
 
+	/**
+	 * @return the idManagedProgram
+	 */
+	public int getIdManagedProgram() {
+		return idManagedProgram;
+	}
+
+	/**
+	 * @param idManagedProgram the idManagedProgram to set
+	 */
+	public void setIdManagedProgram(int idManagedProgram) {
+		this.idManagedProgram = idManagedProgram;
+	}
+
+	
 }
