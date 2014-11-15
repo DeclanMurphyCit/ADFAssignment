@@ -33,18 +33,24 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
            setDataSource(dataSource);
     }	
 	
+	@Autowired
+	public void setTxTemplate(TransactionTemplate txTemplate) {
+		this.transactionTemplate = txTemplate;
+	}
+	
 	@Override
 	@Transactional
 	public void createStudent(String firstName, String lastName,
 			String studentNumber, String email, String phoneNumber,
 			String addressLine1, String addressLine2) {
 		
-		String SQL = "INSERT INTO Student (firstName, lastName, studentNumber, email, phoneNumber,"
+		String SQL = "INSERT INTO Student (firstName, lastName, studentNumber, "
+				+ "email, phoneNumber,"
 				+ "addressLine1, addressLine2) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
 		
-		getJdbcTemplate().update(SQL, new Object[] { firstName, lastName, studentNumber, email,
-				phoneNumber, addressLine1, addressLine2});
+		getJdbcTemplate().update(SQL, new Object[] { firstName, lastName, 
+				studentNumber, email, phoneNumber, addressLine1, addressLine2});
 		
 		System.out.println("Created Student Name = " + firstName + " " + lastName +
 				"\nStudent Number = " + studentNumber + ", email = " + email + ", phoneNumber = "
@@ -102,7 +108,8 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 	public void updateStudentEmail(String studentNumber, String email) {
 		String SQL = "update student set email = ? where studentNumber = ?";
 		getJdbcTemplate().update(SQL, new Object[] {email,studentNumber});
-		System.out.println("Updated student email to " + email + " where studentNumber = " + studentNumber );
+		System.out.println("Updated student email to " + email 
+				+ " where studentNumber = " + studentNumber );
 	}
 
 	@Override
@@ -110,17 +117,38 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 	public void updateStudentEmail(Integer id, String email) {
 		String SQL = "update student set email = ? where id_student = ?";
 		getJdbcTemplate().update(SQL, new Object[] {email,id});
-		System.out.println("Updated student email to " + email + " where id_student = " + id );
-		
+		System.out.println("Updated student email to " 
+		+ email + " where id_student = " + id );		
+	}	
+
+	@Override
+	@Transactional
+	public void updateStudentPhone(String studentNumber, String phoneNumber) {
+		String SQL = "update student set phoneNumber = ? where studentNumber = ?";
+		getJdbcTemplate().update(SQL, new Object[] {phoneNumber,studentNumber});
+		System.out.println("Updated student phone number to " + phoneNumber 
+				+ " where studentNumber = " + studentNumber );
+	}
+
+	@Override
+	@Transactional
+	public void updateStudentPhone(Integer id, String phoneNumber) {
+		String SQL = "update student set phoneNumber = ? where id_student = ?";
+		getJdbcTemplate().update(SQL, new Object[] {phoneNumber,id});
+		System.out.println("Updated student phone number to " 
+		+ phoneNumber + " where id_student = " + id );
 	}
 	
 	@Override
 	@Transactional
-	public void updateStudentAddress(String studentNumber, String addressLine1, String addressLine2) {
-		String SQL = "update student set addressLine1 = ?, addressLine2 = ? where studentNumber = ?";
-		getJdbcTemplate().update(SQL, new Object[] {addressLine1,addressLine2,studentNumber});
-		System.out.println("Updated student address to " + addressLine1 + ", "+addressLine1+ " where studentNumber = " + studentNumber );
-		
+	public void updateStudentAddress(String studentNumber, 
+			String addressLine1, String addressLine2) {
+		String SQL = "update student set addressLine1 = ?, addressLine2 = ? "
+				+ "where studentNumber = ?";
+		getJdbcTemplate().update(SQL, new Object[] {addressLine1,
+				addressLine2,studentNumber});
+		System.out.println("Updated student address to " + addressLine1 + ", "
+				+addressLine1+ " where studentNumber = " + studentNumber );		
 	}
 
 	@Override
@@ -128,12 +156,13 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 	public void updateStudentAddress(Integer id, String addressLine1, String addressLine2) {
 		String SQL = "update student set addressLine1 = ?, addressLine2 = ? where id_student = ?";
 		getJdbcTemplate().update(SQL, new Object[] {addressLine1,addressLine2,id});
-		System.out.println("Updated student address to " + addressLine1 + ", "+addressLine1+ " where id_student = " + id );
+		System.out.println("Updated student address to " + addressLine1 + ", "
+		+addressLine1+ " where id_student = " + id );
 	}
 
 	@Override
 	@Transactional
-	public void enrollModule(Integer idModule, Integer idStudent) {
+	public void enrollModule(Integer idStudent,Integer idModule) {
 		
 		String SQL = "INSERT into student_enrolls_for (idModule,idStudent) "
 				+ "values (?,?)";
@@ -144,13 +173,28 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 	
 	@Override
 	@Transactional
-	public void enrollModules(final Integer idStudent, final List<Integer> idModuleList) {
-		String SQL = "INSERT INTO student_enrolls_for (idStudent,idModule)" +
-				"VALUES (?, ?)";
+	public void enrollModule(String studentNumber,Integer idModule) {
+		
+		String SQL = "select id_student from student where studentNumber = ?";
+		
+		final int id_student=getJdbcTemplate().queryForObject(SQL,
+				new Object[]{studentNumber}, Integer.class);
+		
+		String SQL1 = "INSERT into student_enrolls_for (idModule,idStudent) "
+				+ "values (?,?)";
+		getJdbcTemplate().update(SQL1, new Object[] {idModule,id_student});
+		
+		System.out.println("Student "+id_student + " has enrolled for module" + idModule);			
+	}
+	
+	@Override
+	@Transactional
+	public void enrollModules(final Integer idStudent,final ArrayList<Integer> idModuleList) {
+		String SQL = "INSERT INTO student_enrolls_for (idStudent,idModule) VALUES (?, ?)";
 		
 		System.out.println("Student "+idStudent + " has enrolled for modules: ");			
 
-		getJdbcTemplate().update(SQL, new BatchPreparedStatementSetter() {
+		getJdbcTemplate().batchUpdate(SQL, new BatchPreparedStatementSetter() {
 
 			public int getBatchSize() {
 				return idModuleList.size();
@@ -158,8 +202,38 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 			
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				Integer idModule = idModuleList.get(i);
+				int idModule = idModuleList.get(i);
 				ps.setInt(1, idStudent);
+				ps.setInt(2, idModule);
+				System.out.print(idModule + ",");
+			}		
+		});
+	}
+	
+	@Override
+	@Transactional
+	public void enrollModules(final String studentNumber,final ArrayList<Integer> idModuleList) {		
+		
+		String SQL = "select id_student from student where studentNumber = ?";
+		
+		final int id_student=getJdbcTemplate().queryForObject(SQL,
+				new Object[]{studentNumber}, Integer.class);
+		
+		
+		String SQL2 = "INSERT INTO student_enrolls_for (idStudent,idModule) VALUES (?, ?)";
+		
+		System.out.println("Student "+id_student + " has enrolled for modules: ");			
+
+		getJdbcTemplate().batchUpdate(SQL2, new BatchPreparedStatementSetter() {
+
+			public int getBatchSize() {
+				return idModuleList.size();
+			}
+			
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				int idModule = idModuleList.get(i);
+				ps.setInt(1, id_student);
 				ps.setInt(2, idModule);
 				System.out.print(idModule + ",");
 			}		
@@ -182,6 +256,28 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 		
 		return enrolledModules;
 	}
+	
+	@Override
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public ArrayList<Module> getEnrolledModules(String studentNumber) {
+		
+		String SQL = "select id_student from student where studentNumber = ?";
+		
+		final int id_student=getJdbcTemplate().queryForObject(SQL,
+				new Object[]{studentNumber}, Integer.class);
+		
+		ArrayList<Module> enrolledModules;
+		
+		String SQL2="SELECT * from module"
+				+ " JOIN student_enrolls_for on "
+				+ " student_enrolls_for.idModule = module.id_module"
+				+ " AND student_enrolls_for.idStudent= ?";
+				
+		enrolledModules = (ArrayList<Module>) getJdbcTemplate().query(SQL2,
+				new Object[] {id_student}, new ModuleMapper());
+		
+		return enrolledModules;
+	}
 
 	@Override
 	@Transactional
@@ -193,10 +289,26 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 	}
 	
 	@Override
+	@Transactional
+	public void removeModule(String studentNumber, Integer idModule) {
+		
+		String SQL = "select id_student from student where studentNumber = ?";
+		
+		final int id_student=getJdbcTemplate().queryForObject(SQL,
+				new Object[]{studentNumber}, Integer.class);
+				
+		String SQL2 = "DELETE from student_enrolls_for WHERE idStudent = ? and idModule = ?";
+		getJdbcTemplate().update(SQL2, new Object[]{id_student, idModule});
+		
+		System.out.println("Student " + id_student + " has disenrolled from moudle: " + idModule);
+	}
+	
+	@Override
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public int countRows() {
 		String SQL = "select count(id_student) from student";
 		int rows=getJdbcTemplate().queryForObject(SQL, Integer.class);
 		return rows;
 	}
+
 }

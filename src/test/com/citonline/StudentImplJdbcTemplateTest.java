@@ -24,6 +24,12 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 
+	 /**
+	 * Please Note: Some of these tests are done using a student ID or a student number
+	 * To clarify:
+	 * A Student ID is the primary key of the student table
+	 * A Student Number is another field in the student table that is used by the college
+	 */
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:config.xml"})
@@ -136,7 +142,7 @@ public class StudentImplJdbcTemplateTest {
   	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
-  	public void testGetLecturerStudentID() {		
+  	public void testGetStudentWithStudentID() {		
 		StudentImpl testStudent = studentJT.getStudent(1);	
 		
 		assertEquals("Simon", testStudent.getFirstName());
@@ -158,7 +164,7 @@ public class StudentImplJdbcTemplateTest {
   	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
-  	public void testGetLecturerStudentNumber() {		
+  	public void testGetStudentWithStudentNumber() {		
 		StudentImpl testStudent = studentJT.getStudent("R00058441");	
 		
 		assertEquals("Simon", testStudent.getFirstName());
@@ -174,13 +180,15 @@ public class StudentImplJdbcTemplateTest {
   	 * @author Declan Murphy
   	 * 
   	 * This method tests a list of students can be returned from the db
+  	 * 
+  	 * This test ensures that details of the update are also correct
 	 * 
 	 * INPUT: 2 students: Simon Casey & Mary Casey
 	 * EXPECTED OUTPUT: Both students returned in a list
   	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
-  	public void testListLecturers() {
+  	public void testListStudents() {
 		List<StudentImpl> studentList = studentJT.listStudents();
 		
 		assertEquals(2, studentList.size());
@@ -199,6 +207,8 @@ public class StudentImplJdbcTemplateTest {
   	 * @author Declan Murphy
   	 * 
   	 * This test verifies that a student email can be updated by passing an id
+  	 * 
+  	 * This test ensures that details of the update are also correct
 	 * 
 	 * INPUT: Student: Simon Casey with email simon.casey@mycit.ie
 	 * EXPECTED OUTPUT: Student: Simon Casey with email simon.casey2@mycit.ie
@@ -217,7 +227,9 @@ public class StudentImplJdbcTemplateTest {
   	/**
   	 * @author Declan Murphy
   	 * 
-  	 * This test verifys that a student email can be updated by passing in a student number
+  	 * This test verifies that a student email can be updated by passing in a student number
+  	 * 
+  	 * This test ensures that details of the update are also correct
 	 * 
 	 * INPUT: Student: Simon Casey with email simon.casey@mycit.ie
 	 * EXPECTED OUTPUT: Student: Simon Casey with email simon.casey2@mycit.ie
@@ -236,7 +248,52 @@ public class StudentImplJdbcTemplateTest {
   	/**
   	 * @author Declan Murphy
   	 * 
+  	 * This test verifies that a student's phone number can be updated by passing an id
+  	 * 
+  	 * This test ensures that details of the update are also correct
+	 * 
+	 * INPUT: Student: Simon Casey with phone number 098765433
+	 * EXPECTED OUTPUT: Student: Simon Casey with phone number 12345678
+  	 */
+  	@Test
+  	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+  	public void testUpdatePhoneNumberByStudentId() {
+		StudentImpl simon = studentJT.getStudent(1);
+		assertEquals("098765433",simon.getPhoneNumber());
+		
+		studentJT.updateStudentPhone(simon.getId(), "12345678");
+		simon = studentJT.getStudent(simon.getId());
+		assertEquals("12345678",simon.getPhoneNumber());
+  	}
+  	
+  	/**
+  	 * @author Declan Murphy
+  	 * 
+  	 * This test verifies that a student's phone number can be updated by passing a student number
+  	 * 
+  	 * This test ensures that details of the update are also correct
+	 * 
+	 * INPUT: Student: Simon Casey with phone number 098765433
+	 * EXPECTED OUTPUT: Student: Simon Casey with phone number 12345678
+  	 */
+  	@Test
+  	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+  	public void testUpdatePhoneNumberByStudentNumber() {
+		StudentImpl simon = studentJT.getStudent(1);
+		assertEquals("098765433",simon.getPhoneNumber());
+		
+		studentJT.updateStudentPhone(simon.getStudentNumber(), "12345678");
+		simon = studentJT.getStudent(simon.getStudentNumber());
+		assertEquals("12345678",simon.getPhoneNumber());
+  	}
+  	
+  	
+  	/**
+  	 * @author Declan Murphy
+  	 * 
   	 * This test verifies that a student address can be updated by passing an id
+  	 * 
+  	 * This test ensures that details of the update are also correct
 	 * 
 	 * INPUT: Student: Simon Casey with address "Tramore" & "Waterford"
 	 * EXPECTED OUTPUT: Student: Simon Casey has new address "Wilton" & "Cork"
@@ -258,6 +315,8 @@ public class StudentImplJdbcTemplateTest {
   	 * @author Declan Murphy
   	 * 
   	 * This test verifies that a student address can be updated by passing a student number
+  	 * 
+  	 * This test ensures that details of the update are also correct
 	 * 
 	 * INPUT: Student: Simon Casey with address "Tramore" & "Waterford"
 	 * EXPECTED OUTPUT: Student: Simon Casey has new address "Wilton" & "Cork"
@@ -279,47 +338,180 @@ public class StudentImplJdbcTemplateTest {
   	 * @author Declan Murphy
   	 * 
   	 * This methods checks that a student can enrol a list of modules
+  	 * 
+  	 * The test ensures more than one module can be added
 	 * 
-	 * INPUT: Simon Casey and a list of modules
+	 * INPUT: Simon Casey's ID and a list of modules
 	 * EXPECTED OUTPUT: Simon Casey and the module are linked by the student_enrolls_for table
   	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
-  	public void testStudentEnrolModules() {
+  	public void testStudentEnrolModulesStudentID() {
 		StudentImpl simon = studentJT.getStudent(1);
-		simon.enrolModules(studentJT.getEnrolledModules(1));
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getId()));
 		int listSizeBefore = simon.getModuleList().size();
 		
-		List<Integer> modules = new ArrayList<Integer>();
-		modules.add(1);
-		modules.add(2);		
+		ArrayList<Integer> moduleIDs = new ArrayList<Integer>();
+		moduleIDs.add(1);
+		moduleIDs.add(2);
 		
-		studentJT.enrollModules(1, modules);		
-		simon.enrolModules(studentJT.getEnrolledModules(1));
-		ArrayList<Module> simonsModules = studentJT.getEnrolledModules(1);
-		int listSizeAfter = simon.getModuleList().size();	
+		studentJT.enrollModules(simon.getId(), moduleIDs);		
+		
+		
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getId()));
+		ArrayList<Module> simonsModules = studentJT.getEnrolledModules(simon.getId());
+		int listSizeAfter = simonsModules.size();
 		assertEquals(listSizeBefore,listSizeAfter-2);
-  	} 
+		
+		//Clean the student_enrolls_for table
+		studentJT.removeModule(simon.getId(), moduleIDs.get(0));
+		studentJT.removeModule(simon.getId(), moduleIDs.get(1));
+  	}
   	
   	/**
   	 * @author Declan Murphy
   	 * 
-  	 * This methods checks that a student can enrol in a module
+  	 * This methods checks that a student can enrol a list of modules
+  	 * 
+  	 * The test ensures more than one module can be added
 	 * 
-	 * INPUT: Simon Casey and a module
+	 * INPUT: Simon Casey's student number and a list of module ids
 	 * EXPECTED OUTPUT: Simon Casey and the module are linked by the student_enrolls_for table
   	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
-  	public void testStudentEnrolModule() {
+  	public void testStudentEnrolModulesStudentNumber() {
 		StudentImpl simon = studentJT.getStudent(1);
-		simon.enrolModules(studentJT.getEnrolledModules(1));
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getStudentNumber()));
+		int listSizeBefore = simon.getModuleList().size();
+		
+		ArrayList<Integer> moduleIDs = new ArrayList<Integer>();
+		moduleIDs.add(1);
+		moduleIDs.add(2);
+		
+		studentJT.enrollModules(simon.getStudentNumber(), moduleIDs);		
+		
+		
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getStudentNumber()));
+		ArrayList<Module> simonsModules = studentJT.getEnrolledModules(simon.getStudentNumber());
+		int listSizeAfter = simonsModules.size();
+		assertEquals(listSizeBefore,listSizeAfter-2);
+		
+		//Clean the student_enrolls_for table
+		studentJT.removeModule(simon.getStudentNumber(), moduleIDs.get(0));
+		studentJT.removeModule(simon.getStudentNumber(), moduleIDs.get(1));
+  	}
+  	
+  	/**
+  	 * @author Declan Murphy
+  	 * 
+  	 * This methods checks that a student can enrol in a module with id_student
+  	 * 
+  	 * The test checks if a module has been added and also if the module ID also matches
+	 * 
+	 * INPUT: Simon Casey's ID and a module id
+	 * EXPECTED OUTPUT: Simon Casey and the module are linked by the student_enrolls_for table
+  	 */
+  	@Test
+  	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+  	public void testStudentEnrolModuleStudentID() {
+		StudentImpl simon = studentJT.getStudent(1);
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getId()));
 		assertFalse(simon.getModuleList().size() > 0);
 		
-		studentJT.enrollModule(3, simon.getId());
-		simon.enrolModules(studentJT.getEnrolledModules(1));
-		ArrayList<Module> simonsModules = studentJT.getEnrolledModules(1);
+		studentJT.enrollModule(simon.getId(),3);
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getId()));
+		ArrayList<Module> simonsModules = studentJT.getEnrolledModules(simon.getId());
+		assertTrue(simonsModules.size() > 0);
+		assertTrue(simonsModules.get(0).getId() == 3);
+		
+		//Clean the student_enrolls_for table
+		studentJT.removeModule(simon.getId(), 3);
+  	} 	
+  	
+  	/**
+  	 * @author Declan Murphy
+  	 * 
+  	 * This methods checks that a student can enrol in a module with a student number
+  	 * 
+  	 * The test checks if a module has been added and also if the module ID also matches
+	 * 
+	 * INPUT: Simon Casey' student number and a module id
+	 * EXPECTED OUTPUT: Simon Casey and the module are linked by the student_enrolls_for table
+  	 */
+  	@Test
+  	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+  	public void testStudentEnrolModuleStudentNumber() {
+		StudentImpl simon = studentJT.getStudent(1);
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getStudentNumber()));
+		assertFalse(simon.getModuleList().size() > 0);
+		
+		studentJT.enrollModule(simon.getStudentNumber(),3);
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getStudentNumber()));
+		ArrayList<Module> simonsModules = studentJT.getEnrolledModules(simon.getStudentNumber());
+		assertTrue(simonsModules.size() > 0);
+		assertTrue(simonsModules.get(0).getId() == 3);
+		
+		//Clean the student_enrolls_for table
+		studentJT.removeModule(simon.getStudentNumber(), 3);
+  	} 	
+  	
+  	/**
+  	 * @author Declan Murphy
+  	 * 
+  	 * This methods checks that a student can withdraw from a module
+  	 * 
+  	 * The test checks to see if a module has been enrolled and then
+  	 * verifies that it has been removed afterwards
+	 * 
+	 * INPUT: Simon Casey's ID and a module id
+	 * EXPECTED OUTPUT: Simon Casey and the module are linked by the student_enrolls_for table
+  	 */
+  	@Test
+  	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+  	public void testStudentWithdrawModuleStudentID() {
+		StudentImpl simon = studentJT.getStudent(1);
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getId()));
+		assertFalse(simon.getModuleList().size() > 0);
+		
+		studentJT.enrollModule(simon.getId(),3);
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getId()));
+		ArrayList<Module> simonsModules = studentJT.getEnrolledModules(simon.getId());
 		assertTrue(simonsModules.size() > 0);	
+		
+		studentJT.removeModule(simon.getId(), 3);
+		
+		simonsModules = studentJT.getEnrolledModules(1);
+		assertTrue(simonsModules.size() == 0);
+  	} 	
+  	
+  	/**
+  	 * @author Declan Murphy
+  	 * 
+  	 * This methods checks that a student can withdraw from a module
+  	 * 
+  	 * The test checks to see if a module has been enrolled and then
+  	 * verifies that it has been removed afterwards
+	 * 
+	 * INPUT: Simon Casey's student number and a module id
+	 * EXPECTED OUTPUT: Simon Casey and the module are linked by the student_enrolls_for table
+  	 */
+  	@Test
+  	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
+  	public void testStudentWithdrawModuleStudentNumber() {
+		StudentImpl simon = studentJT.getStudent(1);
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getStudentNumber()));
+		assertFalse(simon.getModuleList().size() > 0);
+		
+		studentJT.enrollModule(simon.getStudentNumber(),3);
+		simon.enrolModules(studentJT.getEnrolledModules(simon.getStudentNumber()));
+		ArrayList<Module> simonsModules = studentJT.getEnrolledModules(simon.getStudentNumber());
+		assertTrue(simonsModules.size() > 0);	
+		
+		studentJT.removeModule(simon.getStudentNumber(), 3);
+		
+		simonsModules = studentJT.getEnrolledModules(simon.getStudentNumber());
+		assertTrue(simonsModules.size() == 0);
   	} 	
   	
 

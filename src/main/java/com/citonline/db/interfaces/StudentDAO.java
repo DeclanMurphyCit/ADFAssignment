@@ -33,17 +33,29 @@ public interface StudentDAO {
 	
 	public void updateStudentEmail(Integer id, String email);
 	
+	public void updateStudentPhone(String studentNumber, String email);
+	
+	public void updateStudentPhone(Integer id, String email);
+	
 	public void updateStudentAddress(String studentNumber, String addressLine1, String addressLine2);
 	
 	public void updateStudentAddress(Integer id, String addressLine1, String addressLine2);
 	
-	public void enrollModule(Integer idModule, Integer idStudent);
+	public void enrollModule(Integer idStudent, Integer idModule);
 	
-	public void enrollModules(final Integer idStudent, final List<Integer> idModuleList);
+	public void enrollModule(String studentNumber,Integer idModule);
+	
+	public void enrollModules(final Integer idStudent, final ArrayList<Integer> idModuleList);
+	
+	public void enrollModules(final String studentNumber,final ArrayList<Integer> idModuleList);
 	
 	public void removeModule(Integer idStudent, Integer idModule);
 	
-	public int countRows();
-
+	public void removeModule(String studentNumber, Integer idModule);
+	
 	public ArrayList<Module> getEnrolledModules(Integer id_student);
+	
+	public ArrayList<Module> getEnrolledModules(String studentNumber);
+	
+	public int countRows();
 }
