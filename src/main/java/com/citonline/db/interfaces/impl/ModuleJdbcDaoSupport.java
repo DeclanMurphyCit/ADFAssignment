@@ -16,6 +16,7 @@ import com.citonline.domain.Module;
 import com.citonline.domain.Program;
 import com.citonline.interfaces.impl.LecturerImpl;
 import com.citonline.interfaces.impl.ModuleImpl;
+import com.citonline.interfaces.impl.StudentImpl;
 
 /*
  * Author: Tim Wallace
@@ -60,6 +61,7 @@ import com.citonline.interfaces.impl.ModuleImpl;
 	}
 
 	@Override
+	@Transactional
 	public Module getModule(String crn) {
 		String SQL = "select * from Module where crn = ?";
 		Module module = (Module) getJdbcTemplate().queryForObject(SQL, 
@@ -67,11 +69,10 @@ import com.citonline.interfaces.impl.ModuleImpl;
 		return module;
 	}
 
-	
 	@Override
 	public void updateModule(String code, String crn, String name, int semester) {
-		String SQL = "update module set code = ?, crn = ?,name = ?,semester = ? where id_module = ?";
-		getJdbcTemplate().update(SQL, new Object[] {code, crn, name, semester});
+		String SQL = "update module set code = ?, crn = ?,name = ?,semester = ? where crn = ?";
+		getJdbcTemplate().update(SQL, new Object[] {code, crn, name, semester, crn});
 		System.out.println("Updated code to " + code + "crn = " + crn + "name = " + name + 
 				"semester = " + semester + " where crn = " + crn );
 	}

@@ -129,9 +129,7 @@ public class ModuleImplJdbcDAOSupportTest {
 		Module mod = moduleJdbcDaoSupportObject.getModule("34557");
 		assertEquals("34557",mod.getCode());
 		
-		moduleJdbcDaoSupportObject.updateModule("soft666", "34557", "MCQ Hacks", 2); //TODO Is calling the following method:
-							//public void updateModule(String code, String crn, String name, int semester)
-							//Which uses update module set code = ?, crn = ?,name = ?,semester = ? where id_module = ?";						
+		moduleJdbcDaoSupportObject.updateModule("soft666", "34557", "MCQ Hacks", 2); 						
 		
 		mod = moduleJdbcDaoSupportObject.getModule("soft666");
 		assertEquals("34557",mod.getCode());
