@@ -126,13 +126,13 @@ public class ModuleImplJdbcDAOSupportTest {
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testUpdateModuleCodeString() {
-		Module mod = moduleJdbcDaoSupportObject.getModule("34557");
-		assertEquals("34557",mod.getCode());
+		Module mod = moduleJdbcDaoSupportObject.getModule("34555");
+		assertEquals("soft665",mod.getCode());
 		
-		moduleJdbcDaoSupportObject.updateModule("soft666", "34557", "MCQ Hacks", 2); 						
+		moduleJdbcDaoSupportObject.updateModule("ware666", "34555", "MCQ Hacks", 2); 						
 		
-		mod = moduleJdbcDaoSupportObject.getModule("soft666");
-		assertEquals("34557",mod.getCode());
+		mod = moduleJdbcDaoSupportObject.getModule("34555");
+		assertEquals("ware666",mod.getCode());
   	}
   
 }
