@@ -95,7 +95,7 @@ public class ModuleImplJdbcDAOSupportTest {
   		moduleJdbcDaoSupportObject.createModule("soft666", "34557", "MCQ Hacks", 2);
 		Module mod = moduleJdbcDaoSupportObject.getModule("34557");
 		
-		assertEquals("soft666",mod.getCode());//TODO This is returning CRN and not code for some reason?
+		assertEquals("soft666",mod.getCode());
 		assertEquals("34557",mod.getCrn());
 		assertEquals("MCQ Hacks",mod.getName());
 		assertEquals("2",mod.getSemester());
@@ -120,7 +120,7 @@ public class ModuleImplJdbcDAOSupportTest {
 		for(ModuleImpl l : mod_list){
 			String fn = l.getCode();
 			
-			boolean is8020 = fn.equals("SOFT8020");//TODO This doesn't exist anywhere in the databaseEntries.xml file
+			boolean is8020 = fn.equals("SOFT8020");
 			boolean is666 = fn.equals("soft666");
 			assertTrue( is8020 || is666 );
 		}
@@ -134,7 +134,7 @@ public class ModuleImplJdbcDAOSupportTest {
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testUpdateModuleCodeString() {
-		Module mod = moduleJdbcDaoSupportObject.getCode("soft666"); //TODO getCode is an empty function also soft666 does not exist in database entries.xml file
+		Module mod = moduleJdbcDaoSupportObject.getModule("soft666");
 		assertEquals("soft666",mod.getCode());
 		
 		Module mod2 = moduleJdbcDaoSupportObject.getModule("soft666");

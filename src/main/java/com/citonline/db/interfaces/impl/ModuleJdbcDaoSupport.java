@@ -94,10 +94,7 @@ import com.citonline.interfaces.impl.ModuleImpl;
 	}
 
 
-	public ModuleImpl getCode(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-	<module id_module="1"/>
-	<module id_module="2"/>
-	<module id_module="3"/>
-	<module id_module="4"/>
+	<module id_module="1" code="soft666" crn="34557" semester=2 name="MCQ Hacks"/>
+	<module id_module="2" code="SOFT8020" crn="32389" semester=3 name="Stuff And Things"/>
 	<program  id_program="1" program_name="DCOM4" program_code="DCOM4"/>
 	<lecturer id_lecturer="1" firstName="Donna" lastName="OShea" email="donna.oshea@cit.ie"
 		phoneNumber="0123456789" roomNumber="B180A"/>
