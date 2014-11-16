@@ -22,7 +22,7 @@ public class ModuleMapper implements RowMapper {
 		String crn = rs.getString("crn");
 		String name = rs.getString("name");
 		int semester = rs.getInt("semester");
-		Module module = new Module(id, crn, name, code, 
+		Module module = new Module(id, code, crn, name, 
 				semester);
 		
 		return module;

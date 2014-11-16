@@ -59,7 +59,7 @@ public class ModuleImplJdbcDAOSupportTest {
   	public void testCreateModule() {
 		int nbRowsBefore = moduleJdbcDaoSupportObject.countRows();
   		
-		moduleJdbcDaoSupportObject.createModule("soft666", "34557", "MCQ Hacks", 2);
+		moduleJdbcDaoSupportObject.createModule("soft666", "34557", "MCQ Hacks", 7);
 		int nbRowsAfter = moduleJdbcDaoSupportObject.countRows();
 		assertEquals(nbRowsBefore,nbRowsAfter-1);
   	}
@@ -98,7 +98,7 @@ public class ModuleImplJdbcDAOSupportTest {
 		assertEquals("soft666",mod.getCode());
 		assertEquals("34557",mod.getCrn());
 		assertEquals("MCQ Hacks",mod.getName());
-		assertEquals("2",mod.getSemester());
+		assertEquals(2,mod.getSemester());
 		
 		moduleJdbcDaoSupportObject.deleteModule("34557");	
   	}
@@ -134,13 +134,12 @@ public class ModuleImplJdbcDAOSupportTest {
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testUpdateModuleCodeString() {
-		Module mod = moduleJdbcDaoSupportObject.getModule("soft666");
+		Module mod = moduleJdbcDaoSupportObject.getModule("34557");
 		assertEquals("soft666",mod.getCode());
 		
-		Module mod2 = moduleJdbcDaoSupportObject.getModule("soft666");
 		moduleJdbcDaoSupportObject.updateModule("soft666", "34557", "MCQ Hacks", 2);
 		
-		mod = moduleJdbcDaoSupportObject.getCode("soft666");
+		mod = moduleJdbcDaoSupportObject.getModule("soft666");
 		assertEquals("soft666",mod.getCode());
   	}
   
