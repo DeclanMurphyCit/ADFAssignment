@@ -1,10 +1,4 @@
-/**
- * @author Tim Wallace
- *
- * Date Created: 13.11.14
- */
 package com.citonline;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -44,7 +38,7 @@ public class ProgramImplJdbcDAOSupportTest {
 	@Autowired
 	ProgramJdbcDaoSupport programJdbcDaoSupportObject;
 
-	final Logger logger = Logger.getLogger(ModuleImplJdbcDAOSupportTest.class);
+	final Logger logger = Logger.getLogger(ProgramImplJdbcDAOSupportTest.class);
 
 	/**
 	 * @author Tim Wallace

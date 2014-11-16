@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.citonline.db.interfaces.ModuleDAO;
 import com.citonline.domain.Module;
+import com.citonline.domain.Program;
 import com.citonline.interfaces.impl.LecturerImpl;
 import com.citonline.interfaces.impl.ModuleImpl;
 
@@ -66,21 +67,20 @@ import com.citonline.interfaces.impl.ModuleImpl;
 		return module;
 	}
 
-
+	
 	@Override
 	public void updateModule(String code, String crn, String name, int semester) {
 		String SQL = "update module set code = ?, crn = ?,name = ?,semester = ? where id_module = ?";
 		getJdbcTemplate().update(SQL, new Object[] {code, crn, name, semester});
 		System.out.println("Updated code to " + code + "crn = " + crn + "name = " + name + 
 				"semester = " + semester + " where crn = " + crn );
-		
 	}
 	
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-	public List<ModuleImpl> listModules() {
+	public List<Module> listModules() {
 		String SQL = "select * from module";
-		List<ModuleImpl> modules = getJdbcTemplate().query(SQL, 
+		List<Module> modules = getJdbcTemplate().query(SQL, 
 						new ModuleMapper());
 		return modules;
 	}
@@ -92,11 +92,5 @@ import com.citonline.interfaces.impl.ModuleImpl;
 		int rows=getJdbcTemplate().queryForObject(SQL, Integer.class);
 		return rows;
 	}
-
-
-
-
-
-
 
 }

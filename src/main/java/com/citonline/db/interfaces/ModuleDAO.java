@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import org.springframework.stereotype.Service;
 
 import com.citonline.domain.Module;
+import com.citonline.domain.Program;
 import com.citonline.interfaces.impl.ModuleImpl;
 
 /*
@@ -36,8 +37,7 @@ public interface ModuleDAO {
 	int countRows();
 
 	void createModule(String code, String crn, String name, int semester);
-
-	public List<ModuleImpl> listModules();
-
+	
+	List<Module> listModules();
 	
 }

@@ -1,8 +1,3 @@
-/**
- * @author Tim Wallace
- *
- * Date Created: 13.11.14
- */
 package com.citonline;
 
 import static org.junit.Assert.assertEquals;
@@ -111,13 +106,13 @@ public class ModuleImplJdbcDAOSupportTest {
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testListModules() {
-		List<ModuleImpl> mod_list = moduleJdbcDaoSupportObject.listModules();
+		List<Module> mod_list = moduleJdbcDaoSupportObject.listModules();
 		
 		assertTrue(mod_list.size()> 0);
 		
 		//assertEquals(2, mod_list.size());
 		
-		for(ModuleImpl l : mod_list){
+		for(Module l : mod_list){
 			String fn = l.getCode();
 			
 			boolean is8020 = fn.equals("SOFT8020");
@@ -135,12 +130,12 @@ public class ModuleImplJdbcDAOSupportTest {
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testUpdateModuleCodeString() {
 		Module mod = moduleJdbcDaoSupportObject.getModule("34557");
-		assertEquals("soft666",mod.getCode());
+		assertEquals("34557",mod.getCode());
 		
 		moduleJdbcDaoSupportObject.updateModule("soft666", "34557", "MCQ Hacks", 2);
 		
 		mod = moduleJdbcDaoSupportObject.getModule("soft666");
-		assertEquals("soft666",mod.getCode());
+		assertEquals("34557",mod.getCode());
   	}
   
 }

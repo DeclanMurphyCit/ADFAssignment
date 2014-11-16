@@ -70,7 +70,6 @@ public class ProgramJdbcDaoSupport extends JdbcDaoSupport implements ProgramDAO 
 		String SQL = "select * from Program where id_program = ?";
 		Program program = (Program) getJdbcTemplate().queryForObject(SQL, 
 						new Object[]{id}, new ProgramMapper());
-		//program.setSemesterList(listSemesters());
 		return program;
 	}
 
