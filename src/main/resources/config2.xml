@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+	default-autowire="byType"
+	default-init-method="init" default-destroy-method="destroy">
+
+	<context:annotation-config/>
+	<context:component-scan base-package="com.citonline.*" />
+	<context:property-placeholder location="classpath:prop.properties"/>
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	
+	<!-- TODO: ADAPT This -->
+	<!-- Initialization for data source -->
+	<bean id="dataSource" 
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/app_dev_assignment1"/>
+		<property name="username" value="root"/>
+		<property name="password" value="root"/>	
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>		
+	</bean>
+		
+	<bean id="txTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager"></property>
+	</bean>
+	
+	<!-- No beans were created by the @Repository 
+	<bean id="StudentJdbcDaoSupport" class="com.citonline.db.interfaces.impl.StudentJdbcDaoSupport"></bean>	
+	<bean id="LecturerJdbcDaoSupport" class="com.citonline.db.interfaces.impl.LecturerJdbcDaoSupport"></bean>
+	<bean id="DeferralJdbcDaoSupport" class="com.cit.online.db.interfaces.impl.DeferralJdbcDaoSupport"></bean>	
+	-->
+	<bean id="module1" class="com.citonline.domain.Module">
+		<constructor-arg name="id" value="15"></constructor-arg>
+		<constructor-arg name="code" value="SOFT8023"></constructor-arg>
+ 		<constructor-arg name="crn" value="CRN"></constructor-arg>
+ 		<constructor-arg name="name" value="cit module"></constructor-arg>
+ 		<constructor-arg name="semester" value="1"></constructor-arg>
+	</bean>
+		<bean id="module2" class="com.citonline.domain.Module">
+		<constructor-arg name="id" value="16"></constructor-arg>
+		<constructor-arg name="code" value="SOFT8020"></constructor-arg>
+ 		<constructor-arg name="crn" value="CRN"></constructor-arg>
+ 		<constructor-arg name="name" value="App Dev Frmwk"></constructor-arg>
+ 		<constructor-arg name="semester" value="7"></constructor-arg>
+	</bean>
+	<bean id="deferral_bean" class="com.citonline.domain.Deferral" autowire="no">
+		<constructor-arg name="id" value="1"></constructor-arg>
+		<constructor-arg name="deferral_date" value="2014-10-01"></constructor-arg>
+ 		<constructor-arg name="id_program" value="1"></constructor-arg>
+ 		<constructor-arg name="id_student" value="1"></constructor-arg>
+ 		<constructor-arg name="program_deferred" value="false"></constructor-arg>
+ 		<constructor-arg name="id_deferral_status" value="1"></constructor-arg>
+	</bean>
+	
+	<bean id="Student_Declan" class="com.citonline.interfaces.impl.StudentImpl" autowire="no">
+		<constructor-arg name="id" value="4"></constructor-arg>
+		<constructor-arg name="firstName" value="Declan"></constructor-arg>
+ 		<constructor-arg name="lastName" value="Murphy"></constructor-arg>
+ 		<constructor-arg name="email" value="declan.murphy2@mycit.ie"></constructor-arg>
+ 		<constructor-arg name="studentNumber" value="R00058443"></constructor-arg>
+ 		<constructor-arg name="phoneNumber" value="0123456789"></constructor-arg>
+ 		<constructor-arg name="addressLine1" value="Tramore"></constructor-arg>
+ 		<constructor-arg name="addressLine2" value="Waterford"></constructor-arg>
+	</bean>
+	
+	<bean id="student_peter" class="com.citonline.interfaces.impl.StudentImpl" autowire="no">
+		<constructor-arg name="id" value="5"></constructor-arg>
+		<constructor-arg name="firstName" value="jane"></constructor-arg>
+ 		<constructor-arg name="lastName" value="doe"></constructor-arg>
+ 		<constructor-arg name="email" value="d.m2@mycit.ie"></constructor-arg>
+ 		<constructor-arg name="studentNumber" value="r2"></constructor-arg>
+ 		<constructor-arg name="phoneNumber" value="0123456789"></constructor-arg>
+ 		<constructor-arg name="addressLine1" value="Tramore"></constructor-arg>
+ 		<constructor-arg name="addressLine2" value="Waterford"></constructor-arg>
+	</bean>
+	
+	<bean id="student_jane" class="com.citonline.interfaces.impl.StudentImpl" autowire="no">
+		<constructor-arg name="id" value="1"></constructor-arg>
+		<constructor-arg name="firstName" value="jane"></constructor-arg>
+ 		<constructor-arg name="lastName" value="doe"></constructor-arg>
+ 		<constructor-arg name="email" value="d.m2@mycit.ie"></constructor-arg>
+ 		<constructor-arg name="studentNumber" value="r2"></constructor-arg>
+ 		<constructor-arg name="phoneNumber" value="0123456789"></constructor-arg>
+ 		<constructor-arg name="addressLine1" value="Tramore"></constructor-arg>
+ 		<constructor-arg name="addressLine2" value="Waterford"></constructor-arg>
+	</bean>
+	
+	 
+</beans>

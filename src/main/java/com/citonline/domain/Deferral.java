@@ -1,73 +1,108 @@
 package com.citonline.domain;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
+/**
+ * 
+ * @author peter halligan
+ * deferral object
+ * holds information relating to the deferral including student id, and Arraylist of deferred modules
+ *
+ */
 public class Deferral 
 {
-
-	Date defferalDate;
-	int student;
-	ArrayList<Module> defferedModules;
-	boolean programDeffered;
-	int program_id;
-	int status;
+	int id;
+	String deferral_date;
+	int id_student;
+	ArrayList<Module> deferredModules;
+	boolean programDeferred;
+	int id_program;
+	int id_deferral_status;
 	
-	
-	public Deferral(Date deferralDate, int student,int program, boolean programDeffered, int status) {
+	/**
+	 * costructor with id for row mapper
+	 * @param id
+	 * @param deferral_date
+	 * @param id_student
+	 * @param id_program
+	 * @param program_deferred
+	 * @param id_deferral_status
+	 */
+	public Deferral(int id, String deferral_date, int id_student,int id_program, boolean program_deferred, int id_deferral_status) {
 		super();
-		this.defferalDate = deferralDate;
-		this.student = student;
-		this.programDeffered = programDeffered;
-		this.program_id = program;
-		
-		ArrayList<Module> defferedModules = new ArrayList<Module>();
+		this.id=id;
+		this.deferral_date = deferral_date;
+		this.id_student = id_student;
+		this.programDeferred = program_deferred;
+		this.id_program = id_program;
+		this.id_deferral_status =id_deferral_status;
+		deferredModules = new ArrayList<Module>();
 	}
-
+	/**
+	 * constructor with no id 
+	 * @param deferral_date
+	 * @param id_student
+	 * @param id_program
+	 * @param program_deferred
+	 * @param id_deferral_status
+	 */
+	public Deferral(String deferral_date, int id_student,int id_program, boolean program_deferred, int id_deferral_status) {
+		super();
+		this.deferral_date = deferral_date;
+		this.id_student = id_student;
+		this.programDeferred = program_deferred;
+		this.id_program = id_program;
+		this.id_deferral_status =id_deferral_status;
+		deferredModules = new ArrayList<Module>();
+	}
 	public int getStatus() {
-		return status;
+		return id_deferral_status;
 	}
 
-	public void setStatus(Enum<DeferralStatus> e) {
-		this.status = e.ordinal();
+	public void setStatus(DeferralStatus status) {
+		this.id_deferral_status = status.getStatus();
 	}
-	public boolean isProgramDeffered() {
-		return programDeffered;
+	public boolean getProgramDeferred() {
+		return programDeferred;
 	}
 
 	public void setProgramDeffered(boolean programDeffered) {
-		this.programDeffered = programDeffered;
+		this.programDeferred = programDeffered;
 	}
 
 	public int getProgram() {
-		return program_id;
+		return id_program;
 	}
 
 	public void setProgram(int program) {
-		this.program_id = program;
+		this.id_program = program;
 	}
 
 	
-	public Date getDefferalDate() {
-		return defferalDate;
+	public String getDefferalDate() {
+		return deferral_date;
 	}
-	public void setDefferalDate(Date defferalDate) {
-		this.defferalDate = defferalDate;
+	public void setDefferalDate(String defferal_date) {
+		this.deferral_date = defferal_date;
 	}
 	public int getStudent() {
-		return student;
+		return id_student;
 	}
-	public void setStudent(int student) {
-		this.student = student;
+	public void setStudent(int id_student) {
+		this.id_student = id_student;
 	}
 	public ArrayList<Module> getDefferedModules() {
-		return defferedModules;
+		return deferredModules;
 	}
 	public void setDefferedModules(ArrayList<Module> defferedModules) {
-		this.defferedModules = defferedModules;
+		this.deferredModules = defferedModules;
 	}
-	
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id_deferral) {
+		this.id= id_deferral;
+	}
 	
 }
