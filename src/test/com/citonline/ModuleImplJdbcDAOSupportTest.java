@@ -32,6 +32,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 /**
  * @author Tim Wallace
  *
+ *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:config.xml"})
@@ -47,6 +48,12 @@ public class ModuleImplJdbcDAOSupportTest {
 	final Logger logger = Logger.getLogger(ModuleImplJdbcDAOSupportTest.class);
 
 
+	/**
+	 * @author Tim Wallace
+	 *
+	 *Test to create a module
+	 */
+	
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testCreateModule() {
@@ -58,7 +65,12 @@ public class ModuleImplJdbcDAOSupportTest {
 		assertEquals(3,nbRows);
   	}
  
-  
+  	/**
+  	 * @author Tim Wallace
+  	 *
+  	 *	Test to delete a module by CRN
+  	 */
+  	
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testDeleteModuleInteger() {
@@ -68,7 +80,11 @@ public class ModuleImplJdbcDAOSupportTest {
 		assertEquals(1,nbRows);
   	}
 
-  	
+  	/**
+  	 * @author Tim Wallace
+  	 *
+  	 *Test to get module by CRN 
+  	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testGetModuleString() {
@@ -80,6 +96,11 @@ public class ModuleImplJdbcDAOSupportTest {
 		assertEquals("1",mod.getSemester());
   	}
 
+  	/**
+  	 * @author Tim Wallace
+  	 *
+  	 *	Test for the modules list
+  	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testListModules() {
@@ -96,6 +117,11 @@ public class ModuleImplJdbcDAOSupportTest {
 		}
   	}
   
+  	/**
+  	 * @author Tim Wallace
+  	 *
+  	 *Test to update the module code 
+  	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testUpdateModuleCodeString() {

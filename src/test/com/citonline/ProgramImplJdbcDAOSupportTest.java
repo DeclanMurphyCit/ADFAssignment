@@ -46,7 +46,11 @@ public class ProgramImplJdbcDAOSupportTest {
 
 	final Logger logger = Logger.getLogger(ModuleImplJdbcDAOSupportTest.class);
 
-
+	/**
+	 * @author Tim Wallace
+	 * Test to create a program
+	 *
+	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testCreateProgam() {
@@ -58,7 +62,11 @@ public class ProgramImplJdbcDAOSupportTest {
 		assertEquals(3,nbRows);
   	}
  
-  
+  	/**
+  	 * @author Tim Wallace
+  	 * 
+  	 * Test to delete a program by id
+  	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testDeleteProgramInteger() {
@@ -68,7 +76,11 @@ public class ProgramImplJdbcDAOSupportTest {
 		assertEquals(1,nbRows);
   	}
 
-  	
+  	/**
+  	 * @author Tim Wallace
+  	 *
+  	 * Test to get program by id
+  	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testGetProgramInt() {
@@ -79,6 +91,12 @@ public class ProgramImplJdbcDAOSupportTest {
 		assertEquals("DCOM4",prog.getProgramCode());
   	}
   	
+  
+  	/**
+  	 * @author Tim Wallace
+  	 * 
+  	 * Test the list of programs
+  	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testListPrograms() {
@@ -95,6 +113,11 @@ public class ProgramImplJdbcDAOSupportTest {
 		}
   	}
   
+  	/**
+  	 * @author Tim Wallace
+  	 *
+  	 * Test to update the program code
+  	 */
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testUpdateProgramCodeString() {
