@@ -162,35 +162,35 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 
 	@Override
 	@Transactional
-	public void enrollModule(Integer idStudent,Integer idModule) {
+	public void enrollModule(Integer idStudent,Integer id_Module) {
 		
-		String SQL = "INSERT into student_enrolls_for (idModule,idStudent) "
+		String SQL = "INSERT into student_enrolls_for (id_Module,idStudent) "
 				+ "values (?,?)";
-		getJdbcTemplate().update(SQL, new Object[] {idModule,idStudent});
+		getJdbcTemplate().update(SQL, new Object[] {id_Module,idStudent});
 		
-		System.out.println("Student "+idStudent + " has enrolled for module" + idModule);			
+		System.out.println("Student "+idStudent + " has enrolled for module" + id_Module);			
 	}
 	
 	@Override
 	@Transactional
-	public void enrollModule(String studentNumber,Integer idModule) {
+	public void enrollModule(String studentNumber,Integer id_Module) {
 		
 		String SQL = "select id_student from student where studentNumber = ?";
 		
 		final int id_student=getJdbcTemplate().queryForObject(SQL,
 				new Object[]{studentNumber}, Integer.class);
 		
-		String SQL1 = "INSERT into student_enrolls_for (idModule,idStudent) "
+		String SQL1 = "INSERT into student_enrolls_for (id_Module,idStudent) "
 				+ "values (?,?)";
-		getJdbcTemplate().update(SQL1, new Object[] {idModule,id_student});
+		getJdbcTemplate().update(SQL1, new Object[] {id_Module,id_student});
 		
-		System.out.println("Student "+id_student + " has enrolled for module" + idModule);			
+		System.out.println("Student "+id_student + " has enrolled for module" + id_Module);			
 	}
 	
 	@Override
 	@Transactional
 	public void enrollModules(final Integer idStudent,final ArrayList<Integer> idModuleList) {
-		String SQL = "INSERT INTO student_enrolls_for (idStudent,idModule) VALUES (?, ?)";
+		String SQL = "INSERT INTO student_enrolls_for (idStudent,id_Module) VALUES (?, ?)";
 		
 		System.out.println("Student "+idStudent + " has enrolled for modules: ");			
 
@@ -220,7 +220,7 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 				new Object[]{studentNumber}, Integer.class);
 		
 		
-		String SQL2 = "INSERT INTO student_enrolls_for (idStudent,idModule) VALUES (?, ?)";
+		String SQL2 = "INSERT INTO student_enrolls_for (idStudent,id_Module) VALUES (?, ?)";
 		
 		System.out.println("Student "+id_student + " has enrolled for modules: ");			
 
@@ -248,7 +248,7 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 		
 		String SQL="SELECT * from module"
 				+ " JOIN student_enrolls_for on "
-				+ " student_enrolls_for.idModule = module.id_module"
+				+ " student_enrolls_for.id_Module = module.id_module"
 				+ " AND student_enrolls_for.idStudent= ?";
 				
 		enrolledModules = (ArrayList<Module>) getJdbcTemplate().query(SQL,
@@ -270,7 +270,7 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 		
 		String SQL2="SELECT * from module"
 				+ " JOIN student_enrolls_for on "
-				+ " student_enrolls_for.idModule = module.id_module"
+				+ " student_enrolls_for.id_Module = module.id_module"
 				+ " AND student_enrolls_for.idStudent= ?";
 				
 		enrolledModules = (ArrayList<Module>) getJdbcTemplate().query(SQL2,
@@ -282,7 +282,7 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 	@Override
 	@Transactional
 	public void removeModule(Integer idStudent, Integer idModule) {
-		String SQL = "DELETE from student_enrolls_for WHERE idStudent = ? and idModule = ?";
+		String SQL = "DELETE from student_enrolls_for WHERE idStudent = ? and id_Module = ?";
 		getJdbcTemplate().update(SQL, new Object[]{idStudent, idModule});
 		
 		System.out.println("Student " + idStudent + " has disenrolled from moudle: " + idModule);
@@ -297,7 +297,7 @@ public class StudentJdbcDaoSupport extends JdbcDaoSupport implements StudentDAO 
 		final int id_student=getJdbcTemplate().queryForObject(SQL,
 				new Object[]{studentNumber}, Integer.class);
 				
-		String SQL2 = "DELETE from student_enrolls_for WHERE idStudent = ? and idModule = ?";
+		String SQL2 = "DELETE from student_enrolls_for WHERE idStudent = ? and id_Module = ?";
 		getJdbcTemplate().update(SQL2, new Object[]{id_student, idModule});
 		
 		System.out.println("Student " + id_student + " has disenrolled from moudle: " + idModule);

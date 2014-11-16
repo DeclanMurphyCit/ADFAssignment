@@ -1,4 +1,4 @@
-package com.cit.online.db.interfaces.impl;
+package com.citonline.db.interfaces.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.citonline.db.interfaces.ProgramDAO;
-import com.citonline.db.interfaces.impl.ProgramMapper;
 import com.citonline.domain.Program;
 import com.citonline.domain.Semester;
 import com.citonline.interfaces.impl.ProgramImpl;

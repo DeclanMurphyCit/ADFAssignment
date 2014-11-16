@@ -74,33 +74,4 @@ public class StudentImplTest {
 		assertEquals("CR106", pTest.getProgramCode());
 		assertEquals("Software Development", pTest.getProgramName());
 	}
-	
-	/**
-	 * @author Declan Murphy 
-	 * @date 4 nov. 2014
-	 * 
-	 * Test method for {@link com.citonline.interfaces.impl.StudentImpl#deferModule(com.citonline.domain.Module)}.
-	 * 
-	 * This method tests if a Deferral has been added to a Student's deferral list
-	 * It also tests if it matches the module bean Program_SoftwareDev
-	 */
-/*	@Test
-	public void deferModule() {
-		
-		StudentImpl declan = (StudentImpl) context.getBean("Student_Declan");		
-		//Program program = (Program) context.getBean("Program_SoftwareDev");
-		Deferral deferral = (Deferral) context.getBean("Deferral_deferADF");
-		
-		
-		//assertTrue(declan.getProgram().equals(program));
-		
-		Program pTest = declan.getProgram();
-		
-		assertEquals("CR106", pTest.getProgramCode());
-		assertEquals("Software Development", pTest.getProgramName());
-	}*/
-	
-
-
-
 }

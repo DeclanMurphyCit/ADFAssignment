@@ -1,4 +1,4 @@
-package com.cit.online.db.interfaces.impl;
+package com.citonline.db.interfaces.impl;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.citonline.db.interfaces.ModuleDAO;
-import com.citonline.db.interfaces.impl.ModuleMapper;
 import com.citonline.domain.Module;
 import com.citonline.interfaces.impl.LecturerImpl;
 import com.citonline.interfaces.impl.ModuleImpl;
