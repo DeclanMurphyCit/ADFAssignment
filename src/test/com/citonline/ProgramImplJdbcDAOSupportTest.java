@@ -54,12 +54,12 @@ public class ProgramImplJdbcDAOSupportTest {
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testCreateProgam() {
-		int nbRows = programJdbcDaoSupportObject.countRows();
-		assertEquals(2,nbRows);
+		int nbRowsBefore = programJdbcDaoSupportObject.countRows();
+		
   		
 		programJdbcDaoSupportObject.createProgram("DNET4", "DNET4");
-		nbRows = programJdbcDaoSupportObject.countRows();
-		assertEquals(3,nbRows);
+		int nbRowsAfter = programJdbcDaoSupportObject.countRows();
+		assertEquals(nbRowsBefore,nbRowsAfter-1);
   	}
  
   	/**
@@ -86,7 +86,7 @@ public class ProgramImplJdbcDAOSupportTest {
   	public void testGetProgramInt() {
 		Program prog = programJdbcDaoSupportObject.getProgram(1);
 		
-		assertEquals("1",prog.getProgramId());
+		assertEquals(1,prog.getProgramId());
 		assertEquals("DCOM4",prog.getProgramName());
 		assertEquals("DCOM4",prog.getProgramCode());
   	}
@@ -100,11 +100,11 @@ public class ProgramImplJdbcDAOSupportTest {
   	@Test
   	@DatabaseSetup(value="classpath:databaseEntries.xml", type=DatabaseOperation.CLEAN_INSERT)
   	public void testListPrograms() {
-		List<ProgramImpl> prog_list = programJdbcDaoSupportObject.listPrograms();
+		List<Program> prog_list = programJdbcDaoSupportObject.listPrograms();
 		
-		assertEquals(2, prog_list.size());
+		assertTrue(prog_list.size() > 0);
 		
-		for(ProgramImpl l : prog_list){
+		for(Program l : prog_list){
 			String fn = l.getProgramCode();
 			
 			boolean isC = fn.equals("DCOM4");

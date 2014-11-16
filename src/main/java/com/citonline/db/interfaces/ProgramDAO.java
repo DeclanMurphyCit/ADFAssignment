@@ -41,7 +41,7 @@ public interface ProgramDAO {
 
 	int countRows();
 
-	List<ProgramImpl> listPrograms();
+	List<Program> listPrograms();
   
 	
 }

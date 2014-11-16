@@ -41,8 +41,8 @@ public class ProgramJdbcDaoSupport extends JdbcDaoSupport implements ProgramDAO 
 	@Override
 	public void createProgram(String programName, String programCode) {
 		
-		String SQL = "INSERT INTO Program (programName, programCode, semesterList) "
-				+ "VALUES(?, ?, ?)";
+		String SQL = "INSERT INTO Program (program_Name, program_Code) "
+				+ "VALUES(?, ?)";
 		
 		getJdbcTemplate().update(SQL, new Object[] { programName, programCode});
 		
@@ -70,7 +70,7 @@ public class ProgramJdbcDaoSupport extends JdbcDaoSupport implements ProgramDAO 
 		String SQL = "select * from Program where id_program = ?";
 		Program program = (Program) getJdbcTemplate().queryForObject(SQL, 
 						new Object[]{id}, new ProgramMapper());
-		program.setSemesterList(listSemesters());
+		//program.setSemesterList(listSemesters());
 		return program;
 	}
 
@@ -98,9 +98,9 @@ public class ProgramJdbcDaoSupport extends JdbcDaoSupport implements ProgramDAO 
 
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-	public List<ProgramImpl> listPrograms() {
+	public List<Program> listPrograms() {
 		String SQL = "select * from program";
-		List<ProgramImpl> programs = getJdbcTemplate().query(SQL, 
+		List<Program> programs = getJdbcTemplate().query(SQL, 
 						new ProgramMapper());
 		return programs;
 	}
